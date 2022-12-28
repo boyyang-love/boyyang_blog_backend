@@ -1,0 +1,68 @@
+syntax = "v1"
+
+import "common.api"
+
+type (
+   CreateBlogReq {
+      Title     string     `form:"title"`
+      SubTitle  string     `form:"sub_title"`
+      Content   string     `form:"content"`
+      Cover     string     `form:"cover"`
+      UserId    int        `form:"user_id,optional"`
+   }
+
+   CreateBlogRes {
+      Id  int `json:"id"`
+   }
+
+   UpdateBlogReq {
+      Id        int        `form:"id"`
+      Title     string     `form:"title"`
+      SubTitle  string     `form:"sub_title"`
+      Content   string     `form:"content"`
+      Cover     string     `form:"cover"`
+   }
+   
+   UpdateBlogRes {
+      Msg string `json:"msg"`
+   }
+
+   DeleteBlogReq {
+     Id int `form:"id"`
+   }
+
+   DeleteBlogRes {
+     Msg string `json:"msg"`
+   }
+
+   BlogInfoReq {
+     Ids   string `form:"ids,optional"`
+     Page  string `form:"page,optional"`
+     Limit string `form:"limit,optional"`
+   }
+
+   BlogInfoRes {
+      Count    int `json:"count"`
+      BlogInfo []BlogInfo `json:"blog_info"`
+   }
+
+   BlogInfo {
+      Id        int        `json:"id"`
+      Title     string     `json:"title"`
+      SubTitle  string     `json:"sub_title"`
+      Content   string     `json:"content"`
+      Cover     string     `json:"cover"`
+      ThumbsUp  *int       `json:"thumbs_up"`
+      UserInfo  User       `json:"user_info"`
+      Comments  []Comment  `json:"comments,omitempty"`
+   }
+
+   ThumbsUpBlogReq {
+      Id int  `form:"id"`
+   }
+
+   ThumbsUpBlogRes {
+      Msg string `json:"msg"`
+   }
+
+)

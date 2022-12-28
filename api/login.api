@@ -1,0 +1,28 @@
+syntax = "v1"
+
+import "common.api"
+//登录
+type (
+    LoginReq {
+        Username string `form:"username"`
+        Password string `form:"password"`
+    }
+
+    LoginRes {
+        Info  User   `json:"info"`
+        Token string `json:"token"`
+    }
+)
+
+// 注册
+type (
+    RegisterReq {
+        Username string `form:"username"`
+        Password string `form:"password"`
+        Tel      int    `form:"tel"`
+    }
+
+    RegisterRes {
+        Id int `json:"id"`
+    }
+)

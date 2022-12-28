@@ -1,0 +1,72 @@
+syntax = "v1"
+
+import (
+	"login.api"
+	"upload.api"
+	"user.api"
+	"exhibition.api"
+	"blog.api"
+	"comment.api"
+)
+
+// 登录注册
+service blog-api {
+	@handler login
+	post /login (LoginReq) returns (LoginRes)
+	@handler register
+	post /register (RegisterReq) returns (RegisterRes)
+}
+
+// 文件上传 图片墙上传 图片墙信息
+@server(
+	jwt: Auth
+)
+service blog-api {
+	@handler upload
+	post /upload (UploadReq) returns (UploadRes)
+	@handler createExhibition
+	post /exhibtion/create (CreateExhibitionReq) returns (CreateExhibitionRes)
+	@handler exhibitionInfo
+	get /exhibtion/info (ExhibitionInfoReq) returns (ExhibitionInfoRes)
+}
+
+// 用户
+@server(
+	jwt: Auth
+)
+service blog-api {
+	@handler userInfo
+	get /users/info (UserInfoReq) returns (UserInfoRes)
+	@handler updateUserInfo
+	post /users/update (UpdateUserInfoReq) returns (UpdateUserInfoRes)
+}
+
+// 博客
+@server(
+	jwt: Auth
+)
+service blog-api {
+	@handler createBlog
+	post /blog/create (CreateBlogReq) returns (CreateBlogRes)
+	@handler updateBlog
+	post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
+	@handler deleteBlog
+	post /blog/delete (DeleteBlogReq) returns (DeleteBlogRes)
+	@handler blogInfo
+	get /blog/info (BlogInfoReq) returns (BlogInfoRes)
+	@handler thumbsUpBlog
+	get /blog/thumbsup (ThumbsUpBlogReq) returns (ThumbsUpBlogRes)
+}
+
+// 博客评论 点赞
+@server(
+	jwt: Auth
+)
+service blog-api {
+	@handler createComment
+	post /blog/comment/create (CreateBlogCommentReq) returns (CreateBlogCommentRes)
+	@handler deleteComment
+	get /blog/comment/delete (DeleateBlogCommentReq) returns (DeleateBlogCommentRes)
+	@handler thumbsUpComment
+	get /blog/comment/thumbsup (ThumbsUpBlogCommentReq) returns (ThumbsUpBlogCommentRes)
+}

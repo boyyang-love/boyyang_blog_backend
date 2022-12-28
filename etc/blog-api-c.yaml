@@ -1,0 +1,19 @@
+Name: blog-api
+Host: 0.0.0.0
+Port: 8888
+MaxBytes: 10240000
+Auth:
+  AccessSecret: $AccessSecret
+  AccessExpire: $AccessExpire
+Mysql:
+  Host: host
+  Port: 28196
+  Database: 数据库名称
+  Username: 用户名
+  Password: 密码
+  Charset: utf8
+  Timeout: 10s
+CloudBase:
+  ClientUrl:  对象存储连接
+  ClientSecretId: 对象存储SecretId
+  ClientSecretKey: 对象存储key

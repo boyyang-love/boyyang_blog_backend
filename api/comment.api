@@ -1,0 +1,28 @@
+syntax = "v1"
+
+type (
+    CreateBlogCommentReq {
+        Content   string     `form:"content" gorm:"size:2000"`
+        BlogId    uint       `form:"blog_id"`
+    }
+
+    CreateBlogCommentRes {
+        Msg string `json:"msg"`
+    }
+
+    DeleateBlogCommentReq {
+        Id uint `form:"id"`
+    }
+
+    DeleateBlogCommentRes {
+        Msg string  `json:"msg"`
+    }
+
+    ThumbsUpBlogCommentReq {
+        Id uint `form:"id"`
+    }
+
+    ThumbsUpBlogCommentRes {
+        Msg string `json:"msg"`
+    }
+)
