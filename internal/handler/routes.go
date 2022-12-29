@@ -75,7 +75,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: updateBlogHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/blog/delete",
 				Handler: deleteBlogHandler(serverCtx),
 			},

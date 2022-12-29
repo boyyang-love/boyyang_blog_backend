@@ -51,7 +51,7 @@ service blog-api {
 	@handler updateBlog
 	post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
 	@handler deleteBlog
-	post /blog/delete (DeleteBlogReq) returns (DeleteBlogRes)
+	get /blog/delete (DeleteBlogReq) returns (DeleteBlogRes)
 	@handler blogInfo
 	get /blog/info (BlogInfoReq) returns (BlogInfoRes)
 	@handler thumbsUpBlog
