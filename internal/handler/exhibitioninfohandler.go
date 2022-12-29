@@ -19,8 +19,8 @@ func exhibitionInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewExhibitionInfoLogic(r.Context(), svcCtx)
-		resp, err := l.ExhibitionInfo(&req)
-		response.Response(w, resp, err)
+		resp, err, msg := l.ExhibitionInfo(&req)
+		response.Response(w, resp, err, msg)
 
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)

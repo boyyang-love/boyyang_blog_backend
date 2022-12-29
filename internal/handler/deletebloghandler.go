@@ -19,8 +19,8 @@ func deleteBlogHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewDeleteBlogLogic(r.Context(), svcCtx)
-		resp, err := l.DeleteBlog(&req)
-		response.Response(w, resp, err)
+		resp, err, msg := l.DeleteBlog(&req)
+		response.Response(w, resp, err, msg)
 
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)

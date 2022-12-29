@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"blog_server/common/response"
 	"blog_server/models"
 	"context"
 	"gorm.io/gorm"
@@ -25,14 +26,14 @@ func NewThumbsUpBlogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Thum
 	}
 }
 
-func (l *ThumbsUpBlogLogic) ThumbsUpBlog(req *types.ThumbsUpBlogReq) (resp *types.ThumbsUpBlogRes, err error) {
+func (l *ThumbsUpBlogLogic) ThumbsUpBlog(req *types.ThumbsUpBlogReq) (resp *types.ThumbsUpBlogRes, err error, msg response.SuccessMsg) {
 	res := l.svcCtx.DB.
 		Model(&models.Blog{}).
 		Where("id = ?", req.Id).
 		Update("thumbs_up", gorm.Expr("thumbs_up + ?", 1))
 	if res.Error == nil {
-		return &types.ThumbsUpBlogRes{Msg: "点赞成功"}, nil
+		return &types.ThumbsUpBlogRes{Msg: "点赞成功"}, nil, msg
 	} else {
-		return nil, res.Error
+		return nil, res.Error, msg
 	}
 }

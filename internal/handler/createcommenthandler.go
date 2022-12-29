@@ -19,9 +19,9 @@ func createCommentHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewCreateCommentLogic(r.Context(), svcCtx)
-		resp, err := l.CreateComment(&req)
-		response.Response(w, resp, err)
-		
+		resp, err, msg := l.CreateComment(&req)
+		response.Response(w, resp, err, msg)
+
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)
 		//} else {

@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"blog_server/common/response"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -24,12 +25,12 @@ func NewUpdateUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Up
 	}
 }
 
-func (l *UpdateUserInfoLogic) UpdateUserInfo(req *types.UpdateUserInfoReq) (resp *types.UpdateUserInfoRes, err error) {
+func (l *UpdateUserInfoLogic) UpdateUserInfo(req *types.UpdateUserInfoReq) (resp *types.UpdateUserInfoRes, err error, msg response.SuccessMsg) {
 	isExist := l.svcCtx.DB.
 		Model(&models.User{}).
 		Where("username = ? and id != ?", req.Username, req.Id).First(&models.User{})
 	if isExist.RowsAffected != 0 {
-		return nil, errors.New("该用户名已经存在")
+		return nil, errors.New("该用户名已经存在"), msg
 	}
 
 	err = l.svcCtx.DB.
@@ -46,8 +47,8 @@ func (l *UpdateUserInfoLogic) UpdateUserInfo(req *types.UpdateUserInfoReq) (resp
 		}).Error
 
 	if err == nil {
-		return &types.UpdateUserInfoRes{Msg: "更新成功"}, nil
+		return &types.UpdateUserInfoRes{Msg: "更新成功"}, nil, msg
 	} else {
-		return nil, err
+		return nil, err, msg
 	}
 }

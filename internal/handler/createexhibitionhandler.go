@@ -19,8 +19,8 @@ func createExhibitionHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewCreateExhibitionLogic(r.Context(), svcCtx)
-		resp, err := l.CreateExhibition(&req)
-		response.Response(w, resp, err)
+		resp, err, msg := l.CreateExhibition(&req)
+		response.Response(w, resp, err, msg)
 
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)

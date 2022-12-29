@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"blog_server/common/response"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -23,7 +24,7 @@ func NewCreateBlogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Create
 	}
 }
 
-func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.CreateBlogRes, err error) {
+func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.CreateBlogRes, err error, msg response.SuccessMsg) {
 	userId, _ := l.ctx.Value("Id").(json.Number).Int64()
 	blog := models.Blog{
 		Title:    req.Title,
@@ -36,8 +37,8 @@ func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.Crea
 		Model(&models.Blog{}).
 		Create(&blog)
 	if res.Error == nil {
-		return &types.CreateBlogRes{Id: int(blog.Id)}, nil
+		return &types.CreateBlogRes{Id: int(blog.Id)}, nil, msg
 	} else {
-		return nil, res.Error
+		return nil, res.Error, msg
 	}
 }

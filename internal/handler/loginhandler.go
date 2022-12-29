@@ -19,8 +19,8 @@ func loginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewLoginLogic(r.Context(), svcCtx)
-		resp, err := l.Login(&req)
-		response.Response(w, resp, err)
+		resp, err, msg := l.Login(&req)
+		response.Response(w, resp, err, msg)
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)
 		//} else {

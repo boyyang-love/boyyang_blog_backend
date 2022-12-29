@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"blog_server/common/response"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -26,7 +27,7 @@ func NewBlogInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *BlogInfo
 	}
 }
 
-func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRes, err error) {
+func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRes, err error, msg response.SuccessMsg) {
 	DB := l.svcCtx.DB
 	var count int64
 	var blogInfo []models.Blog
@@ -66,8 +67,8 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 	if err == nil {
 		var info []types.BlogInfo
 		_ = copier.Copy(&info, &blogInfo)
-		return &types.BlogInfoRes{BlogInfo: info, Count: int(count)}, nil
+		return &types.BlogInfoRes{BlogInfo: info, Count: int(count)}, nil, msg
 	} else {
-		return nil, err
+		return nil, err, msg
 	}
 }

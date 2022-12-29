@@ -2,6 +2,7 @@ package logic
 
 import (
 	"blog_server/common/helper"
+	"blog_server/common/response"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -24,7 +25,7 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 	}
 }
 
-func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRes, err error) {
+func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRes, err error, msg response.SuccessMsg) {
 
 	res := l.svcCtx.DB.
 		Where("username = ? or tel = ?", req.Username, req.Tel).
@@ -42,9 +43,9 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRe
 			Create(&info)
 		return &types.RegisterRes{
 			Id: int(info.Id),
-		}, nil
+		}, nil, msg
 
 	} else {
-		return nil, errors.New("该用户已经存在")
+		return nil, errors.New("该用户已经存在"), msg
 	}
 }

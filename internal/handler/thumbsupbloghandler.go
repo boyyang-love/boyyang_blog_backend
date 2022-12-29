@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"blog_server/common/response"
 	"net/http"
 
 	"blog_server/internal/logic"
@@ -18,7 +19,8 @@ func thumbsUpBlogHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewThumbsUpBlogLogic(r.Context(), svcCtx)
-		resp, err := l.ThumbsUpBlog(&req)
+		resp, err, msg := l.ThumbsUpBlog(&req)
+		response.Response(w, resp, err, msg)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

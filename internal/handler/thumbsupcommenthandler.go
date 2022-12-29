@@ -19,8 +19,8 @@ func thumbsUpCommentHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewThumbsUpCommentLogic(r.Context(), svcCtx)
-		resp, err := l.ThumbsUpComment(&req)
-		response.Response(w, resp, err)
+		resp, err, msg := l.ThumbsUpComment(&req)
+		response.Response(w, resp, err, msg)
 
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)

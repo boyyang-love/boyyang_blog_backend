@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"blog_server/common/response"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -24,7 +25,7 @@ func NewCreateCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cre
 	}
 }
 
-func (l *CreateCommentLogic) CreateComment(req *types.CreateBlogCommentReq) (resp *types.CreateBlogCommentRes, err error) {
+func (l *CreateCommentLogic) CreateComment(req *types.CreateBlogCommentReq) (resp *types.CreateBlogCommentRes, err error, msg response.SuccessMsg) {
 
 	userId, err := l.ctx.Value("Id").(json.Number).Int64()
 	comment := models.Comment{
@@ -34,8 +35,8 @@ func (l *CreateCommentLogic) CreateComment(req *types.CreateBlogCommentReq) (res
 	}
 	res := l.svcCtx.DB.Model(&models.Comment{}).Create(&comment)
 	if res.Error == nil {
-		return &types.CreateBlogCommentRes{Msg: "评论成功"}, nil
+		return &types.CreateBlogCommentRes{Msg: "评论成功"}, nil, msg
 	} else {
-		return nil, res.Error
+		return nil, res.Error, msg
 	}
 }

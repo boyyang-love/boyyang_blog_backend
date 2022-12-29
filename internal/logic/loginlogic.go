@@ -2,6 +2,7 @@ package logic
 
 import (
 	"blog_server/common/helper"
+	"blog_server/common/response"
 	"blog_server/models"
 	"context"
 	"errors"
@@ -26,15 +27,16 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 	}
 }
 
-func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error) {
+func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error, msg response.SuccessMsg) {
 	userInfo := models.User{}
 	res := l.svcCtx.DB.
 		Model(&models.User{}).
 		Where("username = ? and password = ?", req.Username, helper.MakeHash(req.Password)).
 		Scan(&userInfo)
 	if res.RowsAffected == 0 {
-		return nil, errors.New("请检查账号或密码是否正确")
+		return nil, errors.New("请检查账号或密码是否正确"), msg
 	} else {
+		msg.Msg = "登录成功"
 		token, _ := helper.GenerateJwtToken(
 			&helper.GenerateJwtStruct{
 				Id:       int(userInfo.Id),
@@ -54,6 +56,6 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error
 				Tel:       int(*userInfo.Tel),
 			},
 			Token: token,
-		}, nil
+		}, nil, msg
 	}
 }

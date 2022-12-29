@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"blog_server/common/response"
 	"blog_server/models"
 	"context"
 	"github.com/jinzhu/copier"
@@ -27,7 +28,7 @@ func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ex
 	}
 }
 
-func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp *types.ExhibitionInfoRes, err error) {
+func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp *types.ExhibitionInfoRes, err error, msg response.SuccessMsg) {
 	DB := l.svcCtx.DB
 
 	ids := strings.Split(req.Ids, ",")
@@ -44,9 +45,9 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			Count(&count).
 			Error; err == nil {
 			copier.Copy(&exInfo, &ex)
-			return &types.ExhibitionInfoRes{Exhibitions: exInfo}, nil
+			return &types.ExhibitionInfoRes{Exhibitions: exInfo}, nil, msg
 		} else {
-			return nil, err
+			return nil, err, msg
 		}
 	} else {
 		if req.Page != "" && req.Limit != "" {
@@ -64,9 +65,9 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			Count(&count).
 			Error; err == nil {
 			copier.Copy(&exInfo, &ex)
-			return &types.ExhibitionInfoRes{Exhibitions: exInfo, Count: int(count)}, nil
+			return &types.ExhibitionInfoRes{Exhibitions: exInfo, Count: int(count)}, nil, msg
 		} else {
-			return nil, err
+			return nil, err, msg
 		}
 	}
 }

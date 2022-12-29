@@ -38,7 +38,7 @@ func uploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			response.Response(w, &types.UploadRes{
 				FileName: fileInfo.FileName,
 				FilePath: fileInfo.FileName,
-			}, nil)
+			}, nil, response.SuccessMsg{Msg: "上传成功"})
 
 			return
 		}
@@ -66,8 +66,8 @@ func uploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		req.Ext = path.Ext(fileHeader.Filename)
 
 		l := logic.NewUploadLogic(r.Context(), svcCtx)
-		resp, err := l.Upload(&req)
-		response.Response(w, resp, err)
+		resp, err, msg := l.Upload(&req)
+		response.Response(w, resp, err, msg)
 
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)

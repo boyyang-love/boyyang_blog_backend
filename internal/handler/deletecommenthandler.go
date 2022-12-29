@@ -19,8 +19,8 @@ func deleteCommentHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewDeleteCommentLogic(r.Context(), svcCtx)
-		resp, err := l.DeleteComment(&req)
-		response.Response(w, resp, err)
+		resp, err, msg := l.DeleteComment(&req)
+		response.Response(w, resp, err, msg)
 
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)

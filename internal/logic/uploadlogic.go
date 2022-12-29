@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"blog_server/common/response"
 	"context"
 
 	"blog_server/internal/svc"
@@ -23,10 +24,10 @@ func NewUploadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UploadLogi
 	}
 }
 
-func (l *UploadLogic) Upload(req *types.UploadReq) (resp *types.UploadRes, err error) {
+func (l *UploadLogic) Upload(req *types.UploadReq) (resp *types.UploadRes, err error, msg response.SuccessMsg) {
 
 	return &types.UploadRes{
 		FileName: req.FileName,
 		FilePath: req.FilePath,
-	}, nil
+	}, nil, msg
 }

@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"blog_server/common/response"
 	"blog_server/models"
 	"context"
 	"errors"
@@ -25,7 +26,7 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 	}
 }
 
-func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRes, err error) {
+func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRes, err error, msg response.SuccessMsg) {
 	userInfo := models.User{}
 	res := l.svcCtx.DB.
 		Model(&models.User{}).
@@ -33,7 +34,7 @@ func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRe
 		First(&userInfo)
 
 	if res.RowsAffected == 0 {
-		return nil, errors.New("不存在该用户")
+		return nil, errors.New("不存在该用户"), msg
 	} else {
 		return &types.UserInfoRes{
 			Id:        int(userInfo.Id),
@@ -41,6 +42,6 @@ func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRe
 			Gender:    userInfo.Gender,
 			AvatarUrl: userInfo.AvatarUrl,
 			Tel:       *userInfo.Tel,
-		}, nil
+		}, nil, msg
 	}
 }

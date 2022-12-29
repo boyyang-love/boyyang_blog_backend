@@ -19,8 +19,8 @@ func userInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewUserInfoLogic(r.Context(), svcCtx)
-		resp, err := l.UserInfo(&req)
-		response.Response(w, resp, err)
+		resp, err, msg := l.UserInfo(&req)
+		response.Response(w, resp, err, msg)
 
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)

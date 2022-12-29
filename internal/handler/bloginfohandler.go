@@ -19,8 +19,8 @@ func blogInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewBlogInfoLogic(r.Context(), svcCtx)
-		resp, err := l.BlogInfo(&req)
-		response.Response(w, resp, err)
+		resp, err, msg := l.BlogInfo(&req)
+		response.Response(w, resp, err, msg)
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)
 		//} else {

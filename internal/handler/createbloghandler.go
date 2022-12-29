@@ -19,8 +19,8 @@ func createBlogHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewCreateBlogLogic(r.Context(), svcCtx)
-		resp, err := l.CreateBlog(&req)
-		response.Response(w, resp, err)
+		resp, err, msg := l.CreateBlog(&req)
+		response.Response(w, resp, err, msg)
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)
 		//} else {

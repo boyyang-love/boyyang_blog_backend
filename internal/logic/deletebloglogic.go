@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"blog_server/common/response"
 	"blog_server/models"
 	"context"
 
@@ -24,14 +25,14 @@ func NewDeleteBlogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 	}
 }
 
-func (l *DeleteBlogLogic) DeleteBlog(req *types.DeleteBlogReq) (resp *types.DeleteBlogRes, err error) {
+func (l *DeleteBlogLogic) DeleteBlog(req *types.DeleteBlogReq) (resp *types.DeleteBlogRes, err error, msg response.SuccessMsg) {
 	res := l.svcCtx.DB.
 		Model(&models.Blog{}).
 		Where("id = ?", req.Id).
 		Delete(&models.Blog{})
 	if res.Error == nil {
-		return &types.DeleteBlogRes{Msg: "删除成功"}, nil
+		return &types.DeleteBlogRes{Msg: "删除成功"}, nil, msg
 	} else {
-		return nil, res.Error
+		return nil, res.Error, msg
 	}
 }

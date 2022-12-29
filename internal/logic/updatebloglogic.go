@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"blog_server/common/response"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -23,7 +24,7 @@ func NewUpdateBlogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Update
 	}
 }
 
-func (l *UpdateBlogLogic) UpdateBlog(req *types.UpdateBlogReq) (resp *types.UpdateBlogRes, err error) {
+func (l *UpdateBlogLogic) UpdateBlog(req *types.UpdateBlogReq) (resp *types.UpdateBlogRes, err error, msg response.SuccessMsg) {
 	blogInfo := models.Blog{
 		Title:    req.Title,
 		SubTitle: req.SubTitle,
@@ -35,8 +36,8 @@ func (l *UpdateBlogLogic) UpdateBlog(req *types.UpdateBlogReq) (resp *types.Upda
 		Where("id = ?", req.Id).
 		Updates(&blogInfo)
 	if res.Error == nil {
-		return &types.UpdateBlogRes{Msg: "更新成功"}, err
+		return &types.UpdateBlogRes{Msg: "更新成功"}, err, msg
 	} else {
-		return nil, res.Error
+		return nil, res.Error, msg
 	}
 }

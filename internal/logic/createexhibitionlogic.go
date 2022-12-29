@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"blog_server/common/response"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -24,7 +25,7 @@ func NewCreateExhibitionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 	}
 }
 
-func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq) (resp *types.CreateExhibitionRes, err error) {
+func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq) (resp *types.CreateExhibitionRes, err error, msg response.SuccessMsg) {
 	userId, _ := l.ctx.Value("Id").(json.Number).Int64()
 	ex := models.Exhibition{
 		Title:    req.Title,
@@ -38,8 +39,8 @@ func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq)
 		Create(&ex)
 
 	if res.Error == nil {
-		return &types.CreateExhibitionRes{Id: int(ex.Id)}, nil
+		return &types.CreateExhibitionRes{Id: int(ex.Id)}, nil, msg
 	} else {
-		return nil, res.Error
+		return nil, res.Error, msg
 	}
 }

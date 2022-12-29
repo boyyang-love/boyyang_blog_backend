@@ -19,8 +19,8 @@ func updateBlogHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewUpdateBlogLogic(r.Context(), svcCtx)
-		resp, err := l.UpdateBlog(&req)
-		response.Response(w, resp, err)
+		resp, err, msg := l.UpdateBlog(&req)
+		response.Response(w, resp, err, msg)
 
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)
