@@ -20,7 +20,7 @@ func Response(w http.ResponseWriter, resp interface{}, err error, msg interface{
 	if err == nil {
 		body.Code = 1
 		body.Data = resp
-		if msg != nil {
+		if msg.(SuccessMsg).Msg != "" {
 			body.Msg = msg.(SuccessMsg).Msg
 		} else {
 			body.Msg = "ok"

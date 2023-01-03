@@ -44,8 +44,13 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			Find(&ex, ids).
 			Count(&count).
 			Error; err == nil {
-			copier.Copy(&exInfo, &ex)
-			return &types.ExhibitionInfoRes{Exhibitions: exInfo}, nil, msg
+			err = copier.Copy(&exInfo, &ex)
+			return &types.ExhibitionInfoRes{
+					Exhibitions: exInfo,
+					Count:       int(count),
+				},
+				nil,
+				response.SuccessMsg{Msg: "获取成功"}
 		} else {
 			return nil, err, msg
 		}
@@ -64,8 +69,13 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			Offset(-1).
 			Count(&count).
 			Error; err == nil {
-			copier.Copy(&exInfo, &ex)
-			return &types.ExhibitionInfoRes{Exhibitions: exInfo, Count: int(count)}, nil, msg
+			err = copier.Copy(&exInfo, &ex)
+			return &types.ExhibitionInfoRes{
+					Exhibitions: exInfo,
+					Count:       int(count),
+				},
+				nil,
+				response.SuccessMsg{Msg: "获取成功"}
 		} else {
 			return nil, err, msg
 		}

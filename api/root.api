@@ -25,9 +25,11 @@ service blog-api {
 	@handler upload
 	post /upload (UploadReq) returns (UploadRes)
 	@handler createExhibition
-	post /exhibtion/create (CreateExhibitionReq) returns (CreateExhibitionRes)
+	post /exhibition/create (CreateExhibitionReq) returns (CreateExhibitionRes)
 	@handler exhibitionInfo
-	get /exhibtion/info (ExhibitionInfoReq) returns (ExhibitionInfoRes)
+	get /exhibition/info (ExhibitionInfoReq) returns (ExhibitionInfoRes)
+	@handler updateExhibition
+	post /exhibition/update (updateExhibitionReq) returns (updateExhibitionRes)
 }
 
 // 用户

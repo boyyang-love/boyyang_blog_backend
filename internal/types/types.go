@@ -113,6 +113,17 @@ type ExhibitionInfo struct {
 	UserInfo  User   `json:"user_info" gorm:"foreignKey:UserId"`
 }
 
+type UpdateExhibitionReq struct {
+	Id       uint   `form:"id"`
+	Title    string `form:"title,optional"`
+	SubTitle string `form:"sub_title,optional"`
+	Des      string `form:"des,optional"`
+}
+
+type UpdateExhibitionRes struct {
+	Id uint `json:"id"`
+}
+
 type CreateBlogReq struct {
 	Title    string `form:"title"`
 	SubTitle string `form:"sub_title"`

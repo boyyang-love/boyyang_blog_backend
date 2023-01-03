@@ -41,3 +41,17 @@ type (
         UserInfo  User   `json:"user_info" gorm:"foreignKey:UserId"`
     }
 )
+
+// 更新图片墙信息
+type (
+    updateExhibitionReq {
+        Id       uint   `form:"id"`
+        Title    string `form:"title,optional"`
+        SubTitle string `form:"sub_title,optional"`
+        Des      string `form:"des,optional"`
+    }
+
+    updateExhibitionRes {
+       Id uint `json:"id"`
+    }
+)

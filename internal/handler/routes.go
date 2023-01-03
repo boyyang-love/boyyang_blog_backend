@@ -34,13 +34,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/exhibtion/create",
+				Path:    "/exhibition/create",
 				Handler: createExhibitionHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/exhibtion/info",
+				Path:    "/exhibition/info",
 				Handler: exhibitionInfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/exhibition/update",
+				Handler: updateExhibitionHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

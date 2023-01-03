@@ -10,12 +10,12 @@ type (
     }
 
     Comment {
-        Id        uint       `json:"id" gorm:"primary_key"`
-        Content   string     `json:"des" gorm:"size:2000"`
-        BlogId    uint       `json:"blog_id"`
-        UserId    uint       `json:"user_id"`
-        Tag       string     `json:"tag,omitempty"`
-        ThumbsUp  *int       `json:"thumbs_up" gorm:"default:0"`
-        UserInfo  User       `json:"userInfo"`
+        Id        uint    `json:"id" gorm:"primary_key"`
+        Content   string  `json:"des" gorm:"size:2000"`
+        BlogId    uint    `json:"blog_id"`
+        UserId    uint    `json:"user_id"`
+        Tag       string  `json:"tag,omitempty"`
+        ThumbsUp  *int    `json:"thumbs_up" gorm:"default:0"`
+        UserInfo  User    `json:"userInfo"`
     }
 )

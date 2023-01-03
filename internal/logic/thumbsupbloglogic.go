@@ -4,6 +4,7 @@ import (
 	"blog_server/common/response"
 	"blog_server/models"
 	"context"
+	"errors"
 	"gorm.io/gorm"
 
 	"blog_server/internal/svc"
@@ -31,9 +32,13 @@ func (l *ThumbsUpBlogLogic) ThumbsUpBlog(req *types.ThumbsUpBlogReq) (resp *type
 		Model(&models.Blog{}).
 		Where("id = ?", req.Id).
 		Update("thumbs_up", gorm.Expr("thumbs_up + ?", 1))
-	if res.Error == nil {
-		return &types.ThumbsUpBlogRes{Msg: "点赞成功"}, nil, msg
+	if res.Error == nil && res.RowsAffected != 0 {
+		return &types.ThumbsUpBlogRes{Msg: "点赞成功"}, nil, response.SuccessMsg{Msg: "11111"}
 	} else {
-		return nil, res.Error, msg
+		if res.Error != nil {
+			return nil, res.Error, msg
+		} else {
+			return nil, errors.New("不存在该博客"), msg
+		}
 	}
 }
