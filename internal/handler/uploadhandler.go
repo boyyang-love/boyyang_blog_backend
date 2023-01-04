@@ -37,7 +37,7 @@ func uploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		if has.RowsAffected != 0 {
 			response.Response(w, &types.UploadRes{
 				FileName: fileInfo.FileName,
-				FilePath: fileInfo.FileName,
+				FilePath: fileInfo.FilePath,
 			}, nil, response.SuccessMsg{Msg: "上传成功"})
 
 			return
