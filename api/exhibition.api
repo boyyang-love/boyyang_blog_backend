@@ -55,3 +55,15 @@ type (
        Id uint `json:"id"`
     }
 )
+
+// 审批图片
+type (
+    approvalReq {
+        Id     uint `form:"id"`
+        Status int  `form:"status"`
+    }
+
+    approvalRes {
+        Id uint `json:"id"`
+    }
+)

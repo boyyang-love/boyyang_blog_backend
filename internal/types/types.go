@@ -124,6 +124,15 @@ type UpdateExhibitionRes struct {
 	Id uint `json:"id"`
 }
 
+type ApprovalReq struct {
+	Id     uint `form:"id"`
+	Status int  `form:"status"`
+}
+
+type ApprovalRes struct {
+	Id uint `json:"id"`
+}
+
 type CreateBlogReq struct {
 	Title    string `form:"title"`
 	SubTitle string `form:"sub_title"`

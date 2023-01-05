@@ -30,6 +30,8 @@ service blog-api {
 	get /exhibition/info (ExhibitionInfoReq) returns (ExhibitionInfoRes)
 	@handler updateExhibition
 	post /exhibition/update (updateExhibitionReq) returns (updateExhibitionRes)
+	@handler approvalExhibition
+	post /exhibition/approval (approvalReq) returns (approvalRes)
 }
 
 // 用户
