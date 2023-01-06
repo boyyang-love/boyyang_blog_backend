@@ -6,8 +6,8 @@ Auth:
   AccessSecret: $AccessSecret
   AccessExpire: $AccessExpire
 Mysql:
-  Host: host
-  Port: 28196
+  Host: $host
+  Port: $port
   Database: 数据库名称
   Username: 用户名
   Password: 密码

@@ -16,6 +16,8 @@ WORKDIR /app
 COPY --from=builder /app/main .
 COPY --from=builder /app/etc/blog-api.yaml .
 
+EXPOSE 80
+
 CMD ["/app/main"]
 
 
