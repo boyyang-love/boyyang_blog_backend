@@ -33,7 +33,7 @@ func (l *ThumbsUpBlogLogic) ThumbsUpBlog(req *types.ThumbsUpBlogReq) (resp *type
 		Where("id = ?", req.Id).
 		Update("thumbs_up", gorm.Expr("thumbs_up + ?", 1))
 	if res.Error == nil && res.RowsAffected != 0 {
-		return &types.ThumbsUpBlogRes{Msg: "点赞成功"}, nil, response.SuccessMsg{Msg: "11111"}
+		return nil, nil, response.SuccessMsg{Msg: "点赞成功"}
 	} else {
 		if res.Error != nil {
 			return nil, res.Error, msg
