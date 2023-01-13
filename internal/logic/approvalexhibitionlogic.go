@@ -33,9 +33,9 @@ func (l *ApprovalExhibitionLogic) ApprovalExhibition(req *types.ApprovalReq) (re
 		Model(&models.Exhibition{}).
 		Where("id = ?", req.Id).
 		Updates(&models.Exhibition{
-			Status: int(req.Status),
+			Status: req.Status,
 		}).Error; err == nil {
-		return &types.ApprovalRes{Id: uint(req.Id)}, err, response.SuccessMsg{Msg: "状态更新成功"}
+		return &types.ApprovalRes{Id: req.Id}, err, response.SuccessMsg{Msg: "状态更新成功"}
 	} else {
 		return nil, errors.New("状态更新失败"), msg
 	}

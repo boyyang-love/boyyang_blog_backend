@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/golang-jwt/jwt/v4 v4.4.3
+	github.com/jinzhu/copier v0.3.5
 	github.com/tencentyun/cos-go-sdk-v5 v0.7.40
 	github.com/zeromicro/go-zero v1.4.3
 	gorm.io/driver/mysql v1.4.4
@@ -25,7 +26,6 @@ require (
 	github.com/google/pprof v0.0.0-20211214055906-6f57359322fd // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.7.0 // indirect
-	github.com/jinzhu/copier v0.3.5 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/mattn/go-colorable v0.1.9 // indirect
