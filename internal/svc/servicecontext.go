@@ -3,6 +3,7 @@ package svc
 import (
 	"blog_server/common/helper"
 	"blog_server/internal/config"
+	"blog_server/models"
 	"fmt"
 	"github.com/tencentyun/cos-go-sdk-v5"
 	"gorm.io/gorm"
@@ -30,11 +31,11 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	if err != nil {
 		fmt.Printf("数据库连接失败 \n（%s）\n", err.Error())
 	} else {
-		//db.AutoMigrate(&models.User{})
-		//db.AutoMigrate(&models.Upload{})
-		//db.AutoMigrate(&models.Exhibition{})
-		//db.AutoMigrate(&models.Blog{})
-		//db.AutoMigrate(&models.Comment{})
+		db.AutoMigrate(&models.User{})
+		db.AutoMigrate(&models.Upload{})
+		db.AutoMigrate(&models.Exhibition{})
+		db.AutoMigrate(&models.Blog{})
+		db.AutoMigrate(&models.Comment{})
 		fmt.Println("数据库连接成功...")
 	}
 	client := helper.InitCloudBase(cloudBase.ClientUrl, cloudBase.ClientSecretId, cloudBase.ClientSecretKey)
