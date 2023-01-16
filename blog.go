@@ -32,5 +32,4 @@ func main() {
 }
 
 func notAllowedFn(w http.ResponseWriter) {
-
 }

@@ -125,8 +125,9 @@ type UpdateExhibitionRes struct {
 }
 
 type ApprovalReq struct {
-	Id     uint `form:"id"`
-	Status int  `form:"status"`
+	Id     uint   `form:"id"`
+	Status int    `form:"status"`
+	Reason string `form:"reason"`
 }
 
 type ApprovalRes struct {

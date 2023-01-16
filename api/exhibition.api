@@ -59,8 +59,9 @@ type (
 // 审批图片
 type (
     approvalReq {
-        Id     uint `form:"id"`
-        Status int  `form:"status"`
+        Id     uint   `form:"id"`
+        Status int    `form:"status"`
+        Reason string `form:"reason"`
     }
 
     approvalRes {

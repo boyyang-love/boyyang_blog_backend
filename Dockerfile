@@ -14,7 +14,7 @@ FROM alpine:latest
 WORKDIR /app
 
 COPY --from=builder /app/main .
-COPY --from=builder /app/etc/blog-api.yaml .
+COPY --from=builder /app/etc  etc
 
 EXPOSE 80
 
