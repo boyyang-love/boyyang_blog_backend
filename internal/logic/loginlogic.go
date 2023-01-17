@@ -40,7 +40,6 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error
 			&helper.GenerateJwtStruct{
 				Id:       int(userInfo.Id),
 				Username: userInfo.Username,
-				Password: userInfo.Password,
 			},
 			l.svcCtx.Config.Auth.AccessSecret,
 			l.svcCtx.Config.Auth.AccessExpire,

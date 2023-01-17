@@ -8,7 +8,6 @@ import (
 type GenerateJwtStruct struct {
 	Id       int
 	Username string
-	Password string
 	jwt.RegisteredClaims
 }
 
@@ -17,7 +16,6 @@ func GenerateJwtToken(g *GenerateJwtStruct, secretKey string, expire int64) (str
 		GenerateJwtStruct{
 			Id:       g.Id,
 			Username: g.Username,
-			Password: g.Password,
 			RegisteredClaims: jwt.RegisteredClaims{
 				ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(expire * 1000 * 1000))),
 			},
