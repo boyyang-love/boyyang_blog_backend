@@ -39,9 +39,12 @@ func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRe
 		return &types.UserInfoRes{
 			Id:        int(userInfo.Id),
 			Username:  userInfo.Username,
+			Age:       userInfo.Age,
 			Gender:    userInfo.Gender,
 			AvatarUrl: userInfo.AvatarUrl,
 			Tel:       *userInfo.Tel,
+			Email:     *userInfo.Email,
+			Address:   userInfo.Address,
 		}, nil, msg
 	}
 }

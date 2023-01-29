@@ -59,9 +59,12 @@ type UserInfoReq struct {
 type UserInfoRes struct {
 	Id        int    `json:"id"`
 	Username  string `json:"username"`
+	Age       int    `json:"age,omitempty"`
 	Gender    int    `json:"gender"`
 	AvatarUrl string `json:"avatarUrl"`
 	Tel       int    `json:"tel"`
+	Email     string `json:"email,omitempty"`
+	Address   string `json:"address,omitempty"`
 }
 
 type UpdateUserInfoReq struct {
