@@ -11,6 +11,7 @@ type Exhibition struct {
 	SubTitle  string     `json:"sub_title"`
 	Des       string     `json:"des"`
 	Cover     string     `json:"cover"`
+	ThumbsUp  *int       `json:"thumbs_up" gorm:"default:0"` //点赞数
 	UserId    uint       `json:"user_id"`
 	UserInfo  User       `json:"user_info" gorm:"foreignKey:UserId"`
 	Status    int        `json:"status" gorm:"default:1"` // 1待审核 2审核通过 3未通过审核

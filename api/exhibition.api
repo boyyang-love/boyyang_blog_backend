@@ -1,7 +1,5 @@
 syntax = "v1"
 
-import "common.api"
-
 // 创建图片墙
 type (
     CreateExhibitionReq {

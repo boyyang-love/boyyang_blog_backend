@@ -35,6 +35,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		//db.AutoMigrate(&models.Exhibition{})
 		//db.AutoMigrate(&models.Blog{})
 		//db.AutoMigrate(&models.Comment{})
+		//db.AutoMigrate(&models.Likes{})
 		fmt.Println("数据库连接成功...")
 	}
 	client := helper.InitCloudBase(cloudBase.ClientUrl, cloudBase.ClientSecretId, cloudBase.ClientSecretKey)

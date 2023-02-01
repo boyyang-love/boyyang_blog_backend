@@ -32,7 +32,10 @@ func uploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		hash, _ := helper.MakeFileHash(file, fileHeader)
 		fileInfo := new(models.Upload)
-		has := svcCtx.DB.Model(&models.Upload{}).Where("hash = ?", hash).First(&fileInfo)
+		has := svcCtx.DB.
+			Model(&models.Upload{}).
+			Where("hash = ?", hash).
+			First(&fileInfo)
 
 		if has.RowsAffected != 0 {
 			response.Response(w, &types.UploadRes{

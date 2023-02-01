@@ -223,3 +223,32 @@ type ThumbsUpBlogCommentReq struct {
 type ThumbsUpBlogCommentRes struct {
 	Msg string `json:"msg"`
 }
+
+type Dashboard struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
+type DashboardUserInfo struct {
+	User
+	ThumbsUp *int `json:"thumbs_up" gorm:"default:0"` // 获赞数
+	Like     *int `json:"like" gorm:"default:0"`      // 收藏数
+	Publish  *int `json:"publish" gorm:"default:0"`   // 上传数
+}
+
+type DashboardRes struct {
+	UserInfo  DashboardUserInfo `json:"user_info"`
+	Dashboard []Dashboard       `json:"dashboard"`
+}
+
+type AddLikesReq struct {
+	LikesId uint `form:"likes_id"`
+}
+
+type GetLikesReq struct {
+	LikesIds string `form:"likes_ids"`
+}
+
+type GetLikesRes struct {
+	LikesInfo []ExhibitionInfo `json:"likes_info"`
+}

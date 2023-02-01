@@ -1,0 +1,20 @@
+syntax = "v1"
+
+import "exhibition.api"
+
+type (
+    // 收藏
+    AddLikesReq {
+        LikesId uint `form:"likes_id"`
+    }
+
+    // 获取收藏
+    GetLikesReq {
+        LikesIds string `form:"likes_ids"`
+    }
+
+    GetLikesRes {
+        LikesInfo []ExhibitionInfo `json:"likes_info"`
+    }
+
+)

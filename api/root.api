@@ -7,6 +7,9 @@ import (
 	"exhibition.api"
 	"blog.api"
 	"comment.api"
+	"dashboard.api"
+	"likes.api"
+	"common.api"
 )
 
 // 登录注册
@@ -73,4 +76,24 @@ service blog-api {
 	get /blog/comment/delete (DeleateBlogCommentReq) returns (DeleateBlogCommentRes)
 	@handler thumbsUpComment
 	get /blog/comment/thumbsup (ThumbsUpBlogCommentReq) returns (ThumbsUpBlogCommentRes)
+}
+
+// 收藏
+@server(
+	jwt: Auth
+)
+service blog-api {
+	@handler like
+	post /like (AddLikesReq) returns ()
+	@handler likesInfo
+	get /likes/info (GetLikesReq) returns(GetLikesRes)
+}
+
+// 首页 dashboard
+@server(
+	jwt: Auth
+)
+service blog-api {
+	@handler dashboard
+	get /dashboard () returns (DashboardRes)
 }
