@@ -27,9 +27,10 @@ func NewDashboardLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Dashboa
 func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg response.SuccessMsg) {
 
 	type thumbs struct {
-		ThumbsUp int
-		Likes    int
-		Publish  int
+		ThumbsUp  int
+		Likes     int
+		Publish   int
+		Following int
 	}
 
 	DB := l.svcCtx.DB
@@ -62,15 +63,21 @@ func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg r
 	// 用户统计图
 	err = DB.
 		Table(
-			"(?) as l, (?) as b",
-			DB.Model(&models.Likes{}).
+			"(?) as l, (?) as b, (?) as f",
+			DB.
+				Model(&models.Likes{}).
 				Select("count(*) as likes").
 				Where("user_id = ?", id),
-			DB.Model(&models.Blog{}).
+			DB.
+				Model(&models.Blog{}).
 				Select("sum(thumbs_up) as thumbs_up", "count(*) as publish").
 				Where("user_id = ?", id),
+			DB.
+				Model(&models.Follow{}).
+				Select("count(*) as following").
+				Where("follow_user_id = ?", id),
 		).
-		Select("l.likes", "b.thumbs_up", "b.publish").
+		Select("l.likes", "b.thumbs_up", "b.publish", "f.following").
 		Scan(&thumbsUp).
 		Error
 
@@ -79,17 +86,18 @@ func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg r
 		Model(&models.Exhibition{}).
 		Offset(0).
 		Limit(10).
-		Find(&exhibitionInfo).
 		Where("user_id", id).
+		Find(&exhibitionInfo).
 		Error
 
 	if err == nil {
 		return &types.DashboardRes{
 			UserInfo: types.DashboardUserInfo{
-				User:     userInfo,
-				ThumbsUp: &thumbsUp.ThumbsUp,
-				Like:     &thumbsUp.Likes,
-				Publish:  &thumbsUp.Publish,
+				User:      userInfo,
+				ThumbsUp:  &thumbsUp.ThumbsUp,
+				Like:      &thumbsUp.Likes,
+				Publish:   &thumbsUp.Publish,
+				Following: &thumbsUp.Following,
 			},
 			Dashboard:   dashboard,
 			Exhibitions: exhibitionInfo,

@@ -231,9 +231,10 @@ type Dashboard struct {
 
 type DashboardUserInfo struct {
 	User
-	ThumbsUp *int `json:"thumbs_up" gorm:"default:0"` // 获赞数
-	Like     *int `json:"like" gorm:"default:0"`      // 收藏数
-	Publish  *int `json:"publish" gorm:"default:0"`   // 上传数
+	ThumbsUp  *int `json:"thumbs_up" gorm:"default:0"` // 获赞数
+	Like      *int `json:"like" gorm:"default:0"`      // 收藏数
+	Publish   *int `json:"publish" gorm:"default:0"`   // 上传数
+	Following *int `json:"following"`
 }
 
 type DashboardRes struct {
@@ -260,4 +261,13 @@ type GetLikesReq struct {
 
 type GetLikesRes struct {
 	LikesInfo []ExhibitionInfo `json:"likes_info"`
+}
+
+type AddAndUnFollowReq struct {
+	FollowId   uint `form:"follow_id"`
+	FollowType int  `form:"follow_type"` // 1 添加 0 取消
+}
+
+type FollowInfoRes struct {
+	FollowingUser []User `json:"following_user"`
 }

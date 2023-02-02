@@ -10,6 +10,7 @@ import (
 	"dashboard.api"
 	"likes.api"
 	"common.api"
+	"follow.api"
 )
 
 // 登录注册
@@ -78,7 +79,7 @@ service blog-api {
 	get /blog/comment/thumbsup (ThumbsUpBlogCommentReq) returns (ThumbsUpBlogCommentRes)
 }
 
-// 收藏
+// 收藏 关注
 @server(
 	jwt: Auth
 )
@@ -87,6 +88,11 @@ service blog-api {
 	post /like (AddLikesReq) returns ()
 	@handler likesInfo
 	get /likes/info (GetLikesReq) returns(GetLikesRes)
+	@handler follow
+	get /follow (AddAndUnFollowReq) returns()
+	@handler followInfo
+	get /follow/info () returns(FollowInfoRes)
+	
 }
 
 // 首页 dashboard

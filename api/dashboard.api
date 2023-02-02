@@ -12,10 +12,11 @@ type (
        ThumbsUp  *int `json:"thumbs_up" gorm:"default:0"` // 获赞数
        Like      *int `json:"like" gorm:"default:0"` // 收藏数
        Publish   *int `json:"publish" gorm:"default:0"` // 上传数
+       Following *int `json:"following"`
     }
     DashboardRes {
-        UserInfo  DashboardUserInfo  `json:"user_info"`
-        Dashboard []Dashboard        `json:"dashboard"`
+        UserInfo  DashboardUserInfo       `json:"user_info"`
+        Dashboard []Dashboard             `json:"dashboard"`
         Exhibitions []DashboardExhibition `json:"exhibitions"`
     }
     DashboardExhibition {

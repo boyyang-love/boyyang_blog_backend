@@ -136,6 +136,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/likes/info",
 				Handler: likesInfoHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/follow",
+				Handler: followHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/follow/info",
+				Handler: followInfoHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)
