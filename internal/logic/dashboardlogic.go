@@ -36,6 +36,7 @@ func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg r
 	var userInfo types.User
 	var dashboard []types.Dashboard
 	var thumbsUp thumbs
+	var exhibitionInfo []types.DashboardExhibition
 
 	id, err := l.ctx.Value("Id").(json.Number).Int64()
 	if err != nil {
@@ -52,7 +53,7 @@ func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg r
 	// 统计图
 	err = DB.
 		Model(&models.Exhibition{}).
-		Select("count(*) as value", "DATE_FORMAT(created_at, '%Y年%m月%d日') as name").
+		Select("count(*) as value", "DATE_FORMAT(created_at, '%Y-%m-%d') as name").
 		Group("name").
 		Where("user_id = ?", id).
 		Scan(&dashboard).
@@ -60,7 +61,6 @@ func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg r
 
 	// 用户统计图
 	err = DB.
-		Debug().
 		Table(
 			"(?) as l, (?) as b",
 			DB.Model(&models.Likes{}).
@@ -74,6 +74,15 @@ func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg r
 		Scan(&thumbsUp).
 		Error
 
+	// 图片列表
+	err = DB.
+		Model(&models.Exhibition{}).
+		Offset(0).
+		Limit(10).
+		Find(&exhibitionInfo).
+		Where("user_id", id).
+		Error
+
 	if err == nil {
 		return &types.DashboardRes{
 			UserInfo: types.DashboardUserInfo{
@@ -82,7 +91,8 @@ func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg r
 				Like:     &thumbsUp.Likes,
 				Publish:  &thumbsUp.Publish,
 			},
-			Dashboard: dashboard,
+			Dashboard:   dashboard,
+			Exhibitions: exhibitionInfo,
 		}, nil, response.SuccessMsg{Msg: "获取成功"}
 	} else {
 		return nil, err, msg

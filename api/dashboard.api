@@ -14,8 +14,16 @@ type (
        Publish   *int `json:"publish" gorm:"default:0"` // 上传数
     }
     DashboardRes {
-        UserInfo  DashboardUserInfo `json:"user_info"`
-        Dashboard []Dashboard       `json:"dashboard"`
+        UserInfo  DashboardUserInfo  `json:"user_info"`
+        Dashboard []Dashboard        `json:"dashboard"`
+        Exhibitions []DashboardExhibition `json:"exhibitions"`
+    }
+    DashboardExhibition {
+        Id        uint   `json:"id"`
+        Title     string `json:"title"`
+        Des       string `json:"des"`
+        Cover     string `json:"cover"`
+        UserId    uint   `json:"user_id"`
     }
 )
 
