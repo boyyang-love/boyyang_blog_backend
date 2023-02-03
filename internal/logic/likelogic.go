@@ -28,24 +28,36 @@ func (l *LikeLogic) Like(req *types.AddLikesReq) (err error, msg response.Succes
 
 	DB := l.svcCtx.DB
 
-	userId, err := l.ctx.Value("Id").(json.Number).Int64()
+	id, err := l.ctx.Value("Id").(json.Number).Int64()
 	if err != nil {
 		return err, msg
 	}
 
-	if err = DB.Model(&models.Likes{}).
-		FirstOrCreate(
-			&models.Likes{},
-			&models.Likes{
-				ExhibitionId: req.LikesId,
-				UserId:       uint(userId),
-			}).
-		Where("user_id = ? and exhibition_id = ?", userId, req.LikesId).
-		Error;
-		err == nil {
-		return nil, response.SuccessMsg{Msg: "收藏成功"}
+	if req.LikesType == 1 { // 添加收藏
+		if err = DB.
+			Model(&models.Likes{}).
+			Where(&models.Likes{UserId: uint(id), ExhibitionId: req.LikesId}).
+			Assign(&models.Likes{LikesType: true}).
+			FirstOrCreate(
+				&models.Likes{
+					ExhibitionId: req.LikesId,
+					UserId:       uint(id),
+					LikesType:    true,
+				}).
+			Error; err == nil {
+			return nil, response.SuccessMsg{Msg: "收藏成功"}
+		} else {
+			return err, msg
+		}
 	} else {
-		return err, msg
+		if err = DB.
+			Model(&models.Likes{}).
+			Where(&models.Likes{UserId: uint(id), ExhibitionId: req.LikesId}).
+			Update("likes_type", false).
+			Error; err == nil {
+			return nil, response.SuccessMsg{Msg: "取消收藏成功"}
+		} else {
+			return err, msg
+		}
 	}
-
 }

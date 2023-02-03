@@ -9,6 +9,7 @@ type Follow struct {
 	DeletedAt    *time.Time `json:"deleted_at"`
 	FollowUserId uint       `json:"follow_user_id"`
 	UserId       uint       `json:"user_id"`
+	FollowType   bool       `json:"follow_type"` // true 关注 false 取消关注
 }
 
 func (Follow) TableName() string {

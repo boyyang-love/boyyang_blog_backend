@@ -5,7 +5,8 @@ import "exhibition.api"
 type (
     // 收藏
     AddLikesReq {
-        LikesId uint `form:"likes_id"`
+        LikesId   uint `form:"likes_id"`
+        LikesType int  `form:"likes_type"`
     }
 
     // 获取收藏

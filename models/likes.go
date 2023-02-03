@@ -9,6 +9,7 @@ type Likes struct {
 	DeletedAt    *time.Time `json:"deleted_at"`
 	ExhibitionId uint       `json:"exhibition_id"`
 	UserId       uint       `json:"user_id"`
+	LikesType    bool       `json:"likes_type"` // true 收藏 false 取消收藏
 }
 
 func (Likes) TableName() string {

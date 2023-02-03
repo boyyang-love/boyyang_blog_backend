@@ -252,7 +252,8 @@ type DashboardExhibition struct {
 }
 
 type AddLikesReq struct {
-	LikesId uint `form:"likes_id"`
+	LikesId   uint `form:"likes_id"`
+	LikesType int  `form:"likes_type"`
 }
 
 type GetLikesReq struct {

@@ -54,30 +54,30 @@ func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg r
 	// 统计图
 	err = DB.
 		Model(&models.Exhibition{}).
+		Where("user_id = ?", id).
 		Select("count(*) as value", "DATE_FORMAT(created_at, '%Y-%m-%d') as name").
 		Group("name").
-		Where("user_id = ?", id).
 		Scan(&dashboard).
 		Error
 
 	// 用户统计图
 	err = DB.
 		Table(
-			"(?) as l, (?) as b, (?) as f",
+			"(?) as l, (?) as e, (?) as f",
 			DB.
 				Model(&models.Likes{}).
 				Select("count(*) as likes").
-				Where("user_id = ?", id),
+				Where("user_id = ? and likes_type = ?", id, true),
 			DB.
-				Model(&models.Blog{}).
+				Model(&models.Exhibition{}).
 				Select("sum(thumbs_up) as thumbs_up", "count(*) as publish").
 				Where("user_id = ?", id),
 			DB.
 				Model(&models.Follow{}).
 				Select("count(*) as following").
-				Where("follow_user_id = ?", id),
+				Where("follow_user_id = ? and follow_type = ?", id, true),
 		).
-		Select("l.likes", "b.thumbs_up", "b.publish", "f.following").
+		Select("l.likes", "e.thumbs_up", "e.publish", "f.following").
 		Scan(&thumbsUp).
 		Error
 
@@ -87,6 +87,7 @@ func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg r
 		Offset(0).
 		Limit(10).
 		Where("user_id", id).
+		Order("created_at desc").
 		Find(&exhibitionInfo).
 		Error
 
