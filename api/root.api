@@ -28,6 +28,8 @@ service blog-api {
 service blog-api {
 	@handler upload
 	post /upload (UploadReq) returns (UploadRes)
+	@handler cosUpload
+	get /cos/upload (CosUploadReq) returns (CosUploadRes)
 	@handler createExhibition
 	post /exhibition/create (CreateExhibitionReq) returns (CreateExhibitionRes)
 	@handler exhibitionInfo

@@ -52,6 +52,19 @@ type UploadRes struct {
 	FilePath string `json:"file_path"`
 }
 
+type CosUploadReq struct {
+	FileName string `form:"file_name"`
+}
+
+type CosUploadRes struct {
+	Url           string `json:"url"`
+	Token         string `json:"token"`
+	Authorization string `json:"authorization"`
+	FileId        string `json:"file_id"`
+	CosFileId     string `json:"cos_file_id"`
+	Key           string `json:"key"`
+}
+
 type UserInfoReq struct {
 	Id int `form:"id"`
 }

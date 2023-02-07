@@ -21,7 +21,7 @@ func main() {
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 
-	server := rest.MustNewServer(c.RestConf, rest.WithCustomCors(nil, notAllowedFn, "http://boyyanglove.web3v.vip/"))
+	server := rest.MustNewServer(c.RestConf, rest.WithCustomCors(nil, notAllowedFn, "http://boyyanglove.web3v.vip/", "http://localhost:3000"))
 	defer server.Stop()
 
 	ctx := svc.NewServiceContext(c)
@@ -32,4 +32,5 @@ func main() {
 }
 
 func notAllowedFn(w http.ResponseWriter) {
+
 }

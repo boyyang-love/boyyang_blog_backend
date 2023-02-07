@@ -33,6 +33,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: uploadHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodGet,
+				Path:    "/cos/upload",
+				Handler: cosUploadHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodPost,
 				Path:    "/exhibition/create",
 				Handler: createExhibitionHandler(serverCtx),
