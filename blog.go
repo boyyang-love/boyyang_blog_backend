@@ -21,7 +21,7 @@ func main() {
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 
-	server := rest.MustNewServer(c.RestConf, rest.WithCustomCors(nil, notAllowedFn, "http://localhost:3000", "http://boyyanglove.web3v.vip/"))
+	server := rest.MustNewServer(c.RestConf, rest.WithCustomCors(nil, notAllowedFn, "http://localhost:3000", "http://boyyanglove.web3v.vip", "https://prod-2g5hif5wbec83baa-1301921121.tcloudbaseapp.com"))
 	defer server.Stop()
 
 	ctx := svc.NewServiceContext(c)

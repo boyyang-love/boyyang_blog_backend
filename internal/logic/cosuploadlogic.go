@@ -4,6 +4,7 @@ import (
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"context"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -45,8 +46,12 @@ func getAccessToken() (token string, err error) {
 	}
 
 	var accessToken Token
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	client := &http.Client{Transport: tr}
 
-	res, err := http.Get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx20773192bbf7b3b8&secret=309f0b28ace40739a7f15d4772537774")
+	res, err := client.Get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx20773192bbf7b3b8&secret=309f0b28ace40739a7f15d4772537774")
 	if err != nil {
 		return "", err
 	}
@@ -79,9 +84,12 @@ func getDownloadUrl(token string, uploadPath string) (resp *types.CosUploadRes, 
 	}
 
 	postUrl := fmt.Sprintf("https://api.weixin.qq.com/tcb/uploadfile?access_token=%s", token)
-
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	client := &http.Client{Transport: tr}
 	//  获取下载链接
-	res, err := http.Post(
+	res, err := client.Post(
 		postUrl,
 		"application/json",
 		strings.NewReader(string(queryStr)),
