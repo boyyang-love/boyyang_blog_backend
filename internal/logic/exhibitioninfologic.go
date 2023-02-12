@@ -41,6 +41,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 		if err := DB.
 			Model(&models.Exhibition{}).
 			Preload("UserInfo").
+			Order("created_at desc").
 			Find(&ex, ids).
 			Count(&count).
 			Error; err == nil {
@@ -65,6 +66,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 		if err := DB.
 			Model(&models.Exhibition{}).
 			Preload("UserInfo").
+			Order("created_at desc").
 			Find(&ex).
 			Offset(-1).
 			Count(&count).

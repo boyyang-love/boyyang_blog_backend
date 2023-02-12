@@ -7,7 +7,6 @@ import (
 	"blog_server/models"
 	"context"
 	"encoding/json"
-	"fmt"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -27,7 +26,6 @@ func NewDashboardLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Dashboa
 
 func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg response.SuccessMsg) {
 
-	fmt.Println(resp)
 	type thumbs struct {
 		ThumbsUp  int
 		Likes     int

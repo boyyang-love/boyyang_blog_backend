@@ -97,7 +97,7 @@ type UpdateUserInfoRes struct {
 
 type CreateExhibitionReq struct {
 	Title    string `form:"title"`
-	SubTitle string `form:"sub_title"`
+	SubTitle string `form:"sub_title,optional"`
 	Des      string `form:"des"`
 	Cover    string `form:"cover"`
 }
