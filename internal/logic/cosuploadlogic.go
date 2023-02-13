@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"blog_server/common/response"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"context"
@@ -27,14 +28,24 @@ func NewCosUploadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CosUplo
 	}
 }
 
-func (l *CosUploadLogic) CosUpload(req *types.CosUploadReq) (resp *types.CosUploadRes, err error) {
+func (l *CosUploadLogic) CosUpload(req *types.CosUploadReq) (resp *types.CosUploadRes, err error, msg response.SuccessMsg) {
+	// 获取 cos token
 	token, err := getAccessToken()
+	// 用户不传 路径 默认储存在 images 文件夹下
+	if req.Path == "" {
+		req.Path = "images"
+	}
+
 	if err == nil {
-		resp, err = getDownloadUrl(token, fmt.Sprintf("images/%s", req.FileName))
-		resp.Key = fmt.Sprintf("images/%s", req.FileName)
-		return resp, err
+		// 获取 cos 前台 上传路径 相关信息
+		resp, err = getUploadMsg(
+			token,
+			fmt.Sprintf("%s/%s", req.Path, req.FileName),
+		)
+		resp.Key = fmt.Sprintf("%s/%s", req.Path, req.FileName)
+		return resp, err, msg
 	} else {
-		return nil, err
+		return nil, err, msg
 	}
 }
 
@@ -45,13 +56,34 @@ func getAccessToken() (token string, err error) {
 		ExpiresIn   int    `json:"expires_in"`
 	}
 
+	type AppidAndSecret struct {
+		Appid     string
+		Secret    string
+		GrantType string
+	}
+
 	var accessToken Token
+	appidAndSecret := AppidAndSecret{
+		Appid:     "wx20773192bbf7b3b8",
+		Secret:    "309f0b28ace40739a7f15d4772537774",
+		GrantType: "client_credential",
+	}
+
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 	client := &http.Client{Transport: tr}
 
-	res, err := client.Get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx20773192bbf7b3b8&secret=309f0b28ace40739a7f15d4772537774")
+	res, err := client.Get(
+		fmt.Sprintf(
+			"https://api.weixin.qq.com/cgi-bin/token?grant_type=%s&appid=%s&secret=%s",
+			appidAndSecret.GrantType,
+			appidAndSecret.Appid,
+			appidAndSecret.Secret,
+		),
+	)
+
+	//res, err := client.Get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx20773192bbf7b3b8&secret=309f0b28ace40739a7f15d4772537774")
 	if err != nil {
 		return "", err
 	}
@@ -65,7 +97,7 @@ func getAccessToken() (token string, err error) {
 	return accessToken.AccessToken, nil
 }
 
-func getDownloadUrl(token string, uploadPath string) (resp *types.CosUploadRes, err error) {
+func getUploadMsg(token string, uploadPath string) (resp *types.CosUploadRes, err error) {
 
 	type QueryParams struct {
 		Env   string `json:"env"`
@@ -88,7 +120,7 @@ func getDownloadUrl(token string, uploadPath string) (resp *types.CosUploadRes, 
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 	client := &http.Client{Transport: tr}
-	//  获取下载链接
+	//  获取上传链接 相关信息
 	res, err := client.Post(
 		postUrl,
 		"application/json",
@@ -99,7 +131,6 @@ func getDownloadUrl(token string, uploadPath string) (resp *types.CosUploadRes, 
 		return nil, err
 	}
 	body, err := io.ReadAll(res.Body)
-	fmt.Println(string(body))
 	err = json.Unmarshal(body, &resp)
 	if err != nil {
 		return nil, err

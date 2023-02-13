@@ -17,6 +17,7 @@ type (
 
     CosUploadReq {
         FileName string `form:"file_name"`
+        Path     string `form:"path,optional"`
     }
 
     CosUploadRes {

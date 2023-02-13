@@ -54,6 +54,7 @@ type UploadRes struct {
 
 type CosUploadReq struct {
 	FileName string `form:"file_name"`
+	Path     string `form:"path,optional"`
 }
 
 type CosUploadRes struct {

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"blog_server/common/response"
 	"net/http"
 
 	"blog_server/internal/logic"
@@ -18,11 +19,13 @@ func cosUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewCosUploadLogic(r.Context(), svcCtx)
-		resp, err := l.CosUpload(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
-		}
+		resp, err, msg := l.CosUpload(&req)
+
+		response.Response(w, resp, err, msg)
+		//if err != nil {
+		//	httpx.ErrorCtx(r.Context(), w, err)
+		//} else {
+		//	httpx.OkJsonCtx(r.Context(), w, resp)
+		//}
 	}
 }

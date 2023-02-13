@@ -3,6 +3,7 @@ package svc
 import (
 	"blog_server/common/helper"
 	"blog_server/internal/config"
+	"blog_server/models"
 	"fmt"
 	"github.com/tencentyun/cos-go-sdk-v5"
 	"gorm.io/gorm"
@@ -33,7 +34,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		//db.AutoMigrate(&models.User{})
 		//db.AutoMigrate(&models.Upload{})
 		//db.AutoMigrate(&models.Exhibition{})
-		//db.AutoMigrate(&models.Blog{})
+		db.AutoMigrate(&models.Blog{})
 		//db.AutoMigrate(&models.Comment{})
 		//db.AutoMigrate(&models.Likes{})
 		//db.AutoMigrate(&models.Follow{})

@@ -9,7 +9,7 @@ type Blog struct {
 	DeletedAt *time.Time `json:"deleted_at"`
 	Title     string     `json:"title"`
 	SubTitle  string     `json:"sub_title"`
-	Content   string     `json:"des" gorm:"size:2000"`
+	Content   string     `json:"des" gorm:"size:5000"`
 	Cover     string     `json:"cover,omitempty"`
 	UserId    uint       `json:"user_id"`
 	UserInfo  User       `json:"user_info" gorm:"foreignKey:UserId"`
