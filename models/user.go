@@ -15,7 +15,11 @@ type User struct {
 	Address   string     `form:"address" json:"address"`
 	Tel       *int       `form:"tel" json:"tel"`
 	Email     *string    `form:"email" json:"email" gorm:"default:xxxxxx@qq.com"`
-	AvatarUrl string     `form:"avatar_url" json:"avatar_url"`
+	Qq        *int       `form:"qq" json:"qq" gorm:"default:123450000"`
+	Wechat    *string    `form:"wechat" json:"wechat"`
+	GitHub    *string    `form:"gitHub" json:"gitHub"`
+	AvatarUrl string     `form:"avatar_url" json:"avatar_url" default:"images/00008-preview.jpg"`
+	Motto     *string    `form:"motto" json:"motto" default:"第一行没有你，第二行没有你，第三行没有也罢！"`
 }
 
 func (User) TableName() string {

@@ -6,6 +6,7 @@ import (
 	"blog_server/internal/types"
 	"blog_server/models"
 	"context"
+	"encoding/json"
 	"github.com/jinzhu/copier"
 	"strconv"
 	"strings"
@@ -32,6 +33,8 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 	var count int64
 	var blogInfo []models.Blog
 
+	userId, _ := l.ctx.Value("Id").(json.Number).Int64()
+
 	ids := strings.Split(req.Ids, ",")
 
 	if len(ids) > 0 && req.Ids != "" {
@@ -40,6 +43,7 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 			Preload("UserInfo").
 			Preload("Comments").
 			Preload("Comments.UserInfo").
+			Where("user_id", userId).
 			Find(&blogInfo, ids).
 			Count(&count)
 		err = res.Error
@@ -58,6 +62,7 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 			Preload("UserInfo").
 			Preload("Comments").
 			Preload("Comments.UserInfo").
+			Where("user_id", userId).
 			Find(&blogInfo).
 			Offset(-1).
 			Count(&count)

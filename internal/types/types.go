@@ -238,23 +238,24 @@ type ThumbsUpBlogCommentRes struct {
 	Msg string `json:"msg"`
 }
 
+type DashboardRes struct {
+	UserInfo    DashboardUserInfo     `json:"user_info"` // 用户信息
+	Dashboard   []Dashboard           `json:"dashboard"`
+	Exhibitions []DashboardExhibition `json:"exhibitions"`
+}
+
 type Dashboard struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
+	Name                    string `json:"name"`
+	BlogPublishValue        string `json:"blog_publish_value"`
+	ExhibitionsPublishValue string `json:"exhibitions_publish_value"`
 }
 
 type DashboardUserInfo struct {
-	User
 	ThumbsUp  *int `json:"thumbs_up" gorm:"default:0"` // 获赞数
 	Like      *int `json:"like" gorm:"default:0"`      // 收藏数
 	Publish   *int `json:"publish" gorm:"default:0"`   // 上传数
 	Following *int `json:"following"`
-}
-
-type DashboardRes struct {
-	UserInfo    DashboardUserInfo     `json:"user_info"`
-	Dashboard   []Dashboard           `json:"dashboard"`
-	Exhibitions []DashboardExhibition `json:"exhibitions"`
+	DashboardUser
 }
 
 type DashboardExhibition struct {
@@ -263,6 +264,18 @@ type DashboardExhibition struct {
 	Des    string `json:"des"`
 	Cover  string `json:"cover"`
 	UserId uint   `json:"user_id"`
+}
+
+type DashboardUser struct {
+	Username  string  `json:"username"`
+	Gender    int     `json:"gender"`
+	Age       int     `json:"age"`
+	Email     *string `json:"email"`
+	Qq        *int    `json:"qq"`
+	Wechat    *string `json:"wechat"`
+	GitHub    *string `json:"gitHub"`
+	AvatarUrl string  `json:"avatar_url"`
+	Motto     *string `json:"motto"`
 }
 
 type AddLikesReq struct {

@@ -3,21 +3,24 @@ syntax = "v1"
 import "common.api"
 
 type (
-    Dashboard {
-        Name  string `json:"name"`
-        Value string `json:"value"`
-    }
-    DashboardUserInfo {
-       User
-       ThumbsUp  *int `json:"thumbs_up" gorm:"default:0"` // 获赞数
-       Like      *int `json:"like" gorm:"default:0"` // 收藏数
-       Publish   *int `json:"publish" gorm:"default:0"` // 上传数
-       Following *int `json:"following"`
-    }
     DashboardRes {
-        UserInfo  DashboardUserInfo       `json:"user_info"`
-        Dashboard []Dashboard             `json:"dashboard"`
-        Exhibitions []DashboardExhibition `json:"exhibitions"`
+        UserInfo    DashboardUserInfo       `json:"user_info"` // 用户信息
+        Dashboard   []Dashboard             `json:"dashboard"`
+        Exhibitions []DashboardExhibition   `json:"exhibitions"`
+    }
+
+    Dashboard {
+        Name                    string `json:"name"`
+        BlogPublishValue        string `json:"blog_publish_value"`
+        ExhibitionsPublishValue string `json:"exhibitions_publish_value"`
+    }
+
+    DashboardUserInfo {
+       ThumbsUp  *int          `json:"thumbs_up" gorm:"default:0"` // 获赞数
+       Like      *int          `json:"like" gorm:"default:0"` // 收藏数
+       Publish   *int          `json:"publish" gorm:"default:0"` // 上传数
+       Following *int          `json:"following"`
+       DashboardUser
     }
     DashboardExhibition {
         Id        uint   `json:"id"`
@@ -25,6 +28,17 @@ type (
         Des       string `json:"des"`
         Cover     string `json:"cover"`
         UserId    uint   `json:"user_id"`
+    }
+    DashboardUser {
+        Username  string     `json:"username"`
+        Gender    int        `json:"gender"`
+        Age       int        `json:"age"`
+        Email     *string    `json:"email"`
+        Qq        *int       `json:"qq"`
+        Wechat    *string    `json:"wechat"`
+        GitHub    *string    `json:"gitHub"`
+        AvatarUrl string     `json:"avatar_url"`
+        Motto     *string    `json:"motto"`
     }
 )
 
