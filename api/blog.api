@@ -54,6 +54,7 @@ type (
       Cover     string     `json:"cover"`
       ThumbsUp  *int       `json:"thumbs_up"`
       UserInfo  User       `json:"user_info"`
+      Collection *int      `json:"collection"`
       Comments  []Comment  `json:"comments,omitempty"`
    }
 

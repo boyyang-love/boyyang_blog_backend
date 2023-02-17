@@ -195,14 +195,15 @@ type BlogInfoRes struct {
 }
 
 type BlogInfo struct {
-	Id       int       `json:"id"`
-	Title    string    `json:"title"`
-	SubTitle string    `json:"sub_title"`
-	Content  string    `json:"content"`
-	Cover    string    `json:"cover"`
-	ThumbsUp *int      `json:"thumbs_up"`
-	UserInfo User      `json:"user_info"`
-	Comments []Comment `json:"comments,omitempty"`
+	Id         int       `json:"id"`
+	Title      string    `json:"title"`
+	SubTitle   string    `json:"sub_title"`
+	Content    string    `json:"content"`
+	Cover      string    `json:"cover"`
+	ThumbsUp   *int      `json:"thumbs_up"`
+	UserInfo   User      `json:"user_info"`
+	Collection *int      `json:"collection"`
+	Comments   []Comment `json:"comments,omitempty"`
 }
 
 type ThumbsUpBlogReq struct {

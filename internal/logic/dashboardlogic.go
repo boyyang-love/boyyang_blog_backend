@@ -28,82 +28,39 @@ func NewDashboardLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Dashboa
 
 func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg response.SuccessMsg) {
 
-	type thumbs struct {
-		ThumbsUp  int
-		Likes     int
-		Publish   int
-		Following int
-	}
-
 	DB := l.svcCtx.DB
-	var userInfo types.DashboardUser
-	var dashboard []types.Dashboard
-	var thumbsUp thumbs
-	var exhibitionInfo []types.DashboardExhibition
-
 	id, err := l.ctx.Value("Id").(json.Number).Int64()
 	if err != nil {
 		return nil, err, msg
 	}
 
-	// userinfo
-	err = DB.
-		Model(models.User{}).
-		Where("id = ?", id).
-		Scan(&userInfo).
-		Error
-
+	// 用户信息
+	userInfo, err := getDashboardUserInfo(DB, uint(id))
 	// dashboard
-	dashboard, err = getDashboardData(DB, uint(id))
-
-	// 用户统计图
-	err = DB.
-		Table(
-			"(?) as l, (?) as b, (?) as f",
-			DB.
-				Model(&models.Likes{}).
-				Select("count(*) as likes").
-				Where("user_id = ? and likes_type = ?", id, true),
-			DB.
-				Model(&models.Blog{}).
-				Select("sum(thumbs_up) as thumbs_up", "count(*) as publish").
-				Where("user_id = ?", id),
-			DB.
-				Model(&models.Follow{}).
-				Select("count(*) as following").
-				Where("follow_user_id = ? and follow_type = ?", id, true),
-		).
-		Select("l.likes", "b.thumbs_up", "b.publish", "f.following").
-		Scan(&thumbsUp).
-		Error
-
-	// 图片列表
-	err = DB.
-		Model(&models.Exhibition{}).
-		Offset(0).
-		Limit(10).
-		Where("user_id", id).
-		Order("created_at desc").
-		Find(&exhibitionInfo).
-		Error
+	dashboard, err := getDashboardData(DB, uint(id))
+	// cardData
+	cardData, err := getDashboardCard(DB, uint(id))
+	// exhibition
+	exhibition, err := getDashboardExhibition(DB, uint(id))
 
 	if err == nil {
 		return &types.DashboardRes{
 			UserInfo: types.DashboardUserInfo{
-				ThumbsUp:      &thumbsUp.ThumbsUp,
-				Like:          &thumbsUp.Likes,
-				Publish:       &thumbsUp.Publish,
-				Following:     &thumbsUp.Following,
+				ThumbsUp:      &cardData.ThumbsUp,
+				Like:          &cardData.Likes,
+				Publish:       &cardData.Publish,
+				Following:     &cardData.Following,
 				DashboardUser: userInfo,
 			},
 			Dashboard:   dashboard,
-			Exhibitions: exhibitionInfo,
+			Exhibitions: exhibition,
 		}, nil, response.SuccessMsg{Msg: "获取成功"}
 	} else {
 		return nil, err, msg
 	}
 }
 
+// 仪表盘数据
 func getDashboardData(DB *gorm.DB, id uint) (dashboard []types.Dashboard, err error) {
 	var blogDashboard []types.Dashboard
 	var publishDashboard []types.Dashboard
@@ -152,4 +109,64 @@ func getDashboardData(DB *gorm.DB, id uint) (dashboard []types.Dashboard, err er
 	})
 
 	return dashboard, nil
+}
+
+// 用户信息
+func getDashboardUserInfo(DB *gorm.DB, id uint) (userInfo types.DashboardUser, err error) {
+	// userinfo
+	err = DB.
+		Model(models.User{}).
+		Where("id = ?", id).
+		Scan(&userInfo).
+		Error
+
+	return userInfo, err
+}
+
+type CardData struct {
+	ThumbsUp  int
+	Likes     int
+	Publish   int
+	Following int
+}
+
+// 用户卡片数据
+func getDashboardCard(DB *gorm.DB, id uint) (cardData CardData, err error) {
+	// 用户统计图
+	err = DB.
+		Table(
+			"(?) as l, (?) as b, (?) as f",
+			DB.
+				Model(&models.Likes{}).
+				Select("count(*) as likes").
+				Where("user_id = ? and likes_type = ?", id, true),
+			DB.
+				Model(&models.Blog{}).
+				Select("sum(thumbs_up) as thumbs_up", "count(*) as publish").
+				Where("user_id = ?", id),
+			DB.
+				Model(&models.Follow{}).
+				Select("count(*) as following").
+				Where("follow_user_id = ? and follow_type = ?", id, true),
+		).
+		Select("l.likes", "b.thumbs_up", "b.publish", "f.following").
+		Scan(&cardData).
+		Error
+
+	return cardData, err
+}
+
+// 图片墙数据
+func getDashboardExhibition(DB *gorm.DB, id uint) (exhibition []types.DashboardExhibition, err error) {
+	// 图片列表
+	err = DB.
+		Model(&models.Exhibition{}).
+		Offset(0).
+		Limit(10).
+		Where("user_id", id).
+		Order("created_at desc").
+		Find(&exhibition).
+		Error
+
+	return exhibition, err
 }
