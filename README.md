@@ -46,6 +46,7 @@ CloudBase:
 5. 用户关注
 ### 接口在线文档
 [接口文档地址](https://console-docs.apipost.cn/preview/03ccd55c68247833/3eb25d53d437d3ea)
-### 前端代码
-[gitHub](https://github.com/boyyang-love/boyyang_blog)
-[在线预览地址](https://prod-2g5hif5wbec83baa-1301921121.tcloudbaseapp.com)
+### 前后端代码
+1. [后端gitHub仓库地址](https://github.com/boyyang-love/boyyang_blog_backend)
+2. [前端gitHub仓库地址](https://github.com/boyyang-love/boyyang_blog)
+3. [前端页面在线预览地址](https://prod-2g5hif5wbec83baa-1301921121.tcloudbaseapp.com)
