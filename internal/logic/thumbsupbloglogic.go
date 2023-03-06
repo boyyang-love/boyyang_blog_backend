@@ -4,8 +4,9 @@ import (
 	"blog_server/common/response"
 	"blog_server/models"
 	"context"
-	"errors"
+	"encoding/json"
 	"gorm.io/gorm"
+	"strings"
 
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
@@ -28,17 +29,36 @@ func NewThumbsUpBlogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Thum
 }
 
 func (l *ThumbsUpBlogLogic) ThumbsUpBlog(req *types.ThumbsUpBlogReq) (resp *types.ThumbsUpBlogRes, err error, msg response.SuccessMsg) {
-	res := l.svcCtx.DB.
+	id, err := l.ctx.Value("Id").(json.Number).Int64()
+	var blogInfo models.Blog
+	DB := l.svcCtx.DB
+
+	DB = DB.
 		Model(&models.Blog{}).
 		Where("id = ?", req.Id).
-		Update("thumbs_up", gorm.Expr("thumbs_up + ?", 1))
-	if res.Error == nil && res.RowsAffected != 0 {
-		return nil, nil, response.SuccessMsg{Msg: "点赞成功"}
-	} else {
-		if res.Error != nil {
-			return nil, res.Error, msg
-		} else {
-			return nil, errors.New("不存在该博客"), msg
+		Find(&blogInfo)
+
+	if DB.Error == nil {
+		thumbsIds := strings.Split(blogInfo.ThumbsUpList, ",")
+		isThumbed := false
+		for _, thumbsId := range thumbsIds {
+			if thumbsId == string(id) {
+				isThumbed = true
+				break
+			}
 		}
+
+		if isThumbed {
+			return nil, nil, response.SuccessMsg{Msg: "您已经点赞过啦"}
+		} else {
+			thumbsIds = append(thumbsIds, "1")
+			DB.Update("thumbs_up", gorm.Expr("thumbs_up + ?", 1))
+			blogInfo.ThumbsUpList = strings.Join(thumbsIds, ",")
+			DB.Save(&blogInfo)
+			return nil, nil, response.SuccessMsg{Msg: "点赞成功"}
+		}
+	} else {
+		return nil, err, msg
 	}
+
 }
