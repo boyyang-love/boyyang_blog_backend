@@ -66,12 +66,12 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodGet,
 				Path:    "/users/info",
-				Handler: userInfoHandler(serverCtx),
+				Handler: userinfoHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/users/update",
-				Handler: updateUserInfoHandler(serverCtx),
+				Handler: updateUserinfoHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
@@ -97,12 +97,12 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodGet,
 				Path:    "/blog/info",
-				Handler: blogInfoHandler(serverCtx),
+				Handler: bloginfoHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/blog/thumbsup",
-				Handler: thumbsUpBlogHandler(serverCtx),
+				Handler: thumbsupBlogHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
@@ -123,7 +123,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodGet,
 				Path:    "/blog/comment/thumbsup",
-				Handler: thumbsUpCommentHandler(serverCtx),
+				Handler: thumbsupCommentHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

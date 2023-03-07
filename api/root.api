@@ -45,9 +45,9 @@ service blog-api {
 	jwt: Auth
 )
 service blog-api {
-	@handler userInfo
+	@handler userinfo
 	get /users/info (UserInfoReq) returns (UserInfoRes)
-	@handler updateUserInfo
+	@handler updateUserinfo
 	post /users/update (UpdateUserInfoReq) returns (UpdateUserInfoRes)
 }
 
@@ -62,9 +62,9 @@ service blog-api {
 	post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
 	@handler deleteBlog
 	get /blog/delete (DeleteBlogReq) returns (DeleteBlogRes)
-	@handler blogInfo
+	@handler bloginfo
 	get /blog/info (BlogInfoReq) returns (BlogInfoRes)
-	@handler thumbsUpBlog
+	@handler thumbsupBlog
 	get /blog/thumbsup (ThumbsUpBlogReq) returns (ThumbsUpBlogRes)
 }
 
@@ -77,7 +77,7 @@ service blog-api {
 	post /blog/comment/create (CreateBlogCommentReq) returns (CreateBlogCommentRes)
 	@handler deleteComment
 	get /blog/comment/delete (DeleateBlogCommentReq) returns (DeleateBlogCommentRes)
-	@handler thumbsUpComment
+	@handler thumbsupComment
 	get /blog/comment/thumbsup (ThumbsUpBlogCommentReq) returns (ThumbsUpBlogCommentRes)
 }
 

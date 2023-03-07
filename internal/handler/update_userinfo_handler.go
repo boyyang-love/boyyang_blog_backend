@@ -10,16 +10,16 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func thumbsUpCommentHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func updateUserinfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.ThumbsUpBlogCommentReq
+		var req types.UpdateUserInfoReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := logic.NewThumbsUpCommentLogic(r.Context(), svcCtx)
-		resp, err, msg := l.ThumbsUpComment(&req)
+		l := logic.NewUpdateUserInfoLogic(r.Context(), svcCtx)
+		resp, err, msg := l.UpdateUserInfo(&req)
 		response.Response(w, resp, err, msg)
 
 		//if err != nil {

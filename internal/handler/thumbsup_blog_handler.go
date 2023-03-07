@@ -10,16 +10,16 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func blogInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func thumbsupBlogHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.BlogInfoReq
+		var req types.ThumbsUpBlogReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := logic.NewBlogInfoLogic(r.Context(), svcCtx)
-		resp, err, msg := l.BlogInfo(&req)
+		l := logic.NewThumbsUpBlogLogic(r.Context(), svcCtx)
+		resp, err, msg := l.ThumbsUpBlog(&req)
 		response.Response(w, resp, err, msg)
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)
