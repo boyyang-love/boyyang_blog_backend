@@ -5,11 +5,10 @@ import "exhibition.api"
 type (
     // 收藏
     AddLikesReq {
-        LikesId   uint `form:"likes_id"`
-        LikesType int  `form:"likes_type"`
+        LikesId uint `form:"likes_id"`
+        LikesType int `form:"likes_type"`
     }
-
-    // 获取收藏
+        // 获取收藏
     GetLikesReq {
         LikesIds string `form:"likes_ids"`
     }
@@ -17,5 +16,4 @@ type (
     GetLikesRes {
         LikesInfo []ExhibitionInfo `json:"likes_info"`
     }
-
 )

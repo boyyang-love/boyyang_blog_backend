@@ -2,11 +2,11 @@ syntax = "v1"
 
 type (
     AddAndUnFollowReq {
-        FollowId   uint  `form:"follow_id"`
-        FollowType int   `form:"follow_type"` // 1 添加 0 取消
+        FollowId uint `form:"follow_id"`
+        FollowType int `form:"follow_type"` // 1 添加 0 取消
     }
 
     FollowInfoRes {
-      FollowingUser []User `json:"following_user"`
+        FollowingUser []User `json:"following_user"`
     }
 )

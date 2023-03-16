@@ -3,10 +3,10 @@ syntax = "v1"
 // 文件上传
 type (
     UploadReq {
-        Hash     string `json:"hash,optional"`
+        Hash string `json:"hash,optional"`
         FileName string `json:"file_name,optional"`
-        Ext      string `json:"ext,optional"`
-        Size     int64  `json:"size,optional"`
+        Ext string `json:"ext,optional"`
+        Size int64 `json:"size,optional"`
         FilePath string `json:"file_path,optional"`
     }
 
@@ -17,15 +17,15 @@ type (
 
     CosUploadReq {
         FileName string `form:"file_name"`
-        Path     string `form:"path,optional"`
+        Path string `form:"path,optional"`
     }
 
     CosUploadRes {
-        Url           string `json:"url"`
-        Token         string `json:"token"`
+        Url string `json:"url"`
+        Token string `json:"token"`
         Authorization string `json:"authorization"`
-        FileId        string `json:"file_id"`
-        CosFileId     string `json:"cos_file_id"`
-        Key           string `json:"key"`
+        FileId string `json:"file_id"`
+        CosFileId string `json:"cos_file_id"`
+        Key string `json:"key"`
     }
 )

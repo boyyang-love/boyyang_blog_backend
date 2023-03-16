@@ -3,67 +3,66 @@ syntax = "v1"
 import "common.api"
 
 type (
-   CreateBlogReq {
-      Title     string     `form:"title"`
-      SubTitle  string     `form:"sub_title"`
-      Content   string     `form:"content"`
-      Cover     string     `form:"cover"`
-      UserId    int        `form:"user_id,optional"`
-   }
+	CreateBlogReq {
+		Title    string `form:"title"`
+		SubTitle string `form:"sub_title"`
+		Content  string `form:"content"`
+		Cover    string `form:"cover"`
+		UserId   int    `form:"user_id,optional"`
+	}
 
-   CreateBlogRes {
-      Id  int `json:"id"`
-   }
+	CreateBlogRes {
+		Id int `json:"id"`
+	}
 
-   UpdateBlogReq {
-      Id        int        `form:"id"`
-      Title     string     `form:"title"`
-      SubTitle  string     `form:"sub_title"`
-      Content   string     `form:"content"`
-      Cover     string     `form:"cover"`
-   }
-   
-   UpdateBlogRes {
-      Msg string `json:"msg"`
-   }
+	UpdateBlogReq {
+		Id       int    `form:"id"`
+		Title    string `form:"title"`
+		SubTitle string `form:"sub_title"`
+		Content  string `form:"content"`
+		Cover    string `form:"cover"`
+	}
 
-   DeleteBlogReq {
-     Id int `form:"id"`
-   }
+	UpdateBlogRes {
+		Msg string `json:"msg"`
+	}
 
-   DeleteBlogRes {
-     Msg string `json:"msg"`
-   }
+	DeleteBlogReq {
+		Id int `form:"id"`
+	}
 
-   BlogInfoReq {
-     Ids   string `form:"ids,optional"`
-     Page  string `form:"page,optional"`
-     Limit string `form:"limit,optional"`
-   }
+	DeleteBlogRes {
+		Msg string `json:"msg"`
+	}
 
-   BlogInfoRes {
-      Count    int `json:"count"`
-      BlogInfo []BlogInfo `json:"blog_info"`
-   }
+	BlogInfoReq {
+		Ids   string `form:"ids,optional"`
+		Page  string `form:"page,optional"`
+		Limit string `form:"limit,optional"`
+	}
 
-   BlogInfo {
-      Id        int        `json:"id"`
-      Title     string     `json:"title"`
-      SubTitle  string     `json:"sub_title"`
-      Content   string     `json:"content"`
-      Cover     string     `json:"cover"`
-      ThumbsUp  *int       `json:"thumbs_up"`
-      UserInfo  User       `json:"user_info"`
-      Collection *int      `json:"collection"`
-      Comments  []Comment  `json:"comments,omitempty"`
-   }
+	BlogInfoRes {
+		Count    int        `json:"count"`
+		BlogInfo []BlogInfo `json:"blog_info"`
+	}
 
-   ThumbsUpBlogReq {
-      Id int  `form:"id"`
-   }
+	BlogInfo {
+		Id         int       `json:"id"`
+		Title      string    `json:"title"`
+		SubTitle   string    `json:"sub_title"`
+		Content    string    `json:"content"`
+		Cover      string    `json:"cover"`
+		ThumbsUp   *int      `json:"thumbs_up"`
+		UserInfo   User      `json:"user_info"`
+		Collection *int      `json:"collection"`
+		Comments   []Comment `json:"comments,omitempty"`
+	}
 
-   ThumbsUpBlogRes {
-      Msg string `json:"msg"`
-   }
+	ThumbsUpBlogReq {
+		Id int `form:"id"`
+	}
 
+	ThumbsUpBlogRes {
+		Msg string `json:"msg"`
+	}
 )

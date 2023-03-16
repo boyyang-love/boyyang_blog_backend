@@ -14,6 +14,6 @@ Mysql:
   Charset: utf8
   Timeout: 10s
 CloudBase:
-  ClientUrl:  对象存储连接
+  ClientUrl: 对象存储连接
   ClientSecretId: 对象存储SecretId
   ClientSecretKey: 对象存储key
