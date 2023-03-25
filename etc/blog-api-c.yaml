@@ -17,3 +17,6 @@ CloudBase:
   ClientUrl: 对象存储连接
   ClientSecretId: 对象存储SecretId
   ClientSecretKey: 对象存储key
+AppidAndSecret:
+  AppId: $appid // 微信小程序appid
+  Secret: $secret // 密钥

@@ -22,4 +22,8 @@ type Config struct {
 		ClientSecretId  string
 		ClientSecretKey string
 	}
+	AppidAndSecret struct {
+		AppId  string
+		Secret string
+	}
 }

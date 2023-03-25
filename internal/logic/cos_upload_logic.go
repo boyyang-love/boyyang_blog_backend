@@ -2,6 +2,7 @@ package logic
 
 import (
 	"blog_server/common/response"
+	"blog_server/internal/config"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"context"
@@ -30,7 +31,7 @@ func NewCosUploadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CosUplo
 
 func (l *CosUploadLogic) CosUpload(req *types.CosUploadReq) (resp *types.CosUploadRes, err error, msg response.SuccessMsg) {
 	// 获取 cos token
-	token, err := getAccessToken()
+	token, err := getAccessToken(l.svcCtx.Config)
 	// 用户不传 路径 默认储存在 images 文件夹下
 	if req.Path == "" {
 		req.Path = "images"
@@ -49,7 +50,7 @@ func (l *CosUploadLogic) CosUpload(req *types.CosUploadReq) (resp *types.CosUplo
 	}
 }
 
-func getAccessToken() (token string, err error) {
+func getAccessToken(config config.Config) (token string, err error) {
 
 	type Token struct {
 		AccessToken string `json:"access_token"`
@@ -64,8 +65,8 @@ func getAccessToken() (token string, err error) {
 
 	var accessToken Token
 	appidAndSecret := AppidAndSecret{
-		Appid:     "wx20773192bbf7b3b8",
-		Secret:    "309f0b28ace40739a7f15d4772537774",
+		Appid:     config.AppidAndSecret.AppId,
+		Secret:    config.AppidAndSecret.Secret,
 		GrantType: "client_credential",
 	}
 
@@ -83,7 +84,6 @@ func getAccessToken() (token string, err error) {
 		),
 	)
 
-	//res, err := client.Get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx20773192bbf7b3b8&secret=309f0b28ace40739a7f15d4772537774")
 	if err != nil {
 		return "", err
 	}
