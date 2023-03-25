@@ -4,6 +4,7 @@ import (
 	"blog_server/common/response"
 	"blog_server/models"
 	"context"
+	"fmt"
 	"github.com/jinzhu/copier"
 	"strconv"
 	"strings"
@@ -72,6 +73,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			Count(&count).
 			Error; err == nil {
 			err = copier.Copy(&exInfo, &ex)
+			fmt.Println(ex)
 			return &types.ExhibitionInfoRes{
 					Exhibitions: exInfo,
 					Count:       int(count),

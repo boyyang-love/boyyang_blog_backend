@@ -7,6 +7,8 @@ type Upload struct {
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 	DeletedAt *time.Time `sql:"index" json:"deleted_at"`
+	Created   int        `json:"created" gorm:"autoCreateTime"`
+	Updated   int        `json:"updated" gorm:"autoUpdateTime"`
 	Hash      string     `json:"hash"`
 	FileName  string     `json:"file_name"`
 	FilePath  string     `json:"file_path"`

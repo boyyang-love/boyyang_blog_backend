@@ -7,6 +7,8 @@ type Exhibition struct {
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at"`
+	Created   int        `json:"created" gorm:"autoCreateTime"`
+	Updated   int        `json:"updated" gorm:"autoUpdateTime"`
 	Title     string     `json:"title"`
 	SubTitle  string     `json:"sub_title"`
 	Des       string     `json:"des"`

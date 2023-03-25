@@ -120,6 +120,7 @@ type ExhibitionInfoRes struct {
 
 type ExhibitionInfo struct {
 	Id        uint   `json:"id"`
+	Created   int    `json:"created_at"`
 	Title     string `json:"title"`
 	SubTitle  string `json:"sub_title"`
 	Des       string `json:"des"`
