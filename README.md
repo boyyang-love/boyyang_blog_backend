@@ -23,9 +23,12 @@ Mysql:
   Charset: utf8
   Timeout: 10s
 CloudBase:
-  ClientUrl:  对象存储连接
+  ClientUrl: 对象存储连接
   ClientSecretId: 对象存储SecretId
   ClientSecretKey: 对象存储key
+AppidAndSecret:
+  AppId: $appid // 微信小程序appid
+  Secret: $secret // 密钥
 ```
 ### gorm 
 1. orm框架使用的是gorm

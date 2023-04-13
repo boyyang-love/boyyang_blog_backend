@@ -1,13 +1,14 @@
 package main
 
 import (
-	"flag"
-	"fmt"
-	"net/http"
-
+	"blog_server/common/origin"
 	"blog_server/internal/config"
 	"blog_server/internal/handler"
 	"blog_server/internal/svc"
+	"flag"
+	"fmt"
+	"net/http"
+	"strings"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
@@ -21,7 +22,7 @@ func main() {
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 
-	server := rest.MustNewServer(c.RestConf, rest.WithCustomCors(nil, notAllowedFn, "http://localhost:3000", "http://boyyanglove.web3v.vip", "https://prod-2g5hif5wbec83baa-1301921121.tcloudbaseapp.com"))
+	server := rest.MustNewServer(c.RestConf, rest.WithCustomCors(nil, notAllowedFn, strings.Join(origin.GetOrigin(), ",")))
 	defer server.Stop()
 
 	ctx := svc.NewServiceContext(c)
