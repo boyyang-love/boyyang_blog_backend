@@ -1,106 +1,11 @@
 syntax = "v1"
 
 import (
-	"login.api"
-	"upload.api"
-	"user.api"
-	"exhibition.api"
 	"blog.api"
 	"comment.api"
 	"dashboard.api"
 	"likes.api"
-	"common.api"
-	"follow.api"
+	"login.api"
+	"upload.api"
+	"user.api"
 )
-
-// 登录注册
-service blog-api {
-	@handler login
-	post /login (LoginReq) returns (LoginRes)
-	@handler register
-	post /register (RegisterReq) returns (RegisterRes)
-}
-
-// 文件上传 图片墙上传 图片墙信息
-@server(
-	jwt: Auth
-)
-service blog-api {
-	@handler upload
-	post /upload (UploadReq) returns (UploadRes)
-	@handler cosUpload
-	get /cos/upload (CosUploadReq) returns (CosUploadRes)
-	@handler createExhibition
-	post /exhibition/create (CreateExhibitionReq) returns (CreateExhibitionRes)
-	@handler exhibitionInfo
-	get /exhibition/info (ExhibitionInfoReq) returns (ExhibitionInfoRes)
-	@handler updateExhibition
-	post /exhibition/update (updateExhibitionReq) returns (updateExhibitionRes)
-	@handler approvalExhibition
-	post /exhibition/approval (approvalReq) returns (approvalRes)
-}
-
-// 用户
-@server(
-	jwt: Auth
-)
-service blog-api {
-	@handler userinfo
-	get /users/info (UserInfoReq) returns (UserInfoRes)
-	@handler updateUserinfo
-	post /users/update (UpdateUserInfoReq) returns (UpdateUserInfoRes)
-}
-
-// 博客
-@server(
-	jwt: Auth
-)
-service blog-api {
-	@handler createBlog
-	post /blog/create (CreateBlogReq) returns (CreateBlogRes)
-	@handler updateBlog
-	post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
-	@handler deleteBlog
-	get /blog/delete (DeleteBlogReq) returns (DeleteBlogRes)
-	@handler bloginfo
-	get /blog/info (BlogInfoReq) returns (BlogInfoRes)
-	@handler thumbsupBlog
-	get /blog/thumbsup (ThumbsUpBlogReq) returns (ThumbsUpBlogRes)
-}
-
-// 博客评论 点赞
-@server(
-	jwt: Auth
-)
-service blog-api {
-	@handler createComment
-	post /blog/comment/create (CreateBlogCommentReq) returns (CreateBlogCommentRes)
-	@handler deleteComment
-	get /blog/comment/delete (DeleateBlogCommentReq) returns (DeleateBlogCommentRes)
-	@handler thumbsupComment
-	get /blog/comment/thumbsup (ThumbsUpBlogCommentReq) returns (ThumbsUpBlogCommentRes)
-}
-
-// 收藏 关注
-@server(
-	jwt: Auth
-)
-service blog-api {
-	@handler like
-	post /like (AddLikesReq) returns ()
-	@handler likesInfo
-	get /likes/info (GetLikesReq) returns (GetLikesRes)
-	@handler follow
-	get /follow (AddAndUnFollowReq) returns ()
-	@handler followInfo
-	get /follow/info () returns (FollowInfoRes)
-}
-
-// 首页 dashboard
-@server(
-	jwt: Auth
-)
-service blog-api {
-	@handler dashboard
-	get /dashboard () returns (DashboardRes)
-}

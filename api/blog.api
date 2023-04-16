@@ -66,3 +66,21 @@ type (
 		Msg string `json:"msg"`
 	}
 )
+
+// 博客
+@server(
+	jwt: Auth
+)
+service blog-api {
+	@handler createBlog
+	post /blog/create (CreateBlogReq) returns (CreateBlogRes)
+	@handler updateBlog
+	post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
+	@handler deleteBlog
+	get /blog/delete (DeleteBlogReq) returns (DeleteBlogRes)
+	@handler bloginfo
+	get /blog/info (BlogInfoReq) returns (BlogInfoRes)
+	@handler thumbsupBlog
+	get /blog/thumbsup (ThumbsUpBlogReq) returns (ThumbsUpBlogRes)
+}
+

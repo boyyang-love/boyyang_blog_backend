@@ -26,3 +26,12 @@ type (
         Id int `json:"id"`
     }
 )
+
+
+// 登录注册
+service blog-api {
+    @handler login
+    post /login (LoginReq) returns (LoginRes)
+    @handler register
+    post /register (RegisterReq) returns (RegisterRes)
+}

@@ -1,6 +1,7 @@
 syntax = "v1"
 
-import "exhibition.api"
+import "common.api"
+import "upload.api"
 
 type (
     // 收藏
@@ -17,3 +18,29 @@ type (
         LikesInfo []ExhibitionInfo `json:"likes_info"`
     }
 )
+
+type (
+    AddAndUnFollowReq {
+        FollowId uint `form:"follow_id"`
+        FollowType int `form:"follow_type"` // 1 添加 0 取消
+    }
+
+    FollowInfoRes {
+        FollowingUser []User `json:"following_user"`
+    }
+)
+
+// 收藏 关注
+@server(
+    jwt: Auth
+)
+service blog-api {
+    @handler like
+    post /like (AddLikesReq) returns ()
+    @handler likesInfo
+    get /likes/info (GetLikesReq) returns (GetLikesRes)
+    @handler follow
+    get /follow (AddAndUnFollowReq) returns ()
+    @handler followInfo
+    get /follow/info () returns (FollowInfoRes)
+}

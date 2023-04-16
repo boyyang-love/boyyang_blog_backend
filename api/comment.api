@@ -26,3 +26,17 @@ type (
 		Msg string `json:"msg"`
 	}
 )
+
+
+// 博客评论 点赞
+@server(
+	jwt: Auth
+)
+service blog-api {
+	@handler createComment
+	post /blog/comment/create (CreateBlogCommentReq) returns (CreateBlogCommentRes)
+	@handler deleteComment
+	get /blog/comment/delete (DeleateBlogCommentReq) returns (DeleateBlogCommentRes)
+	@handler thumbsupComment
+	get /blog/comment/thumbsup (ThumbsUpBlogCommentReq) returns (ThumbsUpBlogCommentRes)
+}

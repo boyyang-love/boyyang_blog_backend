@@ -36,3 +36,15 @@ type (
         Msg string `json:"msg"`
     }
 )
+
+
+// 用户
+@server(
+    jwt: Auth
+)
+service blog-api {
+    @handler userinfo
+    get /users/info (UserInfoReq) returns (UserInfoRes)
+    @handler updateUserinfo
+    post /users/update (UpdateUserInfoReq) returns (UpdateUserInfoRes)
+}

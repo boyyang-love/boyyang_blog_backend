@@ -41,3 +41,12 @@ type (
 		Motto     *string `json:"motto"`
 	}
 )
+
+// 首页 dashboard
+@server(
+	jwt: Auth
+)
+service blog-api {
+	@handler dashboard
+	get /dashboard () returns (DashboardRes)
+}
