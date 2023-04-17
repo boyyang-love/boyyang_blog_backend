@@ -66,36 +66,6 @@ type CosUploadRes struct {
 	Key           string `json:"key"`
 }
 
-type UserInfoReq struct {
-	Id int `form:"id"`
-}
-
-type UserInfoRes struct {
-	Id        int    `json:"id"`
-	Username  string `json:"username"`
-	Age       int    `json:"age,omitempty"`
-	Gender    int    `json:"gender"`
-	AvatarUrl string `json:"avatarUrl"`
-	Tel       int    `json:"tel"`
-	Email     string `json:"email,omitempty"`
-	Address   string `json:"address,omitempty"`
-}
-
-type UpdateUserInfoReq struct {
-	Id        int    `form:"id"`
-	Username  string `form:"username,optional"`
-	Age       int    `form:"age,optional"`
-	Gender    int    `form:"gender,optional"`
-	AvatarUrl string `form:"avatarUrl,optional"`
-	Tel       int    `form:"tel,optional"`
-	Email     string `form:"email,optional"`
-	Address   string `form:"address,optional"`
-}
-
-type UpdateUserInfoRes struct {
-	Msg string `json:"msg"`
-}
-
 type CreateExhibitionReq struct {
 	Title    string `form:"title"`
 	SubTitle string `form:"sub_title,optional"`
@@ -150,6 +120,36 @@ type ApprovalReq struct {
 
 type ApprovalRes struct {
 	Id uint `json:"id"`
+}
+
+type UserInfoReq struct {
+	Id int `form:"id"`
+}
+
+type UserInfoRes struct {
+	Id        int    `json:"id"`
+	Username  string `json:"username"`
+	Age       int    `json:"age,omitempty"`
+	Gender    int    `json:"gender"`
+	AvatarUrl string `json:"avatarUrl"`
+	Tel       int    `json:"tel"`
+	Email     string `json:"email,omitempty"`
+	Address   string `json:"address,omitempty"`
+}
+
+type UpdateUserInfoReq struct {
+	Id        int    `form:"id"`
+	Username  string `form:"username,optional"`
+	Age       int    `form:"age,optional"`
+	Gender    int    `form:"gender,optional"`
+	AvatarUrl string `form:"avatarUrl,optional"`
+	Tel       int    `form:"tel,optional"`
+	Email     string `form:"email,optional"`
+	Address   string `form:"address,optional"`
+}
+
+type UpdateUserInfoRes struct {
+	Msg string `json:"msg"`
 }
 
 type CreateBlogReq struct {
