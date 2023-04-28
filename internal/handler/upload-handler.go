@@ -2,7 +2,7 @@ package handler
 
 import (
 	"blog_server/common/helper"
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/models"
 	"net/http"
 	"path"
@@ -38,10 +38,10 @@ func uploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			First(&fileInfo)
 
 		if has.RowsAffected != 0 {
-			response.Response(w, &types.UploadRes{
+			respx.Response(w, &types.UploadRes{
 				FileName: fileInfo.FileName,
 				FilePath: fileInfo.FilePath,
-			}, nil, response.SuccessMsg{Msg: "上传成功"})
+			}, nil, respx.SucMsg{Msg: "上传成功"})
 
 			return
 		}
@@ -70,7 +70,7 @@ func uploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := logic.NewUploadLogic(r.Context(), svcCtx)
 		resp, err, msg := l.Upload(&req)
-		response.Response(w, resp, err, msg)
+		respx.Response(w, resp, err, msg)
 
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)

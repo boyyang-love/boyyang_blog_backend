@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -25,7 +25,7 @@ func NewCreateExhibitionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 	}
 }
 
-func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq) (resp *types.CreateExhibitionRes, err error, msg response.SuccessMsg) {
+func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq) (resp *types.CreateExhibitionRes, err error, msg respx.SucMsg) {
 	userId, _ := l.ctx.Value("Id").(json.Number).Int64()
 	ex := models.Exhibition{
 		Title:    req.Title,
@@ -39,7 +39,7 @@ func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq)
 		Create(&ex)
 
 	if res.Error == nil {
-		return &types.CreateExhibitionRes{Id: int(ex.Id)}, nil, response.SuccessMsg{Msg: "图片上传成功"}
+		return &types.CreateExhibitionRes{Id: int(ex.Id)}, nil, respx.SucMsg{Msg: "图片上传成功"}
 	} else {
 		return nil, res.Error, msg
 	}

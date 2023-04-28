@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"context"
 
 	"blog_server/internal/svc"
@@ -24,7 +24,7 @@ func NewFollowInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Follow
 	}
 }
 
-func (l *FollowInfoLogic) FollowInfo() (resp *types.FollowInfoRes, err error, msg response.SuccessMsg) {
+func (l *FollowInfoLogic) FollowInfo() (resp *types.FollowInfoRes, err error, msg respx.SucMsg) {
 	// todo: add your logic here and delete this line
 
 	return

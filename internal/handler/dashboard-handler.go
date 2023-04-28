@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"net/http"
 
 	"blog_server/internal/logic"
@@ -12,7 +12,7 @@ func dashboardHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		l := logic.NewDashboardLogic(r.Context(), svcCtx)
 		resp, err, msg := l.Dashboard()
-		response.Response(w, resp, err, msg)
+		respx.Response(w, resp, err, msg)
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)
 		//} else {

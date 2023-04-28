@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -25,7 +25,7 @@ func NewUpdateUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Up
 	}
 }
 
-func (l *UpdateUserInfoLogic) UpdateUserInfo(req *types.UpdateUserInfoReq) (resp *types.UpdateUserInfoRes, err error, msg response.SuccessMsg) {
+func (l *UpdateUserInfoLogic) UpdateUserInfo(req *types.UpdateUserInfoReq) (resp *types.UpdateUserInfoRes, err error, msg respx.SucMsg) {
 	isExist := l.svcCtx.DB.
 		Model(&models.User{}).
 		Where("username = ? and id != ?", req.Username, req.Id).First(&models.User{})

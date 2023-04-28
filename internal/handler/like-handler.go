@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"net/http"
 
 	"blog_server/internal/logic"
@@ -20,7 +20,7 @@ func likeHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := logic.NewLikeLogic(r.Context(), svcCtx)
 		err, msg := l.Like(&req)
-		response.Response(w, nil, err, msg)
+		respx.Response(w, nil, err, msg)
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)
 		//} else {

@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -25,7 +25,7 @@ func NewCreateCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cre
 	}
 }
 
-func (l *CreateCommentLogic) CreateComment(req *types.CreateBlogCommentReq) (resp *types.CreateBlogCommentRes, err error, msg response.SuccessMsg) {
+func (l *CreateCommentLogic) CreateComment(req *types.CreateBlogCommentReq) (resp *types.CreateBlogCommentRes, err error, msg respx.SucMsg) {
 
 	userId, err := l.ctx.Value("Id").(json.Number).Int64()
 	comment := models.Comment{

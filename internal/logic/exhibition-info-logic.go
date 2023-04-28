@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/models"
 	"context"
 	"fmt"
@@ -29,7 +29,7 @@ func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ex
 	}
 }
 
-func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp *types.ExhibitionInfoRes, err error, msg response.SuccessMsg) {
+func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp *types.ExhibitionInfoRes, err error, msg respx.SucMsg) {
 	DB := l.svcCtx.DB
 
 	ids := strings.Split(req.Ids, ",")
@@ -52,7 +52,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 					Count:       int(count),
 				},
 				nil,
-				response.SuccessMsg{Msg: "获取成功"}
+				respx.SucMsg{Msg: "获取成功"}
 		} else {
 			return nil, err, msg
 		}
@@ -79,7 +79,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 					Count:       int(count),
 				},
 				nil,
-				response.SuccessMsg{Msg: "获取成功"}
+				respx.SucMsg{Msg: "获取成功"}
 		} else {
 			return nil, err, msg
 		}

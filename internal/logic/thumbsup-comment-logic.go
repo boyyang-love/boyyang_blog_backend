@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/models"
 	"context"
 	"gorm.io/gorm"
@@ -26,7 +26,7 @@ func NewThumbsUpCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *T
 	}
 }
 
-func (l *ThumbsUpCommentLogic) ThumbsUpComment(req *types.ThumbsUpBlogCommentReq) (resp *types.ThumbsUpBlogCommentRes, err error, msg response.SuccessMsg) {
+func (l *ThumbsUpCommentLogic) ThumbsUpComment(req *types.ThumbsUpBlogCommentReq) (resp *types.ThumbsUpBlogCommentRes, err error, msg respx.SucMsg) {
 	res := l.svcCtx.DB.
 		Model(&models.Comment{}).
 		Where("id = ?", req.Id).

@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -24,7 +24,7 @@ func NewUpdateExhibitionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 	}
 }
 
-func (l *UpdateExhibitionLogic) UpdateExhibition(req *types.UpdateExhibitionReq) (resp *types.UpdateExhibitionRes, err error, msg response.SuccessMsg) {
+func (l *UpdateExhibitionLogic) UpdateExhibition(req *types.UpdateExhibitionReq) (resp *types.UpdateExhibitionRes, err error, msg respx.SucMsg) {
 	DB := l.svcCtx.DB
 
 	if err = DB.Model(&models.Exhibition{}).Where("id = ?", req.Id).Updates(&models.Exhibition{
@@ -32,7 +32,7 @@ func (l *UpdateExhibitionLogic) UpdateExhibition(req *types.UpdateExhibitionReq)
 		SubTitle: req.SubTitle,
 		Des:      req.Des,
 	}).Error; err == nil {
-		return &types.UpdateExhibitionRes{Id: req.Id}, nil, response.SuccessMsg{Msg: "更新成功"}
+		return &types.UpdateExhibitionRes{Id: req.Id}, nil, respx.SucMsg{Msg: "更新成功"}
 	} else {
 		return nil, err, msg
 	}

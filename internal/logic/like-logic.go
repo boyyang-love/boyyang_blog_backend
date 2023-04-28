@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -24,7 +24,7 @@ func NewLikeLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LikeLogic {
 	}
 }
 
-func (l *LikeLogic) Like(req *types.AddLikesReq) (err error, msg response.SuccessMsg) {
+func (l *LikeLogic) Like(req *types.AddLikesReq) (err error, msg respx.SucMsg) {
 
 	DB := l.svcCtx.DB
 
@@ -45,7 +45,7 @@ func (l *LikeLogic) Like(req *types.AddLikesReq) (err error, msg response.Succes
 					LikesType:    true,
 				}).
 			Error; err == nil {
-			return nil, response.SuccessMsg{Msg: "收藏成功"}
+			return nil, respx.SucMsg{Msg: "收藏成功"}
 		} else {
 			return err, msg
 		}
@@ -55,7 +55,7 @@ func (l *LikeLogic) Like(req *types.AddLikesReq) (err error, msg response.Succes
 			Where(&models.Likes{UserId: uint(id), ExhibitionId: req.LikesId}).
 			Update("likes_type", false).
 			Error; err == nil {
-			return nil, response.SuccessMsg{Msg: "取消收藏成功"}
+			return nil, respx.SucMsg{Msg: "取消收藏成功"}
 		} else {
 			return err, msg
 		}

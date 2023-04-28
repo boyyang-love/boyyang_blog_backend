@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"net/http"
 
 	"blog_server/internal/logic"
@@ -20,7 +20,7 @@ func approvalExhibitionHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := logic.NewApprovalExhibitionLogic(r.Context(), svcCtx)
 		resp, err, msg := l.ApprovalExhibition(&req)
-		response.Response(w, resp, err, msg)
+		respx.Response(w, resp, err, msg)
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)
 		//} else {

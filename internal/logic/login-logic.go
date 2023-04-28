@@ -2,7 +2,7 @@ package logic
 
 import (
 	"blog_server/common/helper"
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -26,7 +26,7 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 	}
 }
 
-func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error, msg response.SuccessMsg) {
+func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error, msg respx.SucMsg) {
 	userInfo := models.User{}
 	res := l.svcCtx.DB.
 		Model(&models.User{}).
@@ -53,6 +53,6 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error
 				Tel:       int(*userInfo.Tel),
 			},
 			Token: token,
-		}, nil, response.SuccessMsg{Msg: "登录成功"}
+		}, nil, respx.SucMsg{Msg: "登录成功"}
 	}
 }

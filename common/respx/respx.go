@@ -1,4 +1,4 @@
-package response
+package respx
 
 import (
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -11,7 +11,7 @@ type Body struct {
 	Data interface{} `json:"data,omitempty"`
 }
 
-type SuccessMsg struct {
+type SucMsg struct {
 	Msg string `json:"msg"`
 }
 
@@ -20,8 +20,8 @@ func Response(w http.ResponseWriter, resp interface{}, err error, msg interface{
 	if err == nil {
 		body.Code = 0
 		body.Data = resp
-		if msg.(SuccessMsg).Msg != "" {
-			body.Msg = msg.(SuccessMsg).Msg
+		if msg.(SucMsg).Msg != "" {
+			body.Msg = msg.(SucMsg).Msg
 		} else {
 			body.Msg = "ok"
 		}

@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/internal/config"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
@@ -29,7 +29,7 @@ func NewCosUploadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CosUplo
 	}
 }
 
-func (l *CosUploadLogic) CosUpload(req *types.CosUploadReq) (resp *types.CosUploadRes, err error, msg response.SuccessMsg) {
+func (l *CosUploadLogic) CosUpload(req *types.CosUploadReq) (resp *types.CosUploadRes, err error, msg respx.SucMsg) {
 	// 获取 cos token
 	token, err := getAccessToken(l.svcCtx.Config)
 	// 用户不传 路径 默认储存在 images 文件夹下

@@ -2,7 +2,7 @@ package logic
 
 import (
 	"blog_server/common/errorx"
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -25,7 +25,7 @@ func NewApprovalExhibitionLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 	}
 }
 
-func (l *ApprovalExhibitionLogic) ApprovalExhibition(req *types.ApprovalReq) (resp *types.ApprovalRes, err error, msg response.SuccessMsg) {
+func (l *ApprovalExhibitionLogic) ApprovalExhibition(req *types.ApprovalReq) (resp *types.ApprovalRes, err error, msg respx.SucMsg) {
 	db := l.svcCtx.DB
 
 	if err = db.
@@ -35,7 +35,8 @@ func (l *ApprovalExhibitionLogic) ApprovalExhibition(req *types.ApprovalReq) (re
 			Status:    req.Status,
 			RejectRes: req.Reason,
 		}).Error; err == nil {
-		return &types.ApprovalRes{Id: req.Id}, err, response.SuccessMsg{Msg: "状态更新成功"}
+
+		return &types.ApprovalRes{Id: req.Id}, err, respx.SucMsg{Msg: "状态更新成功"}
 	} else {
 		return nil, errorx.NewDefaultError(err.Error()), msg
 	}

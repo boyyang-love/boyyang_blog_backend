@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -24,7 +24,7 @@ func NewUpdateBlogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Update
 	}
 }
 
-func (l *UpdateBlogLogic) UpdateBlog(req *types.UpdateBlogReq) (resp *types.UpdateBlogRes, err error, msg response.SuccessMsg) {
+func (l *UpdateBlogLogic) UpdateBlog(req *types.UpdateBlogReq) (resp *types.UpdateBlogRes, err error, msg respx.SucMsg) {
 	blogInfo := models.Blog{
 		Title:    req.Title,
 		SubTitle: req.SubTitle,

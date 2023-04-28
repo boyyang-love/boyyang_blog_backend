@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -26,7 +26,7 @@ func NewDashboardLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Dashboa
 	}
 }
 
-func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg response.SuccessMsg) {
+func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg respx.SucMsg) {
 
 	DB := l.svcCtx.DB
 	id, err := l.ctx.Value("Id").(json.Number).Int64()
@@ -54,7 +54,7 @@ func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg r
 			},
 			Dashboard:   dashboard,
 			Exhibitions: exhibition,
-		}, nil, response.SuccessMsg{Msg: "获取成功"}
+		}, nil, respx.SucMsg{Msg: "获取成功"}
 	} else {
 		return nil, err, msg
 	}

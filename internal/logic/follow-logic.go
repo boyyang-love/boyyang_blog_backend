@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"blog_server/common/response"
+	"blog_server/common/respx"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -24,7 +24,7 @@ func NewFollowLogic(ctx context.Context, svcCtx *svc.ServiceContext) *FollowLogi
 	}
 }
 
-func (l *FollowLogic) Follow(req *types.AddAndUnFollowReq) (err error, msg response.SuccessMsg) {
+func (l *FollowLogic) Follow(req *types.AddAndUnFollowReq) (err error, msg respx.SucMsg) {
 	DB := l.svcCtx.DB
 	id, err := l.ctx.Value("Id").(json.Number).Int64()
 	if err != nil {
@@ -32,7 +32,7 @@ func (l *FollowLogic) Follow(req *types.AddAndUnFollowReq) (err error, msg respo
 	}
 
 	if req.FollowId == uint(id) {
-		return nil, response.SuccessMsg{Msg: "不能关注自己"}
+		return nil, respx.SucMsg{Msg: "不能关注自己"}
 	}
 
 	if req.FollowType == 1 { //关注
@@ -47,7 +47,7 @@ func (l *FollowLogic) Follow(req *types.AddAndUnFollowReq) (err error, msg respo
 					FollowType:   true,
 				}).
 			Error; err == nil {
-			return nil, response.SuccessMsg{Msg: "关注成功"}
+			return nil, respx.SucMsg{Msg: "关注成功"}
 		} else {
 			return err, msg
 		}
@@ -57,7 +57,7 @@ func (l *FollowLogic) Follow(req *types.AddAndUnFollowReq) (err error, msg respo
 			Where("follow_user_id = ? and user_id = ?", req.FollowId, id).
 			Update("follow_type", false).
 			Error; err == nil {
-			return nil, response.SuccessMsg{Msg: "取消关注成功"}
+			return nil, respx.SucMsg{Msg: "取消关注成功"}
 		}
 	}
 
