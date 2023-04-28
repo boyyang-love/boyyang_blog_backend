@@ -1,30 +1,30 @@
-package handler
+package user
 
 import (
 	"blog_server/common/respx"
-	"net/http"
-
-	"blog_server/internal/logic"
+	"blog_server/internal/logic/user"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
+	"net/http"
 )
 
-func followHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func UpdateUserinfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.AddAndUnFollowReq
+		var req types.UpdateUserInfoReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := logic.NewFollowLogic(r.Context(), svcCtx)
-		err, msg := l.Follow(&req)
-		respx.Response(w, nil, err, msg)
+		l := logic.NewUpdateUserInfoLogic(r.Context(), svcCtx)
+		resp, err, msg := l.UpdateUserInfo(&req)
+		respx.Response(w, resp, err, msg)
+
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)
 		//} else {
-		//	httpx.Ok(w)
+		//	httpx.OkJsonCtx(r.Context(), w, resp)
 		//}
 	}
 }

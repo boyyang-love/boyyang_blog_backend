@@ -1,14 +1,13 @@
-package handler
+package dashboard
 
 import (
 	"blog_server/common/respx"
-	"net/http"
-
-	"blog_server/internal/logic"
+	"blog_server/internal/logic/dashboard"
 	"blog_server/internal/svc"
+	"net/http"
 )
 
-func dashboardHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func DashboardHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		l := logic.NewDashboardLogic(r.Context(), svcCtx)
 		resp, err, msg := l.Dashboard()

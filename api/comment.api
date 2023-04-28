@@ -31,12 +31,13 @@ type (
 // 博客评论 点赞
 @server(
 	jwt: Auth
+	group: comment
 )
 service blog-api {
-	@handler createComment
+	@handler CreateComment
 	post /blog/comment/create (CreateBlogCommentReq) returns (CreateBlogCommentRes)
-	@handler deleteComment
+	@handler DeleteComment
 	get /blog/comment/delete (DeleateBlogCommentReq) returns (DeleateBlogCommentRes)
-	@handler thumbsupComment
+	@handler ThumbsupComment
 	get /blog/comment/thumbsup (ThumbsUpBlogCommentReq) returns (ThumbsUpBlogCommentRes)
 }

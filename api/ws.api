@@ -1,0 +1,18 @@
+syntax = "v1"
+
+type WsReq {
+    Id int `json:"id"`
+}
+
+type WsRes {
+    Msg string `json:"msg"`
+}
+
+@server(
+    jwt: Auth
+    group: ws
+)
+service blog-api {
+    @handler Ws
+    get /ws (WsReq) returns (WsRes)
+}

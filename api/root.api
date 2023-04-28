@@ -8,4 +8,5 @@ import (
 	"login.api"
 	"upload.api"
 	"user.api"
+	"ws.api"
 )

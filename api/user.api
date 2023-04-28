@@ -41,10 +41,11 @@ type (
 // 用户
 @server(
     jwt: Auth
+    group: user
 )
 service blog-api {
-    @handler userinfo
+    @handler Userinfo
     get /users/info (UserInfoReq) returns (UserInfoRes)
-    @handler updateUserinfo
+    @handler UpdateUserinfo
     post /users/update (UpdateUserInfoReq) returns (UpdateUserInfoRes)
 }

@@ -28,10 +28,15 @@ type (
 )
 
 
+// 用户
+@server(
+    group: login
+)
+
 // 登录注册
 service blog-api {
-    @handler login
+    @handler Login
     post /login (LoginReq) returns (LoginRes)
-    @handler register
+    @handler Register
     post /register (RegisterReq) returns (RegisterRes)
 }

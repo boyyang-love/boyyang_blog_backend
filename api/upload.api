@@ -103,18 +103,19 @@ type (
 // 文件上传 图片墙上传 图片墙信息
 @server(
     jwt: Auth
+    group: exhibition
 )
 service blog-api {
-    @handler upload
+    @handler Upload
     post /upload (UploadReq) returns (UploadRes)
-    @handler cosUpload
+    @handler CosUpload
     get /cos/upload (CosUploadReq) returns (CosUploadRes)
-    @handler createExhibition
+    @handler CreateExhibition
     post /exhibition/create (CreateExhibitionReq) returns (CreateExhibitionRes)
-    @handler exhibitionInfo
+    @handler ExhibitionInfo
     get /exhibition/info (ExhibitionInfoReq) returns (ExhibitionInfoRes)
-    @handler updateExhibition
+    @handler UpdateExhibition
     post /exhibition/update (updateExhibitionReq) returns (updateExhibitionRes)
-    @handler approvalExhibition
+    @handler ApprovalExhibition
     post /exhibition/approval (approvalReq) returns (approvalRes)
 }

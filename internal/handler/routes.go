@@ -4,6 +4,14 @@ package handler
 import (
 	"net/http"
 
+	blog "blog_server/internal/handler/blog"
+	comment "blog_server/internal/handler/comment"
+	dashboard "blog_server/internal/handler/dashboard"
+	exhibition "blog_server/internal/handler/exhibition"
+	like "blog_server/internal/handler/like"
+	login "blog_server/internal/handler/login"
+	user "blog_server/internal/handler/user"
+	ws "blog_server/internal/handler/ws"
 	"blog_server/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -14,95 +22,28 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/login",
-				Handler: loginHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/register",
-				Handler: registerHandler(serverCtx),
-			},
-		},
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/upload",
-				Handler: uploadHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/cos/upload",
-				Handler: cosUploadHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/exhibition/create",
-				Handler: createExhibitionHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/exhibition/info",
-				Handler: exhibitionInfoHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/exhibition/update",
-				Handler: updateExhibitionHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/exhibition/approval",
-				Handler: approvalExhibitionHandler(serverCtx),
-			},
-		},
-		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/users/info",
-				Handler: userinfoHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/users/update",
-				Handler: updateUserinfoHandler(serverCtx),
-			},
-		},
-		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodPost,
 				Path:    "/blog/create",
-				Handler: createBlogHandler(serverCtx),
+				Handler: blog.CreateBlogHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/blog/update",
-				Handler: updateBlogHandler(serverCtx),
+				Handler: blog.UpdateBlogHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/blog/delete",
-				Handler: deleteBlogHandler(serverCtx),
+				Handler: blog.DeleteBlogHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/blog/info",
-				Handler: bloginfoHandler(serverCtx),
+				Handler: blog.BloginfoHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/blog/thumbsup",
-				Handler: thumbsupBlogHandler(serverCtx),
+				Handler: blog.ThumbsupBlogHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
@@ -113,17 +54,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodPost,
 				Path:    "/blog/comment/create",
-				Handler: createCommentHandler(serverCtx),
+				Handler: comment.CreateCommentHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/blog/comment/delete",
-				Handler: deleteCommentHandler(serverCtx),
+				Handler: comment.DeleteCommentHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/blog/comment/thumbsup",
-				Handler: thumbsupCommentHandler(serverCtx),
+				Handler: comment.ThumbsupCommentHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
@@ -134,7 +75,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodGet,
 				Path:    "/dashboard",
-				Handler: dashboardHandler(serverCtx),
+				Handler: dashboard.DashboardHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
@@ -145,22 +86,100 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodPost,
 				Path:    "/like",
-				Handler: likeHandler(serverCtx),
+				Handler: like.LikeHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/likes/info",
-				Handler: likesInfoHandler(serverCtx),
+				Handler: like.LikesInfoHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/follow",
-				Handler: followHandler(serverCtx),
+				Handler: like.FollowHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/follow/info",
-				Handler: followInfoHandler(serverCtx),
+				Handler: like.FollowInfoHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/upload",
+				Handler: exhibition.UploadHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/cos/upload",
+				Handler: exhibition.CosUploadHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/exhibition/create",
+				Handler: exhibition.CreateExhibitionHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/exhibition/info",
+				Handler: exhibition.ExhibitionInfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/exhibition/update",
+				Handler: exhibition.UpdateExhibitionHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/exhibition/approval",
+				Handler: exhibition.ApprovalExhibitionHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/login",
+				Handler: login.LoginHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/register",
+				Handler: login.RegisterHandler(serverCtx),
+			},
+		},
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/users/info",
+				Handler: user.UserinfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/users/update",
+				Handler: user.UpdateUserinfoHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/ws",
+				Handler: ws.WsHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

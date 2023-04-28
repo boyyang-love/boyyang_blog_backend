@@ -70,17 +70,18 @@ type (
 // 博客
 @server(
 	jwt: Auth
+	group: blog
 )
 service blog-api {
-	@handler createBlog
+	@handler CreateBlog
 	post /blog/create (CreateBlogReq) returns (CreateBlogRes)
-	@handler updateBlog
+	@handler UpdateBlog
 	post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
-	@handler deleteBlog
+	@handler DeleteBlog
 	get /blog/delete (DeleteBlogReq) returns (DeleteBlogRes)
-	@handler bloginfo
+	@handler Bloginfo
 	get /blog/info (BlogInfoReq) returns (BlogInfoRes)
-	@handler thumbsupBlog
+	@handler ThumbsupBlog
 	get /blog/thumbsup (ThumbsUpBlogReq) returns (ThumbsUpBlogRes)
 }
 

@@ -1,19 +1,18 @@
-package handler
+package exhibition
 
 import (
 	"blog_server/common/helper"
 	"blog_server/common/respx"
-	"blog_server/models"
-	"net/http"
-	"path"
-
-	"blog_server/internal/logic"
+	"blog_server/internal/logic/exhibition"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
+	"blog_server/models"
 	"github.com/zeromicro/go-zero/rest/httpx"
+	"net/http"
+	"path"
 )
 
-func uploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func UploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.UploadReq
 		if err := httpx.Parse(r, &req); err != nil {

@@ -1,30 +1,29 @@
-package handler
+package like
 
 import (
 	"blog_server/common/respx"
-	"net/http"
-
-	"blog_server/internal/logic"
+	"blog_server/internal/logic/like"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
+	"net/http"
 )
 
-func createBlogHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func LikeHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.CreateBlogReq
+		var req types.AddLikesReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := logic.NewCreateBlogLogic(r.Context(), svcCtx)
-		resp, err, msg := l.CreateBlog(&req)
-		respx.Response(w, resp, err, msg)
+		l := logic.NewLikeLogic(r.Context(), svcCtx)
+		err, msg := l.Like(&req)
+		respx.Response(w, nil, err, msg)
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)
 		//} else {
-		//	httpx.OkJsonCtx(r.Context(), w, resp)
+		//	httpx.Ok(w)
 		//}
 	}
 }

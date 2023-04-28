@@ -1,14 +1,13 @@
-package handler
+package like
 
 import (
 	"blog_server/common/respx"
-	"net/http"
-
-	"blog_server/internal/logic"
+	"blog_server/internal/logic/like"
 	"blog_server/internal/svc"
+	"net/http"
 )
 
-func followInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func FollowInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		l := logic.NewFollowInfoLogic(r.Context(), svcCtx)
 		resp, err, msg := l.FollowInfo()
