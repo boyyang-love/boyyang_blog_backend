@@ -1,13 +1,12 @@
 package logic
 
 import (
+	"blog_server/common/errorx"
 	"blog_server/common/response"
-	"blog_server/models"
-	"context"
-	"errors"
-
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
+	"blog_server/models"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -38,6 +37,6 @@ func (l *ApprovalExhibitionLogic) ApprovalExhibition(req *types.ApprovalReq) (re
 		}).Error; err == nil {
 		return &types.ApprovalRes{Id: req.Id}, err, response.SuccessMsg{Msg: "状态更新成功"}
 	} else {
-		return nil, errors.New("状态更新失败"), msg
+		return nil, errorx.NewDefaultError(err.Error()), msg
 	}
 }

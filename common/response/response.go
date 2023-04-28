@@ -18,7 +18,7 @@ type SuccessMsg struct {
 func Response(w http.ResponseWriter, resp interface{}, err error, msg interface{}) {
 	var body Body
 	if err == nil {
-		body.Code = 1
+		body.Code = 0
 		body.Data = resp
 		if msg.(SuccessMsg).Msg != "" {
 			body.Msg = msg.(SuccessMsg).Msg
@@ -26,7 +26,7 @@ func Response(w http.ResponseWriter, resp interface{}, err error, msg interface{
 			body.Msg = "ok"
 		}
 	} else {
-		body.Code = 0
+		body.Code = 1
 		body.Msg = err.Error()
 	}
 
