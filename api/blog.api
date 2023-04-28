@@ -12,11 +12,11 @@ type (
 	}
 
 	CreateBlogRes {
-		Id int `json:"id"`
+		Id uint `json:"id"`
 	}
 
 	UpdateBlogReq {
-		Id       int    `form:"id"`
+		Id       uint    `form:"id"`
 		Title    string `form:"title"`
 		SubTitle string `form:"sub_title"`
 		Content  string `form:"content"`
@@ -28,7 +28,7 @@ type (
 	}
 
 	DeleteBlogReq {
-		Id int `form:"id"`
+		Id uint `form:"id"`
 	}
 
 	DeleteBlogRes {
@@ -47,7 +47,7 @@ type (
 	}
 
 	BlogInfo {
-		Id         int       `json:"id"`
+		Id         uint       `json:"id"`
 		Title      string    `json:"title"`
 		SubTitle   string    `json:"sub_title"`
 		Content    string    `json:"content"`
@@ -59,7 +59,7 @@ type (
 	}
 
 	ThumbsUpBlogReq {
-		Id int `form:"id"`
+		Id uint `form:"id"`
 	}
 
 	ThumbsUpBlogRes {

@@ -1,7 +1,7 @@
 syntax = "v1"
 
 type WsReq {
-    Id int `json:"id"`
+    Id uint `json:"id"`
 }
 
 type WsRes {

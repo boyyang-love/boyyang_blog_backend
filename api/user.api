@@ -3,11 +3,11 @@ syntax = "v1"
 // 用户信息
 type (
     UserInfoReq {
-        Id int `form:"id"`
+        Id uint `form:"id"`
     }
 
     UserInfoRes {
-        Id        int    `json:"id"`
+        Id        uint    `json:"id"`
         Username  string `json:"username"`
         Age       int    `json:"age,omitempty"`
         Gender    int    `json:"gender"`
@@ -22,7 +22,7 @@ type (
 // 更新用户信息
 type (
     UpdateUserInfoReq {
-        Id        int    `form:"id"`
+        Id        uint    `form:"id"`
         Username  string `form:"username,optional"`
         Age       int    `form:"age,optional"`
         Gender    int    `form:"gender,optional"`

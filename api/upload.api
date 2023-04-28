@@ -41,7 +41,7 @@ type (
     }
 
     CreateExhibitionRes {
-        Id int `json:"id"`
+        Id uint `json:"id"`
     }
 )
 

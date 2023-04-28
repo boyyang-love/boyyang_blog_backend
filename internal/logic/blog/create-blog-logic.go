@@ -37,7 +37,7 @@ func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.Crea
 		Model(&models.Blog{}).
 		Create(&blog)
 	if res.Error == nil {
-		return &types.CreateBlogRes{Id: int(blog.Id)}, nil, respx.SucMsg{
+		return &types.CreateBlogRes{Id: blog.Id}, nil, respx.SucMsg{
 			Msg: "上传成功！",
 		}
 	} else {

@@ -39,7 +39,7 @@ func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq)
 		Create(&ex)
 
 	if res.Error == nil {
-		return &types.CreateExhibitionRes{Id: int(ex.Id)}, nil, respx.SucMsg{Msg: "图片上传成功"}
+		return &types.CreateExhibitionRes{Id: ex.Id}, nil, respx.SucMsg{Msg: "图片上传成功"}
 	} else {
 		return nil, res.Error, msg
 	}

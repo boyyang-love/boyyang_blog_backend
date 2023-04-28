@@ -42,7 +42,7 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRe
 			Model(&models.User{}).
 			Create(&info)
 		return &types.RegisterRes{
-			Id: int(info.Id),
+			Id: info.Id,
 		}, nil, respx.SucMsg{Msg: "账号注册成功"}
 
 	} else {

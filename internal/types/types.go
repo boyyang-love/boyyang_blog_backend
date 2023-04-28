@@ -10,11 +10,11 @@ type CreateBlogReq struct {
 }
 
 type CreateBlogRes struct {
-	Id int `json:"id"`
+	Id uint `json:"id"`
 }
 
 type UpdateBlogReq struct {
-	Id       int    `form:"id"`
+	Id       uint   `form:"id"`
 	Title    string `form:"title"`
 	SubTitle string `form:"sub_title"`
 	Content  string `form:"content"`
@@ -26,7 +26,7 @@ type UpdateBlogRes struct {
 }
 
 type DeleteBlogReq struct {
-	Id int `form:"id"`
+	Id uint `form:"id"`
 }
 
 type DeleteBlogRes struct {
@@ -45,7 +45,7 @@ type BlogInfoRes struct {
 }
 
 type BlogInfo struct {
-	Id         int       `json:"id"`
+	Id         uint      `json:"id"`
 	Title      string    `json:"title"`
 	SubTitle   string    `json:"sub_title"`
 	Content    string    `json:"content"`
@@ -57,7 +57,7 @@ type BlogInfo struct {
 }
 
 type ThumbsUpBlogReq struct {
-	Id int `form:"id"`
+	Id uint `form:"id"`
 }
 
 type ThumbsUpBlogRes struct {
@@ -65,7 +65,7 @@ type ThumbsUpBlogRes struct {
 }
 
 type User struct {
-	Id        int    `json:"id"`
+	Id        uint   `json:"id"`
 	Username  string `json:"username"`
 	Gender    int    `json:"gender"`
 	AvatarUrl string `json:"avatarUrl"`
@@ -204,7 +204,7 @@ type CreateExhibitionReq struct {
 }
 
 type CreateExhibitionRes struct {
-	Id int `json:"id"`
+	Id uint `json:"id"`
 }
 
 type ExhibitionInfoReq struct {
@@ -269,15 +269,15 @@ type RegisterReq struct {
 }
 
 type RegisterRes struct {
-	Id int `json:"id"`
+	Id uint `json:"id"`
 }
 
 type UserInfoReq struct {
-	Id int `form:"id"`
+	Id uint `form:"id"`
 }
 
 type UserInfoRes struct {
-	Id        int    `json:"id"`
+	Id        uint   `json:"id"`
 	Username  string `json:"username"`
 	Age       int    `json:"age,omitempty"`
 	Gender    int    `json:"gender"`
@@ -288,7 +288,7 @@ type UserInfoRes struct {
 }
 
 type UpdateUserInfoReq struct {
-	Id        int    `form:"id"`
+	Id        uint   `form:"id"`
 	Username  string `form:"username,optional"`
 	Age       int    `form:"age,optional"`
 	Gender    int    `form:"gender,optional"`
@@ -303,7 +303,7 @@ type UpdateUserInfoRes struct {
 }
 
 type WsReq struct {
-	Id int `json:"id"`
+	Id uint `json:"id"`
 }
 
 type WsRes struct {

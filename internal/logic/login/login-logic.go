@@ -46,11 +46,11 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error
 
 		return &types.LoginRes{
 			Info: types.User{
-				Id:        int(userInfo.Id),
+				Id:        userInfo.Id,
 				Username:  userInfo.Username,
 				Gender:    userInfo.Gender,
 				AvatarUrl: userInfo.AvatarUrl,
-				Tel:       int(*userInfo.Tel),
+				Tel:       *userInfo.Tel,
 			},
 			Token: token,
 		}, nil, respx.SucMsg{Msg: "登录成功"}
