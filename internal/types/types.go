@@ -68,7 +68,7 @@ type User struct {
 	Id        uint   `json:"id"`
 	Username  string `json:"username"`
 	Gender    int    `json:"gender"`
-	AvatarUrl string `json:"avatarUrl"`
+	AvatarUrl string `json:"avatar_url"`
 	Tel       int    `json:"tel"`
 }
 
@@ -79,7 +79,7 @@ type Comment struct {
 	UserId   uint   `json:"user_id"`
 	Tag      string `json:"tag,omitempty"`
 	ThumbsUp *int   `json:"thumbs_up" gorm:"default:0"`
-	UserInfo User   `json:"userInfo"`
+	UserInfo User   `json:"user_info"`
 }
 
 type CreateBlogCommentReq struct {
@@ -281,7 +281,7 @@ type UserInfoRes struct {
 	Username  string `json:"username"`
 	Age       int    `json:"age,omitempty"`
 	Gender    int    `json:"gender"`
-	AvatarUrl string `json:"avatarUrl"`
+	AvatarUrl string `json:"avatar_url"`
 	Tel       int    `json:"tel"`
 	Email     string `json:"email,omitempty"`
 	Address   string `json:"address,omitempty"`
@@ -296,10 +296,6 @@ type UpdateUserInfoReq struct {
 	Tel       int    `form:"tel,optional"`
 	Email     string `form:"email,optional"`
 	Address   string `form:"address,optional"`
-}
-
-type UpdateUserInfoRes struct {
-	Msg string `json:"msg"`
 }
 
 type WsReq struct {

@@ -11,7 +11,7 @@ type (
         Username  string `json:"username"`
         Age       int    `json:"age,omitempty"`
         Gender    int    `json:"gender"`
-        AvatarUrl string `json:"avatarUrl"`
+        AvatarUrl string `json:"avatar_url"`
         Tel       int    `json:"tel"`
         Email     string `json:"email,omitempty"`
         Address   string `json:"address,omitempty"`
@@ -31,10 +31,6 @@ type (
         Email     string `form:"email,optional"`
         Address   string `form:"address,optional"`
     }
-
-    UpdateUserInfoRes {
-        Msg string `json:"msg"`
-    }
 )
 
 
@@ -47,5 +43,5 @@ service blog-api {
     @handler Userinfo
     get /users/info (UserInfoReq) returns (UserInfoRes)
     @handler UpdateUserinfo
-    post /users/update (UpdateUserInfoReq) returns (UpdateUserInfoRes)
+    post /users/update (UpdateUserInfoReq)
 }

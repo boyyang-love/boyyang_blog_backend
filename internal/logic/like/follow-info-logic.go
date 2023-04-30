@@ -2,7 +2,9 @@ package logic
 
 import (
 	"blog_server/common/respx"
+	"blog_server/models"
 	"context"
+	"encoding/json"
 
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
@@ -25,7 +27,33 @@ func NewFollowInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Follow
 }
 
 func (l *FollowInfoLogic) FollowInfo() (resp *types.FollowInfoRes, err error, msg respx.SucMsg) {
-	// todo: add your logic here and delete this line
-
-	return
+	id, err := l.ctx.Value("Id").(json.Number).Int64() // 用户id
+	var followInfo []models.Follow
+	DB := l.svcCtx.DB
+	if err = DB.
+		Model(&models.Follow{}).
+		Where("user_id = ? and  follow_type = ? ", id, true).
+		Scan(&followInfo).Error; err != nil {
+		return nil, err, msg
+	} else {
+		var followIds []uint      // 用户关注列表 following id
+		var userInfo []types.User // 关注列表用户信息
+		for _, follow := range followInfo {
+			followIds = append(followIds, follow.FollowUserId)
+		}
+		if err =
+			DB.
+				Debug().
+				Select("id", "username", "gender", "avatar_url", "tel").
+				Model(&models.User{}).
+				Where("id in ?", followIds).
+				Scan(&userInfo).
+				Error; err != nil {
+			return nil, err, msg
+		} else {
+			return &types.FollowInfoRes{
+				FollowingUser: userInfo,
+			}, nil, msg
+		}
+	}
 }
