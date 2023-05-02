@@ -4,18 +4,26 @@ import "common.api"
 import "upload.api"
 
 type (
-    // 收藏
-    AddLikesReq {
-        LikesId uint `form:"likes_id"`
+    AddLikesReq {// 收藏
+        Exhibition_id uint `form:"exhibition_id"`
         LikesType int `form:"likes_type"`
     }
-        // 获取收藏
-    GetLikesReq {
-        LikesIds string `form:"likes_ids"`
+
+    LikesInfoReq {// 获取收藏
+        ExhibitionId uint `form:"exhibition_id"`
     }
 
-    GetLikesRes {
-        LikesInfo []ExhibitionInfo `json:"likes_info"`
+    LikesInfoRes {
+        LikesInfo []LikesInfo `json:"likes_info"`
+    }
+
+    LikesInfo {
+        Id uint `json:"id"`
+        Created int `json:"created"`
+        Updated int `json:"updated"`
+        ExhibitionId uint `json:"exhibition_id"`
+        UserId uint `json:"user_id"`
+        LikesType bool `json:"likes_type"`
     }
 )
 
@@ -39,7 +47,7 @@ service blog-api {
     @handler Like
     post /like (AddLikesReq)
     @handler LikesInfo
-    get /likes/info (GetLikesReq) returns (GetLikesRes)
+    get /likes/info (LikesInfoReq) returns (LikesInfoRes)
     @handler Follow
     get /follow (AddAndUnFollowReq)
     @handler FollowInfo

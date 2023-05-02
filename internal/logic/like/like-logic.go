@@ -36,11 +36,11 @@ func (l *LikeLogic) Like(req *types.AddLikesReq) (err error, msg respx.SucMsg) {
 	if req.LikesType == 1 { // 添加收藏
 		if err = DB.
 			Model(&models.Likes{}).
-			Where(&models.Likes{UserId: uint(id), ExhibitionId: req.LikesId}).
+			Where(&models.Likes{UserId: uint(id), ExhibitionId: req.Exhibition_id}).
 			Assign(&models.Likes{LikesType: true}).
 			FirstOrCreate(
 				&models.Likes{
-					ExhibitionId: req.LikesId,
+					ExhibitionId: req.Exhibition_id,
 					UserId:       uint(id),
 					LikesType:    true,
 				}).
@@ -52,7 +52,7 @@ func (l *LikeLogic) Like(req *types.AddLikesReq) (err error, msg respx.SucMsg) {
 	} else {
 		if err = DB.
 			Model(&models.Likes{}).
-			Where(&models.Likes{UserId: uint(id), ExhibitionId: req.LikesId}).
+			Where(&models.Likes{UserId: uint(id), ExhibitionId: req.Exhibition_id}).
 			Update("likes_type", false).
 			Error; err == nil {
 			return nil, respx.SucMsg{Msg: "取消收藏成功"}

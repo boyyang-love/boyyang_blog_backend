@@ -27,25 +27,24 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 
 func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRes, err error, msg respx.SucMsg) {
 
-	res := l.svcCtx.DB.
+	if err = l.svcCtx.DB.
 		Where("username = ? or tel = ?", req.Username, req.Tel).
-		First(&models.User{})
-
-	if res.RowsAffected == 0 {
+		First(&models.User{}).Error; err != nil {
 		info := models.User{
 			Username: req.Username,
 			Password: helper.MakeHash(req.Password),
 			Tel:      &req.Tel,
 		}
-
-		l.svcCtx.DB.
+		if err = l.svcCtx.DB.
 			Model(&models.User{}).
-			Create(&info)
-		return &types.RegisterRes{
-			Id: info.Id,
-		}, nil, respx.SucMsg{Msg: "账号注册成功"}
-
+			Create(&info).Error; err != nil {
+			return nil, err, msg
+		} else {
+			return &types.RegisterRes{
+				Id: info.Id,
+			}, nil, respx.SucMsg{Msg: "账号注册成功"}
+		}
 	} else {
-		return nil, errors.New("该用户已经存在"), msg
+		return nil, errors.New("用户名已经存在或者该手机号已经注册"), msg
 	}
 }

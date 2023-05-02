@@ -148,16 +148,25 @@ type DashboardUser struct {
 }
 
 type AddLikesReq struct {
-	LikesId   uint `form:"likes_id"`
-	LikesType int  `form:"likes_type"`
+	Exhibition_id uint `form:"exhibition_id"`
+	LikesType     int  `form:"likes_type"`
 }
 
-type GetLikesReq struct {
-	LikesIds string `form:"likes_ids"`
+type LikesInfoReq struct {
+	ExhibitionId uint `form:"exhibition_id"`
 }
 
-type GetLikesRes struct {
-	LikesInfo []ExhibitionInfo `json:"likes_info"`
+type LikesInfoRes struct {
+	LikesInfo []LikesInfo `json:"likes_info"`
+}
+
+type LikesInfo struct {
+	Id           uint `json:"id"`
+	Created      int  `json:"created"`
+	Updated      int  `json:"updated"`
+	ExhibitionId uint `json:"exhibition_id"`
+	UserId       uint `json:"user_id"`
+	LikesType    bool `json:"likes_type"`
 }
 
 type AddAndUnFollowReq struct {
