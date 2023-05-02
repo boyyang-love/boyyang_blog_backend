@@ -40,9 +40,6 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 	if len(ids) > 0 && req.Ids != "" {
 		res := DB.
 			Model(&models.Blog{}).
-			Preload("UserInfo").
-			Preload("Comments").
-			Preload("Comments.UserInfo").
 			Where("user_id", userId).
 			Find(&blogInfo, ids).
 			Count(&count)
@@ -59,9 +56,6 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 
 		res := DB.
 			Model(&models.Blog{}).
-			Preload("UserInfo").
-			Preload("Comments").
-			Preload("Comments.UserInfo").
 			Where("user_id", userId).
 			Find(&blogInfo).
 			Offset(-1).

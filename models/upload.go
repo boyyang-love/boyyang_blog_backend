@@ -3,10 +3,10 @@ package models
 import "time"
 
 type Upload struct {
-	Id        uint       `gorm:"primary_key" json:"id"`
+	Id        uint       `json:"id" gorm:"primary_key"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
-	DeletedAt *time.Time `sql:"index" json:"deleted_at"`
+	DeletedAt *time.Time `json:"deleted_at"`
 	Created   int        `json:"created" gorm:"autoCreateTime"`
 	Updated   int        `json:"updated" gorm:"autoUpdateTime"`
 	Hash      string     `json:"hash"`

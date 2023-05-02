@@ -33,7 +33,6 @@ type (
     }
 )
 
-
 // 用户
 @server(
     jwt: Auth

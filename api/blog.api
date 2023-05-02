@@ -47,7 +47,9 @@ type (
 	}
 
 	BlogInfo {
-		Id         uint       `json:"id"`
+		Id         uint      `json:"id"`
+		Created    int       `json:"created"`
+		Updated    int       `json:"updated"`
 		Title      string    `json:"title"`
 		SubTitle   string    `json:"sub_title"`
 		Content    string    `json:"content"`

@@ -46,6 +46,8 @@ type BlogInfoRes struct {
 
 type BlogInfo struct {
 	Id         uint      `json:"id"`
+	Created    int       `json:"created"`
+	Updated    int       `json:"updated"`
 	Title      string    `json:"title"`
 	SubTitle   string    `json:"sub_title"`
 	Content    string    `json:"content"`
@@ -136,6 +138,7 @@ type DashboardExhibition struct {
 }
 
 type DashboardUser struct {
+	Id        uint    `json:"id"`
 	Username  string  `json:"username"`
 	Gender    int     `json:"gender"`
 	Age       int     `json:"age"`

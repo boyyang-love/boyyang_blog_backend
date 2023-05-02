@@ -30,6 +30,7 @@ type (
         UserId uint   `json:"user_id"`
     }
     DashboardUser {
+        id        uint    `json:"id"`
         Username  string  `json:"username"`
         Gender    int     `json:"gender"`
         Age       int     `json:"age"`

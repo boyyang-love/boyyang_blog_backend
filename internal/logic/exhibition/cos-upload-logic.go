@@ -51,7 +51,6 @@ func (l *CosUploadLogic) CosUpload(req *types.CosUploadReq) (resp *types.CosUplo
 }
 
 func getAccessToken(config config.Config) (token string, err error) {
-
 	type Token struct {
 		AccessToken string `json:"access_token"`
 		ExpiresIn   int    `json:"expires_in"`
@@ -98,7 +97,6 @@ func getAccessToken(config config.Config) (token string, err error) {
 }
 
 func getUploadMsg(token string, uploadPath string) (resp *types.CosUploadRes, err error) {
-
 	type QueryParams struct {
 		Env   string `json:"env"`
 		Token string `json:"token,omitempty"`
