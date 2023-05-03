@@ -6,7 +6,8 @@ type CreateBlogReq struct {
 	SubTitle string `form:"sub_title"`
 	Content  string `form:"content"`
 	Cover    string `form:"cover"`
-	UserId   int    `form:"user_id,optional"`
+	UserId   uint   `form:"user_id,optional"`
+	Tags     string `form:"tags,optional"`
 }
 
 type CreateBlogRes struct {
@@ -40,22 +41,23 @@ type BlogInfoReq struct {
 }
 
 type BlogInfoRes struct {
-	Count    int        `json:"count"`
+	Count    int64      `json:"count"`
 	BlogInfo []BlogInfo `json:"blog_info"`
 }
 
 type BlogInfo struct {
-	Id         uint      `json:"id"`
-	Created    int       `json:"created"`
-	Updated    int       `json:"updated"`
-	Title      string    `json:"title"`
-	SubTitle   string    `json:"sub_title"`
-	Content    string    `json:"content"`
-	Cover      string    `json:"cover"`
-	ThumbsUp   *int      `json:"thumbs_up"`
-	UserInfo   User      `json:"user_info"`
-	Collection *int      `json:"collection"`
-	Comments   []Comment `json:"comments,omitempty"`
+	Id         uint   `json:"id"`
+	Created    int    `json:"created"`
+	Updated    int    `json:"updated"`
+	Title      string `json:"title"`
+	SubTitle   string `json:"sub_title"`
+	Content    string `json:"content"`
+	Cover      string `json:"cover"`
+	ThumbsUp   *int   `json:"thumbs_up"`
+	Collection *int   `json:"collection"`
+	UserId     uint   `json:"user_id"`
+	UserInfo   User   `json:"user_info"`
+	Tag        string `json:"tags"`
 }
 
 type ThumbsUpBlogReq struct {
@@ -232,7 +234,7 @@ type ExhibitionInfoRes struct {
 
 type ExhibitionInfo struct {
 	Id        uint   `json:"id"`
-	Created   int    `json:"created_at"`
+	Created   int    `json:"created"`
 	Title     string `json:"title"`
 	SubTitle  string `json:"sub_title"`
 	Des       string `json:"des"`

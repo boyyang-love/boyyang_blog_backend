@@ -26,16 +26,15 @@ func NewApprovalExhibitionLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 }
 
 func (l *ApprovalExhibitionLogic) ApprovalExhibition(req *types.ApprovalReq) (resp *types.ApprovalRes, err error, msg respx.SucMsg) {
-	db := l.svcCtx.DB
+	DB := l.svcCtx.DB
 
-	if err = db.
+	if err = DB.
 		Model(&models.Exhibition{}).
 		Where("id = ?", req.Id).
 		Updates(&models.Exhibition{
 			Status:    req.Status,
 			RejectRes: req.Reason,
 		}).Error; err == nil {
-
 		return &types.ApprovalRes{Id: req.Id}, err, respx.SucMsg{Msg: "状态更新成功"}
 	} else {
 		return nil, errorx.NewDefaultError(err.Error()), msg

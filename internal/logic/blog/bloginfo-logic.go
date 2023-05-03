@@ -38,12 +38,13 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 	ids := strings.Split(req.Ids, ",")
 
 	if len(ids) > 0 && req.Ids != "" {
-		res := DB.
+		err = DB.
 			Model(&models.Blog{}).
+			Preload("UserInfo").
 			Where("user_id", userId).
 			Find(&blogInfo, ids).
-			Count(&count)
-		err = res.Error
+			Count(&count).
+			Error
 	} else {
 		// 分页
 		if req.Page != "" || req.Limit != "" {
@@ -56,6 +57,7 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 
 		res := DB.
 			Model(&models.Blog{}).
+			Preload("UserInfo").
 			Where("user_id", userId).
 			Find(&blogInfo).
 			Offset(-1).
@@ -66,7 +68,10 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 	if err == nil {
 		var info []types.BlogInfo
 		_ = copier.Copy(&info, &blogInfo)
-		return &types.BlogInfoRes{BlogInfo: info, Count: int(count)}, nil, msg
+		return &types.BlogInfoRes{
+			BlogInfo: info,
+			Count:    count,
+		}, nil, msg
 	} else {
 		return nil, err, msg
 	}

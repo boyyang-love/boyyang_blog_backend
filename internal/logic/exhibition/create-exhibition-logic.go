@@ -27,20 +27,20 @@ func NewCreateExhibitionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 
 func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq) (resp *types.CreateExhibitionRes, err error, msg respx.SucMsg) {
 	userId, _ := l.ctx.Value("Id").(json.Number).Int64()
-	ex := models.Exhibition{
+	exhibition := models.Exhibition{
 		Title:    req.Title,
 		SubTitle: req.SubTitle,
 		Des:      req.Des,
 		Cover:    req.Cover,
 		UserId:   uint(userId),
 	}
-	res := l.svcCtx.DB.
+	if err = l.svcCtx.DB.
 		Model(&models.Exhibition{}).
-		Create(&ex)
-
-	if res.Error == nil {
-		return &types.CreateExhibitionRes{Id: ex.Id}, nil, respx.SucMsg{Msg: "图片上传成功"}
+		Create(&exhibition).Error; err != nil {
+		return nil, err, msg
 	} else {
-		return nil, res.Error, msg
+		return &types.CreateExhibitionRes{Id: exhibition.Id},
+			nil,
+			respx.SucMsg{Msg: "图片上传成功"}
 	}
 }

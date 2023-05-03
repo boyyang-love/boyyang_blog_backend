@@ -4,7 +4,6 @@ import (
 	"blog_server/common/respx"
 	"blog_server/models"
 	"context"
-	"fmt"
 	"github.com/jinzhu/copier"
 	"strconv"
 	"strings"
@@ -31,9 +30,7 @@ func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ex
 
 func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp *types.ExhibitionInfoRes, err error, msg respx.SucMsg) {
 	DB := l.svcCtx.DB
-
 	ids := strings.Split(req.Ids, ",")
-
 	var ex []models.Exhibition
 	var exInfo []types.ExhibitionInfo
 	var count int64
@@ -41,6 +38,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 	if len(ids) > 0 && req.Ids != "" {
 		if err := DB.
 			Model(&models.Exhibition{}).
+			Preload("UserInfo").
 			Order("created_at desc").
 			Find(&ex, ids).
 			Count(&count).
@@ -65,13 +63,13 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 		}
 		if err := DB.
 			Model(&models.Exhibition{}).
+			Preload("UserInfo").
 			Order("created_at desc").
 			Find(&ex).
 			Offset(-1).
 			Count(&count).
 			Error; err == nil {
 			err = copier.Copy(&exInfo, &ex)
-			fmt.Println(ex)
 			return &types.ExhibitionInfoRes{
 					Exhibitions: exInfo,
 					Count:       int(count),

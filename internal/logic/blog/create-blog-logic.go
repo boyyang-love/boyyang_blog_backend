@@ -8,6 +8,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/zeromicro/go-zero/core/logx"
+	"strings"
 )
 
 type CreateBlogLogic struct {
@@ -26,19 +27,25 @@ func NewCreateBlogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Create
 
 func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.CreateBlogRes, err error, msg respx.SucMsg) {
 	userId, _ := l.ctx.Value("Id").(json.Number).Int64()
+
 	blog := models.Blog{
 		Title:    req.Title,
 		SubTitle: req.SubTitle,
 		Content:  req.Content,
 		Cover:    req.Cover,
 		UserId:   uint(userId),
+		Tag:      req.Tags,
+	}
+	// 创建tags
+	for _, tag := range strings.Split(req.Tags, ",") {
+		blog.TagInfo = append(blog.TagInfo, models.Tag{Name: tag, UserId: uint(userId)})
 	}
 	res := l.svcCtx.DB.
 		Model(&models.Blog{}).
 		Create(&blog)
 	if res.Error == nil {
 		return &types.CreateBlogRes{Id: blog.Id}, nil, respx.SucMsg{
-			Msg: "上传成功！",
+			Msg: "博客发布成功！",
 		}
 	} else {
 		return nil, res.Error, msg

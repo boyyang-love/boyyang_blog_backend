@@ -8,7 +8,8 @@ type (
 		SubTitle string `form:"sub_title"`
 		Content  string `form:"content"`
 		Cover    string `form:"cover"`
-		UserId   int    `form:"user_id,optional"`
+		UserId   uint    `form:"user_id,optional"`
+	    Tags     string `form:"tags,optional"`
 	}
 
 	CreateBlogRes {
@@ -42,7 +43,7 @@ type (
 	}
 
 	BlogInfoRes {
-		Count    int        `json:"count"`
+		Count    int64        `json:"count"`
 		BlogInfo []BlogInfo `json:"blog_info"`
 	}
 
@@ -55,9 +56,10 @@ type (
 		Content    string    `json:"content"`
 		Cover      string    `json:"cover"`
 		ThumbsUp   *int      `json:"thumbs_up"`
-		UserInfo   User      `json:"user_info"`
 		Collection *int      `json:"collection"`
-		Comments   []Comment `json:"comments,omitempty"`
+		UserId     uint      `json:"user_id"`
+		UserInfo   User      `json:"user_info"`
+		Tag        string    `json:"tags"`
 	}
 
 	ThumbsUpBlogReq {
