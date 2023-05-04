@@ -53,3 +53,37 @@ AppidAndSecret:
 1. [后端gitHub仓库地址](https://github.com/boyyang-love/boyyang_blog_backend)
 2. [前端gitHub仓库地址](https://github.com/boyyang-love/boyyang_blog)
 3. [前端页面在线预览地址](https://prod-2g5hif5wbec83baa-1301921121.tcloudbaseapp.com)
+
+### 项目结构
+```.
+├─api // api接口生成目录
+├─common // 公共方法
+│  ├─errorx
+│  ├─helper
+│  └─respx
+├─etc // yaml配置文件目录
+├─internal
+│  ├─config // config
+│  ├─handler
+│  │  ├─blog
+│  │  ├─comment
+│  │  ├─dashboard
+│  │  ├─exhibition
+│  │  ├─like
+│  │  ├─login
+│  │  ├─user
+│  │  └─ws
+│  ├─logic // 业务接口相关
+│  │  ├─blog
+│  │  ├─comment
+│  │  ├─dashboard
+│  │  ├─exhibition
+│  │  ├─like
+│  │  ├─login
+│  │  ├─user
+│  │  └─ws
+│  ├─svc
+│  └─types // go-zero自动生成的type文件
+├─models // mysql 数据库模型文件（gorm）
+
+```

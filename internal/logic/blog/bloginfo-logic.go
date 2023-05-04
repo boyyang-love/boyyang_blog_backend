@@ -41,6 +41,7 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 		err = DB.
 			Model(&models.Blog{}).
 			Preload("UserInfo").
+			Order("created desc").
 			Where("user_id", userId).
 			Find(&blogInfo, ids).
 			Count(&count).
@@ -58,6 +59,7 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 		res := DB.
 			Model(&models.Blog{}).
 			Preload("UserInfo").
+			Order("created desc").
 			Where("user_id", userId).
 			Find(&blogInfo).
 			Offset(-1).
