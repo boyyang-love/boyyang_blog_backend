@@ -242,7 +242,7 @@ type ExhibitionInfo struct {
 	UserId    uint   `json:"user_id"`
 	Status    int    `json:"status"`     // 1待审核 2审核通过 3未通过审核
 	RejectRes string `json:"reject_res"` // 驳回原因
-	UserInfo  User   `json:"user_info,omitempty" gorm:"foreignKey:UserId"`
+	UserInfo  User   `json:"user_info,omitempty"`
 }
 
 type UpdateExhibitionReq struct {
@@ -293,12 +293,12 @@ type UserInfoReq struct {
 type UserInfoRes struct {
 	Id        uint   `json:"id"`
 	Username  string `json:"username"`
-	Age       int    `json:"age,omitempty"`
+	Age       int    `json:"age"`
 	Gender    int    `json:"gender"`
 	AvatarUrl string `json:"avatar_url"`
 	Tel       int    `json:"tel"`
-	Email     string `json:"email,omitempty"`
-	Address   string `json:"address,omitempty"`
+	Email     string `json:"email"`
+	Address   string `json:"address"`
 }
 
 type UpdateUserInfoReq struct {

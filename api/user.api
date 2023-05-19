@@ -9,13 +9,12 @@ type (
     UserInfoRes {
         Id        uint   `json:"id"`
         Username  string `json:"username"`
-        Age       int    `json:"age,omitempty"`
+        Age       int    `json:"age"`
         Gender    int    `json:"gender"`
         AvatarUrl string `json:"avatar_url"`
         Tel       int    `json:"tel"`
-        Email     string `json:"email,omitempty"`
-        Address   string `json:"address,omitempty"`
-
+        Email     string `json:"email"`
+        Address   string `json:"address"`
     }
 )
 

@@ -27,31 +27,26 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error, msg respx.SucMsg) {
-	userInfo := models.User{}
+	var info types.User
 	res := l.svcCtx.DB.
 		Model(&models.User{}).
 		Where("username = ? and password = ?", req.Username, helper.MakeHash(req.Password)).
-		Scan(&userInfo)
+		First(&info)
+
 	if res.RowsAffected == 0 {
 		return nil, errors.New("请检查账号或密码是否正确"), msg
 	} else {
 		token, _ := helper.GenerateJwtToken(
 			&helper.GenerateJwtStruct{
-				Id:       int(userInfo.Id),
-				Username: userInfo.Username,
+				Id:       int(info.Id),
+				Username: info.Username,
 			},
 			l.svcCtx.Config.Auth.AccessSecret,
 			l.svcCtx.Config.Auth.AccessExpire,
 		)
 
 		return &types.LoginRes{
-			Info: types.User{
-				Id:        userInfo.Id,
-				Username:  userInfo.Username,
-				Gender:    userInfo.Gender,
-				AvatarUrl: userInfo.AvatarUrl,
-				Tel:       *userInfo.Tel,
-			},
+			Info:  info,
 			Token: token,
 		}, nil, respx.SucMsg{Msg: "登录成功"}
 	}
