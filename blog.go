@@ -28,6 +28,8 @@ func main() {
 			"http://boyyanglove.web3v.vip",
 			"https://prod-2g5hif5wbec83baa-1301921121.tcloudbaseapp.com",
 			"http://boyyang.3vkj.club",
+			"http://111.67.195.4:8085",
+			"http://111.67.195.4:8081",
 		),
 	)
 	defer server.Stop()
