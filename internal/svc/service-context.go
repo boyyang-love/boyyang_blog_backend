@@ -30,7 +30,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	)
 	db, err := helper.InitMysql(args)
 	if err != nil {
-		fmt.Printf("数据库连接失败 \n（%s）\n", err.Error())
+		fmt.Printf("🐼 Mysql storage initialization failed‼️ 🐼 (%s)", err.Error())
 	} else {
 		//db.AutoMigrate(&models.User{})
 		//db.AutoMigrate(&models.Upload{})
@@ -40,13 +40,14 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		//db.AutoMigrate(&models.Likes{})
 		//db.AutoMigrate(&models.Follow{})
 		//db.AutoMigrate(&models.Tag{})
-		fmt.Println("数据库连接成功🎇🎇🎇🎇")
+		fmt.Println("🐼 Mysql storage initialization successful‼️ 🐼")
 	}
 	clt := helper.InitCloudBase(cloudBase.ClientUrl, cloudBase.ClientSecretId, cloudBase.ClientSecretKey)
 	if clt == nil {
-		fmt.Println("对象存储连接失败🧶🧶🧶🧶")
+		fmt.Printf("🐼 Object storage initialization failed‼️ 🐼")
+		fmt.Println("💫 ")
 	} else {
-		fmt.Println("对象存储连接成功🎇🎇🎇🎇")
+		fmt.Println("🐼 Object storage initialization successful‼️ 🐼")
 	}
 	// hub
 	hub := client.NewHub()
