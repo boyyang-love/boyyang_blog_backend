@@ -34,7 +34,19 @@ func main() {
 	)
 	defer server.Stop()
 
+	//hub := wss.NewHub()
+	//go hub.Run()
+	//
+	//server.AddRoute(rest.Route{
+	//	Method: http.MethodGet,
+	//	Path:   "/wss",
+	//	Handler: func(w http.ResponseWriter, r *http.Request) {
+	//		wss.ServeWs(hub, w, r)
+	//	},
+	//})
+
 	ctx := svc.NewServiceContext(c)
+	go ctx.Hub.HubRun()
 	handler.RegisterHandlers(server, ctx)
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)

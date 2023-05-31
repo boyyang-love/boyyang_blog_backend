@@ -1,9 +1,9 @@
 package ws
 
 import (
+	"blog_server/common/client"
 	"net/http"
 
-	"blog_server/internal/logic/ws"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -11,18 +11,11 @@ import (
 
 func WsHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		client.WsRun(svcCtx.Hub, w, r)
 		var req types.WsReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
-		}
-
-		l := ws.NewWsLogic(r.Context(), svcCtx)
-		resp, err := l.Ws(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
 		}
 	}
 }

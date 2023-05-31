@@ -1,11 +1,10 @@
 package ws
 
 import (
-	"context"
-
+	"blog_server/common/respx"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
-
+	"context"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -23,8 +22,7 @@ func NewWsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *WsLogic {
 	}
 }
 
-func (l *WsLogic) Ws(req *types.WsReq) (resp *types.WsRes, err error) {
-	// todo: add your logic here and delete this line
+func (l *WsLogic) Ws(req *types.WsReq) (resp *types.WsRes, err error, msg respx.SucMsg) {
 
-	return
+	return nil, nil, respx.SucMsg{Msg: "socket 断开链接"}
 }

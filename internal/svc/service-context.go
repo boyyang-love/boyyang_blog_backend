@@ -1,6 +1,7 @@
 package svc
 
 import (
+	"blog_server/common/client"
 	"blog_server/common/helper"
 	"blog_server/internal/config"
 	"fmt"
@@ -12,6 +13,7 @@ type ServiceContext struct {
 	Config config.Config
 	DB     *gorm.DB
 	Client *cos.Client
+	Hub    *client.Hub
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -38,17 +40,20 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		//db.AutoMigrate(&models.Likes{})
 		//db.AutoMigrate(&models.Follow{})
 		//db.AutoMigrate(&models.Tag{})
-		fmt.Println("数据库连接成功...")
+		fmt.Println("数据库连接成功🎇🎇🎇🎇")
 	}
-	client := helper.InitCloudBase(cloudBase.ClientUrl, cloudBase.ClientSecretId, cloudBase.ClientSecretKey)
-	if client == nil {
-		fmt.Println("对象存储连接失败")
+	clt := helper.InitCloudBase(cloudBase.ClientUrl, cloudBase.ClientSecretId, cloudBase.ClientSecretKey)
+	if clt == nil {
+		fmt.Println("对象存储连接失败🧶🧶🧶🧶")
 	} else {
-		fmt.Println("对象存储连接成功...")
+		fmt.Println("对象存储连接成功🎇🎇🎇🎇")
 	}
+	// hub
+	hub := client.NewHub()
 	return &ServiceContext{
 		Config: c,
 		DB:     db,
-		Client: client,
+		Client: clt,
+		Hub:    hub,
 	}
 }
