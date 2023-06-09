@@ -29,6 +29,7 @@ func (h *Hub) HubRun() {
 			h.broadcast <- []byte(fmt.Sprintf("user(id=%v) has connected.\n", client.id))
 			h.clients[client] = true
 		case unregister := <-h.unregister:
+			h.broadcast <- []byte(fmt.Sprintf("user(id=%v) has connected.\n", unregister.id))
 			delete(h.clients, unregister)
 		case boardcastMessage := <-h.broadcast:
 			for client := range h.clients {

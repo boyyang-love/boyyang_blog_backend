@@ -46,6 +46,7 @@ func main() {
 	//})
 
 	ctx := svc.NewServiceContext(c)
+	// websocket
 	go ctx.Hub.HubRun()
 	handler.RegisterHandlers(server, ctx)
 
