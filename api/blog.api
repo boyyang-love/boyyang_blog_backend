@@ -8,7 +8,7 @@ type (
 		SubTitle string `form:"sub_title"`
 		Content  string `form:"content"`
 		Cover    string `form:"cover"`
-		UserId   uint    `form:"user_id,optional"`
+		UserId   uint   `form:"user_id,optional"`
 	    Tags     string `form:"tags,optional"`
 	}
 
@@ -32,9 +32,6 @@ type (
 		Id uint `form:"id"`
 	}
 
-	DeleteBlogRes {
-		Msg string `json:"msg"`
-	}
 
 	BlogInfoReq {
 		Ids   string `form:"ids,optional"`
@@ -77,12 +74,12 @@ type (
 	group: blog
 )
 service blog-api {
-	@handler CreateBlog
+	@handler CreateBlog // 创建博客
 	post /blog/create (CreateBlogReq) returns (CreateBlogRes)
 	@handler UpdateBlog
 	post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
 	@handler DeleteBlog
-	get /blog/delete (DeleteBlogReq) returns (DeleteBlogRes)
+	get /blog/delete (DeleteBlogReq) returns ()
 	@handler Bloginfo
 	get /blog/info (BlogInfoReq) returns (BlogInfoRes)
 	@handler ThumbsupBlog

@@ -25,14 +25,13 @@ func NewDeleteBlogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 	}
 }
 
-func (l *DeleteBlogLogic) DeleteBlog(req *types.DeleteBlogReq) (resp *types.DeleteBlogRes, err error, msg respx.SucMsg) {
-	res := l.svcCtx.DB.
+func (l *DeleteBlogLogic) DeleteBlog(req *types.DeleteBlogReq) (err error, msg respx.SucMsg) {
+	if err = l.svcCtx.DB.
 		Model(&models.Blog{}).
 		Where("id = ?", req.Id).
-		Delete(&models.Blog{})
-	if res.Error == nil {
-		return &types.DeleteBlogRes{Msg: "删除成功"}, nil, msg
+		Delete(&models.Blog{}).Error; err != nil {
+		return err, msg
 	} else {
-		return nil, res.Error, msg
+		return nil, respx.SucMsg{Msg: "博客删除成功"}
 	}
 }

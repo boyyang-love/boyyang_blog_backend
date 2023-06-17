@@ -30,10 +30,6 @@ type DeleteBlogReq struct {
 	Id uint `form:"id"`
 }
 
-type DeleteBlogRes struct {
-	Msg string `json:"msg"`
-}
-
 type BlogInfoReq struct {
 	Ids   string `form:"ids,optional"`
 	Page  string `form:"page,optional"`
