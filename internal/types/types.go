@@ -170,6 +170,10 @@ type LikesInfo struct {
 	LikesType    bool `json:"likes_type"`
 }
 
+type LikesInfoIds struct {
+	Ids []int `json:"ids"`
+}
+
 type AddAndUnFollowReq struct {
 	FollowId   uint `form:"follow_id"`
 	FollowType int  `form:"follow_type"` // 1 添加 0 取消
@@ -226,6 +230,7 @@ type ExhibitionInfoReq struct {
 type ExhibitionInfoRes struct {
 	Count       int              `json:"count"`
 	Exhibitions []ExhibitionInfo `json:"exhibitions"`
+	LikesIds    []int            `json:"likes_ids"`
 }
 
 type ExhibitionInfo struct {
@@ -260,6 +265,10 @@ type ApprovalReq struct {
 
 type ApprovalRes struct {
 	Id uint `json:"id"`
+}
+
+type DelExhibitionReq struct {
+	Id uint `form:"id"`
 }
 
 type LoginReq struct {

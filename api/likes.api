@@ -25,6 +25,10 @@ type (
         UserId       uint `json:"user_id"`
         LikesType    bool `json:"likes_type"`
     }
+
+    LikesInfoIds {
+        ids []int   `json:"ids"`
+    }
 )
 
 type (
@@ -48,6 +52,8 @@ service blog-api {
     post /like (AddLikesReq)
     @handler LikesInfo
     get /likes/info (LikesInfoReq) returns (LikesInfoRes)
+    @handler LikesInfoIds
+    get /likes/info/ids returns (LikesInfoIds)
     @handler Follow
     get /follow (AddAndUnFollowReq)
     @handler FollowInfo

@@ -17,7 +17,7 @@ type (
 	}
 
 	UpdateBlogReq {
-		Id       uint    `form:"id"`
+		Id       uint   `form:"id"`
 		Title    string `form:"title"`
 		SubTitle string `form:"sub_title"`
 		Content  string `form:"content"`

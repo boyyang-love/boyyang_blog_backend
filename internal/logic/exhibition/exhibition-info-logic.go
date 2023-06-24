@@ -4,6 +4,7 @@ import (
 	"blog_server/common/respx"
 	"blog_server/models"
 	"context"
+	"encoding/json"
 	"github.com/jinzhu/copier"
 	"strconv"
 	"strings"
@@ -35,6 +36,12 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 	var exInfo []types.ExhibitionInfo
 	var count int64
 
+	//获取收藏ids
+	likes, err := likesIds(l)
+	if err != nil {
+		return nil, err, msg
+	}
+
 	if len(ids) > 0 && req.Ids != "" {
 		if err := DB.
 			Model(&models.Exhibition{}).
@@ -47,6 +54,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			return &types.ExhibitionInfoRes{
 					Exhibitions: exInfo,
 					Count:       int(count),
+					LikesIds:    likes,
 				},
 				nil,
 				respx.SucMsg{Msg: "获取成功"}
@@ -73,11 +81,26 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			return &types.ExhibitionInfoRes{
 					Exhibitions: exInfo,
 					Count:       int(count),
+					LikesIds:    likes,
 				},
 				nil,
 				respx.SucMsg{Msg: "获取成功"}
 		} else {
 			return nil, err, msg
 		}
+	}
+}
+
+func likesIds(l *ExhibitionInfoLogic) (ids []int, err error) {
+	userid, _ := l.ctx.Value("Id").(json.Number).Int64()
+	if err = l.svcCtx.DB.
+		Model(&models.Likes{}).
+		Select("exhibition_id").
+		Where("user_id = ? and likes_type = ?", userid, true).
+		Find(&models.Likes{}).
+		Scan(&ids).Error; err != nil {
+		return nil, err
+	} else {
+		return ids, nil
 	}
 }
