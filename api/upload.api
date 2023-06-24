@@ -56,6 +56,7 @@ type (
     ExhibitionInfoRes {
         Count       int              `json:"count"`
         Exhibitions []ExhibitionInfo `json:"exhibitions"`
+        LikesIds    []int            `json:"likes_ids"`
     }
 
     ExhibitionInfo {
@@ -99,6 +100,12 @@ type (
     }
 )
 
+type (
+    delExhibitionReq {
+        Id uint `form:"id"`
+    }
+)
+
 
 // 文件上传 图片墙上传 图片墙信息
 @server(
@@ -118,4 +125,6 @@ service blog-api {
     post /exhibition/update (updateExhibitionReq) returns (updateExhibitionRes)
     @handler ApprovalExhibition
     post /exhibition/approval (approvalReq) returns (approvalRes)
+    @handler DelExhibition
+    post /exhibition/del (delExhibitionReq) returns()
 }

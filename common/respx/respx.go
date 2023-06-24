@@ -12,7 +12,8 @@ type Body struct {
 }
 
 type SucMsg struct {
-	Msg string `json:"msg"`
+	Msg  string `json:"msg"`
+	Code int    `json:"code"`
 }
 
 func Response(w http.ResponseWriter, resp interface{}, err error, msg interface{}) {
@@ -22,6 +23,9 @@ func Response(w http.ResponseWriter, resp interface{}, err error, msg interface{
 		body.Data = resp
 		if msg.(SucMsg).Msg != "" {
 			body.Msg = msg.(SucMsg).Msg
+			if msg.(SucMsg).Code != 0 {
+				body.Code = int(msg.(SucMsg).Code)
+			}
 		} else {
 			body.Msg = "ok"
 		}

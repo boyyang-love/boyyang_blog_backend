@@ -6,8 +6,6 @@ import (
 	"blog_server/internal/types"
 	"blog_server/models"
 	"context"
-	"fmt"
-
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -26,7 +24,6 @@ func NewLikesInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LikesIn
 }
 
 func (l *LikesInfoLogic) LikesInfo(req *types.LikesInfoReq) (resp *types.LikesInfoRes, err error, msg respx.SucMsg) {
-	fmt.Println(req.ExhibitionId)
 	DB := l.svcCtx.DB
 	var likesInfo []types.LikesInfo
 	if err = DB.
@@ -35,7 +32,6 @@ func (l *LikesInfoLogic) LikesInfo(req *types.LikesInfoReq) (resp *types.LikesIn
 		Find(&likesInfo).Error; err != nil {
 		return nil, err, msg
 	} else {
-		fmt.Println(likesInfo)
 		return &types.LikesInfoRes{
 			LikesInfo: likesInfo,
 		}, nil, msg

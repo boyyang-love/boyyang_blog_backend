@@ -95,6 +95,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodGet,
+				Path:    "/likes/info/ids",
+				Handler: like.LikesInfoIdsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
 				Path:    "/follow",
 				Handler: like.FollowHandler(serverCtx),
 			},
@@ -138,6 +143,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/exhibition/approval",
 				Handler: exhibition.ApprovalExhibitionHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/exhibition/del",
+				Handler: exhibition.DelExhibitionHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
