@@ -32,7 +32,7 @@ func (l *FollowLogic) Follow(req *types.AddAndUnFollowReq) (err error, msg respx
 	}
 
 	if req.FollowId == uint(id) {
-		return nil, respx.SucMsg{Msg: "不能关注自己"}
+		return nil, respx.SucMsg{Msg: "不能关注自己", Code: 1}
 	}
 
 	if req.FollowType == 1 { //关注
