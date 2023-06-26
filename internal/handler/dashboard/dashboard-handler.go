@@ -2,7 +2,7 @@ package dashboard
 
 import (
 	"blog_server/common/respx"
-	"blog_server/internal/logic/dashboard"
+	logic "blog_server/internal/logic/dashboard"
 	"blog_server/internal/svc"
 	"net/http"
 )

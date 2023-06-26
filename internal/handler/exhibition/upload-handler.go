@@ -3,7 +3,7 @@ package exhibition
 import (
 	"blog_server/common/helper"
 	"blog_server/common/respx"
-	"blog_server/internal/logic/exhibition"
+	logic "blog_server/internal/logic/exhibition"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"

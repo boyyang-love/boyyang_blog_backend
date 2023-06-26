@@ -2,7 +2,7 @@ package user
 
 import (
 	"blog_server/common/respx"
-	"blog_server/internal/logic/user"
+	logic "blog_server/internal/logic/user"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"

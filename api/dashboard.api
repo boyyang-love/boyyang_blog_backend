@@ -4,42 +4,42 @@ import "common.api"
 
 type (
     DashboardRes {
-        UserInfo    DashboardUserInfo     `json:"user_info"` // 用户信息
-        Dashboard   []Dashboard           `json:"dashboard"`
+        UserInfo DashboardUserInfo `json:"user_info"` // 用户信息
+        Dashboard []Dashboard `json:"dashboard"`
         Exhibitions []DashboardExhibition `json:"exhibitions"`
     }
 
     Dashboard {
-        Name                    string `json:"name"`
-        BlogPublishValue        string `json:"blog_publish_value"`
+        Name string `json:"name"`
+        BlogPublishValue string `json:"blog_publish_value"`
         ExhibitionsPublishValue string `json:"exhibitions_publish_value"`
     }
 
     DashboardUserInfo {
-        ThumbsUp  *int `json:"thumbs_up" gorm:"default:0"` // 获赞数
-        Like      *int `json:"like" gorm:"default:0"`          // 收藏数
-        Publish   *int `json:"publish" gorm:"default:0"`    // 上传数
+        ThumbsUp *int `json:"thumbs_up" gorm:"default:0"` // 获赞数
+        Like *int `json:"like" gorm:"default:0"`          // 收藏数
+        Publish *int `json:"publish" gorm:"default:0"`    // 上传数
         Following *int `json:"following"`
         DashboardUser
     }
     DashboardExhibition {
-        Id     uint   `json:"id"`
-        Title  string `json:"title"`
-        Des    string `json:"des"`
-        Cover  string `json:"cover"`
-        UserId uint   `json:"user_id"`
+        Id uint `json:"id"`
+        Title string `json:"title"`
+        Des string `json:"des"`
+        Cover string `json:"cover"`
+        UserId uint `json:"user_id"`
     }
     DashboardUser {
-        id        uint    `json:"id"`
-        Username  string  `json:"username"`
-        Gender    int     `json:"gender"`
-        Age       int     `json:"age"`
-        Email     *string `json:"email"`
-        Qq        *int    `json:"qq"`
-        Wechat    *string `json:"wechat"`
-        GitHub    *string `json:"gitHub"`
-        AvatarUrl string  `json:"avatar_url"`
-        Motto     *string `json:"motto"`
+        id uint `json:"id"`
+        Username string `json:"username"`
+        Gender int `json:"gender"`
+        Age int `json:"age"`
+        Email *string `json:"email"`
+        Qq *int `json:"qq"`
+        Wechat *string `json:"wechat"`
+        GitHub *string `json:"gitHub"`
+        AvatarUrl string `json:"avatar_url"`
+        Motto *string `json:"motto"`
     }
 )
 

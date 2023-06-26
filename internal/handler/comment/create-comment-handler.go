@@ -2,7 +2,7 @@ package comment
 
 import (
 	"blog_server/common/respx"
-	"blog_server/internal/logic/comment"
+	logic "blog_server/internal/logic/comment"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"

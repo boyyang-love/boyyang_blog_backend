@@ -1,43 +1,43 @@
 syntax = "v1"
 
 type (
-	CreateBlogCommentReq {
-		Content string `form:"content" gorm:"size:2000"`
-		BlogId  uint   `form:"blog_id"`
-	}
+    CreateBlogCommentReq {
+        Content string `form:"content" gorm:"size:2000"`
+        BlogId uint `form:"blog_id"`
+    }
 
-	CreateBlogCommentRes {
-		Msg string `json:"msg"`
-	}
+    CreateBlogCommentRes {
+        Msg string `json:"msg"`
+    }
 
-	DeleateBlogCommentReq {
-		Id uint `form:"id"`
-	}
+    DeleateBlogCommentReq {
+        Id uint `form:"id"`
+    }
 
-	DeleateBlogCommentRes {
-		Msg string `json:"msg"`
-	}
+    DeleateBlogCommentRes {
+        Msg string `json:"msg"`
+    }
 
-	ThumbsUpBlogCommentReq {
-		Id uint `form:"id"`
-	}
+    ThumbsUpBlogCommentReq {
+        Id uint `form:"id"`
+    }
 
-	ThumbsUpBlogCommentRes {
-		Msg string `json:"msg"`
-	}
+    ThumbsUpBlogCommentRes {
+        Msg string `json:"msg"`
+    }
 )
 
 
 // 博客评论 点赞
 @server(
-	jwt: Auth
-	group: comment
+    jwt: Auth
+    group: comment
 )
 service blog-api {
-	@handler CreateComment
-	post /blog/comment/create (CreateBlogCommentReq) returns (CreateBlogCommentRes)
-	@handler DeleteComment
-	get /blog/comment/delete (DeleateBlogCommentReq) returns (DeleateBlogCommentRes)
-	@handler ThumbsupComment
-	get /blog/comment/thumbsup (ThumbsUpBlogCommentReq) returns (ThumbsUpBlogCommentRes)
+    @handler CreateComment
+    post /blog/comment/create (CreateBlogCommentReq) returns (CreateBlogCommentRes)
+    @handler DeleteComment
+    get /blog/comment/delete (DeleateBlogCommentReq) returns (DeleateBlogCommentRes)
+    @handler ThumbsupComment
+    get /blog/comment/thumbsup (ThumbsUpBlogCommentReq) returns (ThumbsUpBlogCommentRes)
 }

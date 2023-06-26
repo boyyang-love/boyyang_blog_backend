@@ -2,7 +2,7 @@ package blog
 
 import (
 	"blog_server/common/respx"
-	"blog_server/internal/logic/blog"
+	logic "blog_server/internal/logic/blog"
 	"net/http"
 
 	"blog_server/internal/svc"

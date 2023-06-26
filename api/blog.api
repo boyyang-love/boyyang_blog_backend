@@ -3,86 +3,86 @@ syntax = "v1"
 import "common.api"
 
 type (
-	CreateBlogReq {
-		Title    string `form:"title"`
-		SubTitle string `form:"sub_title"`
-		Content  string `form:"content"`
-		Cover    string `form:"cover"`
-		UserId   uint   `form:"user_id,optional"`
-	    Tags     string `form:"tags,optional"`
-	}
+    CreateBlogReq {
+        Title string `form:"title"`
+        SubTitle string `form:"sub_title"`
+        Content string `form:"content"`
+        Cover string `form:"cover"`
+        UserId uint `form:"user_id,optional"`
+        Tags string `form:"tags,optional"`
+    }
 
-	CreateBlogRes {
-		Id uint `json:"id"`
-	}
+    CreateBlogRes {
+        Id uint `json:"id"`
+    }
 
-	UpdateBlogReq {
-		Id       uint   `form:"id"`
-		Title    string `form:"title"`
-		SubTitle string `form:"sub_title"`
-		Content  string `form:"content"`
-		Cover    string `form:"cover"`
-	}
+    UpdateBlogReq {
+        Id uint `form:"id"`
+        Title string `form:"title"`
+        SubTitle string `form:"sub_title"`
+        Content string `form:"content"`
+        Cover string `form:"cover"`
+    }
 
-	UpdateBlogRes {
-		Msg string `json:"msg"`
-	}
+    UpdateBlogRes {
+        Msg string `json:"msg"`
+    }
 
-	DeleteBlogReq {
-		Id uint `form:"id"`
-	}
+    DeleteBlogReq {
+        Id uint `form:"id"`
+    }
 
 
-	BlogInfoReq {
-		Ids   string `form:"ids,optional"`
-		Page  string `form:"page,optional"`
-		Limit string `form:"limit,optional"`
-	}
+    BlogInfoReq {
+        Ids string `form:"ids,optional"`
+        Page string `form:"page,optional"`
+        Limit string `form:"limit,optional"`
+    }
 
-	BlogInfoRes {
-		Count    int64        `json:"count"`
-		BlogInfo []BlogInfo `json:"blog_info"`
-	}
+    BlogInfoRes {
+        Count int64 `json:"count"`
+        BlogInfo []BlogInfo `json:"blog_info"`
+    }
 
-	BlogInfo {
-		Id         uint      `json:"id"`
-		Created    int       `json:"created"`
-		Updated    int       `json:"updated"`
-		Title      string    `json:"title"`
-		SubTitle   string    `json:"sub_title"`
-		Content    string    `json:"content"`
-		Cover      string    `json:"cover"`
-		ThumbsUp   *int      `json:"thumbs_up"`
-		Collection *int      `json:"collection"`
-		UserId     uint      `json:"user_id"`
-		UserInfo   User      `json:"user_info"`
-		Tag        string    `json:"tags"`
-	}
+    BlogInfo {
+        Id uint `json:"id"`
+        Created int `json:"created"`
+        Updated int `json:"updated"`
+        Title string `json:"title"`
+        SubTitle string `json:"sub_title"`
+        Content string `json:"content"`
+        Cover string `json:"cover"`
+        ThumbsUp *int `json:"thumbs_up"`
+        Collection *int `json:"collection"`
+        UserId uint `json:"user_id"`
+        UserInfo User `json:"user_info"`
+        Tag string `json:"tags"`
+    }
 
-	ThumbsUpBlogReq {
-		Id uint `form:"id"`
-	}
+    ThumbsUpBlogReq {
+        Id uint `form:"id"`
+    }
 
-	ThumbsUpBlogRes {
-		Msg string `json:"msg"`
-	}
+    ThumbsUpBlogRes {
+        Msg string `json:"msg"`
+    }
 )
 
 // 博客
 @server(
-	jwt: Auth
-	group: blog
+    jwt: Auth
+    group: blog
 )
 service blog-api {
-	@handler CreateBlog // 创建博客
-	post /blog/create (CreateBlogReq) returns (CreateBlogRes)
-	@handler UpdateBlog
-	post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
-	@handler DeleteBlog
-	get /blog/delete (DeleteBlogReq) returns ()
-	@handler Bloginfo
-	get /blog/info (BlogInfoReq) returns (BlogInfoRes)
-	@handler ThumbsupBlog
-	get /blog/thumbsup (ThumbsUpBlogReq) returns (ThumbsUpBlogRes)
+    @handler CreateBlog // 创建博客
+    post /blog/create (CreateBlogReq) returns (CreateBlogRes)
+    @handler UpdateBlog
+    post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
+    @handler DeleteBlog
+    get /blog/delete (DeleteBlogReq) returns ()
+    @handler Bloginfo
+    get /blog/info (BlogInfoReq) returns (BlogInfoRes)
+    @handler ThumbsupBlog
+    get /blog/thumbsup (ThumbsUpBlogReq) returns (ThumbsUpBlogRes)
 }
 

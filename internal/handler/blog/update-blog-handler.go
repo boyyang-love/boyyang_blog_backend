@@ -2,7 +2,7 @@ package blog
 
 import (
 	"blog_server/common/respx"
-	"blog_server/internal/logic/blog"
+	logic "blog_server/internal/logic/blog"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"

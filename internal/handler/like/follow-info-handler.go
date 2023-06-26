@@ -2,7 +2,7 @@ package like
 
 import (
 	"blog_server/common/respx"
-	"blog_server/internal/logic/like"
+	logic "blog_server/internal/logic/like"
 	"blog_server/internal/svc"
 	"net/http"
 )

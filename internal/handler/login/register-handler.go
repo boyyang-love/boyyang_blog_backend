@@ -2,7 +2,7 @@ package login
 
 import (
 	"blog_server/common/respx"
-	"blog_server/internal/logic/login"
+	logic "blog_server/internal/logic/login"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"

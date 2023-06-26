@@ -6,7 +6,7 @@ import "upload.api"
 type (
     AddLikesReq {// 收藏
         Exhibition_id uint `form:"exhibition_id"`
-        LikesType     int  `form:"likes_type"`
+        LikesType int `form:"likes_type"`
     }
 
     LikesInfoReq {// 获取收藏
@@ -18,23 +18,23 @@ type (
     }
 
     LikesInfo {
-        Id           uint `json:"id"`
-        Created      int  `json:"created"`
-        Updated      int  `json:"updated"`
+        Id uint `json:"id"`
+        Created int `json:"created"`
+        Updated int `json:"updated"`
         ExhibitionId uint `json:"exhibition_id"`
-        UserId       uint `json:"user_id"`
-        LikesType    bool `json:"likes_type"`
+        UserId uint `json:"user_id"`
+        LikesType bool `json:"likes_type"`
     }
 
     LikesInfoIds {
-        ids []int   `json:"ids"`
+        ids []int `json:"ids"`
     }
 )
 
 type (
     AddAndUnFollowReq {
-        FollowId   uint `form:"follow_id"`
-        FollowType int  `form:"follow_type"` // 1 添加 0 取消
+        FollowId uint `form:"follow_id"`
+        FollowType int `form:"follow_type"` // 1 添加 0 取消
     }
 
     FollowInfoRes {

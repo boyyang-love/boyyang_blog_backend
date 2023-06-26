@@ -7,28 +7,28 @@ type (
     }
 
     UserInfoRes {
-        Id        uint   `json:"id"`
-        Username  string `json:"username"`
-        Age       int    `json:"age"`
-        Gender    int    `json:"gender"`
+        Id uint `json:"id"`
+        Username string `json:"username"`
+        Age int `json:"age"`
+        Gender int `json:"gender"`
         AvatarUrl string `json:"avatar_url"`
-        Tel       int    `json:"tel"`
-        Email     string `json:"email"`
-        Address   string `json:"address"`
+        Tel int `json:"tel"`
+        Email string `json:"email"`
+        Address string `json:"address"`
     }
 )
 
 // 更新用户信息
 type (
     UpdateUserInfoReq {
-        Id        uint   `form:"id"`
-        Username  string `form:"username,optional"`
-        Age       int    `form:"age,optional"`
-        Gender    int    `form:"gender,optional"`
+        Id uint `form:"id"`
+        Username string `form:"username,optional"`
+        Age int `form:"age,optional"`
+        Gender int `form:"gender,optional"`
         AvatarUrl string `form:"avatarUrl,optional"`
-        Tel       int    `form:"tel,optional"`
-        Email     string `form:"email,optional"`
-        Address   string `form:"address,optional"`
+        Tel int `form:"tel,optional"`
+        Email string `form:"email,optional"`
+        Address string `form:"address,optional"`
     }
 )
 

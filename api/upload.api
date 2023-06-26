@@ -3,10 +3,10 @@ syntax = "v1"
 // 文件上传
 type (
     UploadReq {
-        Hash     string `json:"hash,optional"`
+        Hash string `json:"hash,optional"`
         FileName string `json:"file_name,optional"`
-        Ext      string `json:"ext,optional"`
-        Size     int64  `json:"size,optional"`
+        Ext string `json:"ext,optional"`
+        Size int64 `json:"size,optional"`
         FilePath string `json:"file_path,optional"`
     }
 
@@ -17,16 +17,16 @@ type (
 
     CosUploadReq {
         FileName string `form:"file_name"`
-        Path     string `form:"path,optional"`
+        Path string `form:"path,optional"`
     }
 
     CosUploadRes {
-        Url           string `json:"url"`
-        Token         string `json:"token"`
+        Url string `json:"url"`
+        Token string `json:"token"`
         Authorization string `json:"authorization"`
-        FileId        string `json:"file_id"`
-        CosFileId     string `json:"cos_file_id"`
-        Key           string `json:"key"`
+        FileId string `json:"file_id"`
+        CosFileId string `json:"cos_file_id"`
+        Key string `json:"key"`
     }
 )
 
@@ -34,10 +34,10 @@ type (
 // 创建图片墙
 type (
     CreateExhibitionReq {
-        Title    string `form:"title"`
+        Title string `form:"title"`
         SubTitle string `form:"sub_title,optional"`
-        Des      string `form:"des"`
-        Cover    string `form:"cover"`
+        Des string `form:"des"`
+        Cover string `form:"cover"`
     }
 
     CreateExhibitionRes {
@@ -48,38 +48,38 @@ type (
 // 获取图片墙信息
 type (
     ExhibitionInfoReq {
-        Ids   string `form:"ids,optional"`
-        Page  string `form:"page,optional"`
+        Ids string `form:"ids,optional"`
+        Page string `form:"page,optional"`
         Limit string `form:"limit,optional"`
     }
 
     ExhibitionInfoRes {
-        Count       int              `json:"count"`
+        Count int `json:"count"`
         Exhibitions []ExhibitionInfo `json:"exhibitions"`
-        LikesIds    []int            `json:"likes_ids"`
+        LikesIds []int `json:"likes_ids"`
     }
 
     ExhibitionInfo {
-        Id        uint   `json:"id"`
-        Created   int    `json:"created"`
-        Title     string `json:"title"`
-        SubTitle  string `json:"sub_title"`
-        Des       string `json:"des"`
-        Cover     string `json:"cover"`
-        UserId    uint   `json:"user_id"`
-        Status    int    `json:"status"`     // 1待审核 2审核通过 3未通过审核
+        Id uint `json:"id"`
+        Created int `json:"created"`
+        Title string `json:"title"`
+        SubTitle string `json:"sub_title"`
+        Des string `json:"des"`
+        Cover string `json:"cover"`
+        UserId uint `json:"user_id"`
+        Status int `json:"status"`           // 1待审核 2审核通过 3未通过审核
         RejectRes string `json:"reject_res"` // 驳回原因
-        UserInfo  User   `json:"user_info,omitempty"`
+        UserInfo User `json:"user_info,omitempty"`
     }
 )
 
 // 更新图片墙信息
 type (
     updateExhibitionReq {
-        Id       uint   `form:"id"`
-        Title    string `form:"title,optional"`
+        Id uint `form:"id"`
+        Title string `form:"title,optional"`
         SubTitle string `form:"sub_title,optional"`
-        Des      string `form:"des,optional"`
+        Des string `form:"des,optional"`
     }
 
     updateExhibitionRes {
@@ -90,8 +90,8 @@ type (
 // 审批图片
 type (
     approvalReq {
-        Id     uint   `form:"id"`
-        Status int    `form:"status"`
+        Id uint `form:"id"`
+        Status int `form:"status"`
         Reason string `form:"reason"`
     }
 
@@ -126,5 +126,5 @@ service blog-api {
     @handler ApprovalExhibition
     post /exhibition/approval (approvalReq) returns (approvalRes)
     @handler DelExhibition
-    post /exhibition/del (delExhibitionReq) returns()
+    post /exhibition/del (delExhibitionReq) returns ()
 }

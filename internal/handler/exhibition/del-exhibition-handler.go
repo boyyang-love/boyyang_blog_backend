@@ -2,9 +2,9 @@ package exhibition
 
 import (
 	"blog_server/common/respx"
+	logic "blog_server/internal/logic/exhibition"
 	"net/http"
 
-	"blog_server/internal/logic/exhibition"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"

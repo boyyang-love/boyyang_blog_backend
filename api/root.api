@@ -1,12 +1,12 @@
 syntax = "v1"
 
 import (
-	"blog.api"
-	"comment.api"
-	"dashboard.api"
-	"likes.api"
-	"login.api"
-	"upload.api"
-	"user.api"
-	"ws.api"
+    "blog.api"
+    "comment.api"
+    "dashboard.api"
+    "likes.api"
+    "login.api"
+    "upload.api"
+    "user.api"
+    "ws.api"
 )
