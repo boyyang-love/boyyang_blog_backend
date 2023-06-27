@@ -154,7 +154,7 @@ type AddLikesReq struct {
 }
 
 type LikesInfoReq struct {
-	ExhibitionId uint `form:"exhibition_id"`
+	ExhibitionId uint `form:"exhibition_id,optional"`
 }
 
 type LikesInfoRes struct {
@@ -162,12 +162,15 @@ type LikesInfoRes struct {
 }
 
 type LikesInfo struct {
-	Id           uint `json:"id"`
-	Created      int  `json:"created"`
-	Updated      int  `json:"updated"`
-	ExhibitionId uint `json:"exhibition_id"`
-	UserId       uint `json:"user_id"`
-	LikesType    bool `json:"likes_type"`
+	Id       uint   `json:"id"`
+	Created  int    `json:"created"`
+	Updated  int    `json:"updated"`
+	Title    string `json:"title"`
+	SubTitle string `json:"sub_title"`
+	Des      string `json:"des"`
+	Cover    string `json:"cover"`                      // 图片上传路径
+	ThumbsUp *int   `json:"thumbs_up" gorm:"default:0"` // 点赞数
+	UserId   uint   `json:"user_id"`                    // 该图片上传者 id
 }
 
 type LikesInfoIds struct {

@@ -29,9 +29,10 @@ func (l *DeleteBlogLogic) DeleteBlog(req *types.DeleteBlogReq) (err error, msg r
 	if err = l.svcCtx.DB.
 		Model(&models.Blog{}).
 		Where("id = ?", req.Id).
-		Delete(&models.Blog{}).Error; err != nil {
-		return err, msg
-	} else {
+		Delete(&models.Blog{}).
+		Error; err == nil {
 		return nil, respx.SucMsg{Msg: "博客删除成功"}
+	} else {
+		return err, msg
 	}
 }

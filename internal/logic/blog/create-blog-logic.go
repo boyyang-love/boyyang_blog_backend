@@ -27,8 +27,7 @@ func NewCreateBlogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Create
 
 func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.CreateBlogRes, err error, msg respx.SucMsg) {
 	userId, _ := l.ctx.Value("Id").(json.Number).Int64()
-
-	blog := models.Blog{
+	blog := &models.Blog{
 		Title:    req.Title,
 		SubTitle: req.SubTitle,
 		Content:  req.Content,
@@ -36,18 +35,35 @@ func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.Crea
 		UserId:   uint(userId),
 		Tag:      req.Tags,
 	}
-	// 创建tags
-	for _, tag := range strings.Split(req.Tags, ",") {
-		blog.TagInfo = append(blog.TagInfo, models.Tag{Name: tag, UserId: uint(userId)})
-	}
-	res := l.svcCtx.DB.
+
+	if err := l.svcCtx.DB.
 		Model(&models.Blog{}).
-		Create(&blog)
-	if res.Error == nil {
-		return &types.CreateBlogRes{Id: blog.Id}, nil, respx.SucMsg{
-			Msg: "博客发布成功！",
-		}
+		Create(&blog).
+		Error; err != nil {
+		return nil, err, msg
 	} else {
-		return nil, res.Error, msg
+		if req.Tags != "" {
+			// 创建tags
+			for _, tag := range strings.Split(req.Tags, ",") {
+				if err = l.svcCtx.DB.
+					Model(&models.Tag{}).
+					FirstOrCreate(
+						&models.Tag{},
+						&models.Tag{
+							Name:   tag,
+							UserId: uint(userId),
+						},
+					).
+					Error; err != nil {
+					return nil, err, msg
+				}
+			}
+		}
+		return &types.CreateBlogRes{Id: blog.Id},
+			nil,
+			respx.SucMsg{
+				Msg: "博客发布成功！",
+			}
 	}
+
 }

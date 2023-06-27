@@ -15,8 +15,7 @@ type Blog struct {
 	Cover        string     `json:"cover,omitempty"` // 背景图片
 	UserId       uint       `json:"user_id"`         // 博客作者
 	UserInfo     User       `json:"user_info" gorm:"foreignKey:UserId"`
-	Tag          string     `json:"tag,omitempty"` // 博客标签
-	TagInfo      []Tag      `json:"tag_info" gorm:"foreignKey:BlogId"`
+	Tag          string     `json:"tag,omitempty"`               // 博客标签
 	ThumbsUp     *int       `json:"thumbs_up" gorm:"default:0"`  // 点赞数
 	ThumbsUpList string     `json:"thumbs_up_list"`              // 点赞id集合
 	Collection   *int       `json:"collection" gorm:"default:0"` // 收藏数

@@ -6,6 +6,7 @@ import (
 	"blog_server/internal/types"
 	"blog_server/models"
 	"context"
+	"encoding/json"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -24,16 +25,42 @@ func NewLikesInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LikesIn
 }
 
 func (l *LikesInfoLogic) LikesInfo(req *types.LikesInfoReq) (resp *types.LikesInfoRes, err error, msg respx.SucMsg) {
-	DB := l.svcCtx.DB
-	var likesInfo []types.LikesInfo
-	if err = DB.
-		Model(&models.Likes{}).
-		Where("exhibition_id = ? and likes_type = ?", req.ExhibitionId, true).
-		Find(&likesInfo).Error; err != nil {
+
+	var ids []uint
+	var likesInfos []types.LikesInfo
+	if req.ExhibitionId == 0 {
+		ids, err = l.getLikesIds()
+	} else {
+		ids = append(ids, req.ExhibitionId)
+	}
+
+	if err = l.svcCtx.DB.
+		Model(&models.Exhibition{}).
+		Debug().
+		Where("id in (?)", ids).
+		Find(&likesInfos).
+		Error; err != nil {
 		return nil, err, msg
 	} else {
 		return &types.LikesInfoRes{
-			LikesInfo: likesInfo,
+			LikesInfo: likesInfos,
 		}, nil, msg
+	}
+}
+
+func (l *LikesInfoLogic) getLikesIds() (ids []uint, err error) {
+	userid, _ := l.ctx.Value("Id").(json.Number).Int64()
+	DB := l.svcCtx.DB
+	var likesIds []uint
+
+	if err = DB.
+		Model(&models.Likes{}).
+		Select("exhibition_id").
+		Where("user_id=?", userid).
+		Scan(&likesIds).
+		Error; err != nil {
+		return nil, err
+	} else {
+		return likesIds, nil
 	}
 }

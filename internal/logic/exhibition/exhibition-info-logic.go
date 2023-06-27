@@ -30,11 +30,18 @@ func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ex
 }
 
 func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp *types.ExhibitionInfoRes, err error, msg respx.SucMsg) {
+
+	type exhibition struct {
+		types.ExhibitionInfo
+		UserInfo models.User `gorm:"foreignKey:UserId" json:"user_info"`
+	}
+
 	DB := l.svcCtx.DB
 	ids := strings.Split(req.Ids, ",")
-	var ex []models.Exhibition
-	var exInfo []types.ExhibitionInfo
+
 	var count int64
+	var ex []exhibition
+	var exInfo []types.ExhibitionInfo
 
 	//获取收藏ids
 	likes, err := likesIds(l)
@@ -44,6 +51,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 
 	if len(ids) > 0 && req.Ids != "" {
 		if err := DB.
+			Debug().
 			Model(&models.Exhibition{}).
 			Preload("UserInfo").
 			Order("created_at desc").
@@ -70,6 +78,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 				Limit(limit)
 		}
 		if err := DB.
+			Debug().
 			Model(&models.Exhibition{}).
 			Preload("UserInfo").
 			Order("created_at desc").
