@@ -246,7 +246,7 @@ type ExhibitionInfo struct {
 	UserId    uint   `json:"user_id"`
 	Status    int    `json:"status"`     // 1待审核 2审核通过 3未通过审核
 	RejectRes string `json:"reject_res"` // 驳回原因
-	UserInfo  User   `json:"user_info,omitempty"`
+	UserInfo  User   `json:"user_info,omitempty" gorm:"foreignKey:UserId"`
 }
 
 type UpdateExhibitionReq struct {

@@ -3,6 +3,7 @@ package helper
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 )
 
 func InitMysql(args string) (db *gorm.DB, err error) {
@@ -17,7 +18,11 @@ func InitMysql(args string) (db *gorm.DB, err error) {
 	//		timeout,
 	//	)
 
-	db, err = gorm.Open(mysql.Open(args), &gorm.Config{})
+	db, err = gorm.Open(mysql.Open(args), &gorm.Config{
+		NamingStrategy: schema.NamingStrategy{
+			SingularTable: true,
+		},
+	})
 
 	return db, err
 }

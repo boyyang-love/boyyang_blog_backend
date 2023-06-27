@@ -5,7 +5,7 @@ import (
 	"blog_server/models"
 	"context"
 	"encoding/json"
-	"github.com/jinzhu/copier"
+	"gorm.io/gorm"
 	"strconv"
 	"strings"
 
@@ -31,16 +31,10 @@ func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ex
 
 func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp *types.ExhibitionInfoRes, err error, msg respx.SucMsg) {
 
-	type exhibition struct {
-		types.ExhibitionInfo
-		UserInfo models.User `gorm:"foreignKey:UserId" json:"user_info"`
-	}
-
 	DB := l.svcCtx.DB
 	ids := strings.Split(req.Ids, ",")
 
 	var count int64
-	var ex []exhibition
 	var exInfo []types.ExhibitionInfo
 
 	//获取收藏ids
@@ -53,12 +47,13 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 		if err := DB.
 			Debug().
 			Model(&models.Exhibition{}).
-			Preload("UserInfo").
+			Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
+				return db.Select("id", "username", "gender", "avatar_url", "tel")
+			}).
 			Order("created_at desc").
-			Find(&ex, ids).
+			Find(&exInfo, ids).
 			Count(&count).
 			Error; err == nil {
-			err = copier.Copy(&exInfo, &ex)
 			return &types.ExhibitionInfoRes{
 					Exhibitions: exInfo,
 					Count:       int(count),
@@ -77,16 +72,19 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 				Offset((page - 1) * limit).
 				Limit(limit)
 		}
+
 		if err := DB.
 			Debug().
 			Model(&models.Exhibition{}).
-			Preload("UserInfo").
+			Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
+				return db.Select("id", "username", "gender", "avatar_url", "tel")
+			}).
 			Order("created_at desc").
-			Find(&ex).
+			Find(&exInfo).
 			Offset(-1).
 			Count(&count).
 			Error; err == nil {
-			err = copier.Copy(&exInfo, &ex)
+			//err = copier.Copy(&exInfo, &ex)
 			return &types.ExhibitionInfoRes{
 					Exhibitions: exInfo,
 					Count:       int(count),
