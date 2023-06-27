@@ -45,7 +45,6 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 
 	if len(ids) > 0 && req.Ids != "" {
 		if err := DB.
-			Debug().
 			Model(&models.Exhibition{}).
 			Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
 				return db.Select("id", "username", "gender", "avatar_url", "tel")
@@ -74,7 +73,6 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 		}
 
 		if err := DB.
-			Debug().
 			Model(&models.Exhibition{}).
 			Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
 				return db.Select("id", "username", "gender", "avatar_url", "tel")
@@ -104,7 +102,6 @@ func likesIds(l *ExhibitionInfoLogic) (ids []int, err error) {
 		Model(&models.Likes{}).
 		Select("exhibition_id").
 		Where("user_id = ? and likes_type = ?", userid, true).
-		Find(&models.Likes{}).
 		Scan(&ids).Error; err != nil {
 		return nil, err
 	} else {
