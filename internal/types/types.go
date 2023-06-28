@@ -228,6 +228,7 @@ type ExhibitionInfoReq struct {
 	Ids   string `form:"ids,optional"`
 	Page  string `form:"page,optional"`
 	Limit string `form:"limit,optional"`
+	Type  int    `form:"type,optional"`
 }
 
 type ExhibitionInfoRes struct {

@@ -49,6 +49,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
 				return db.Select("id", "username", "gender", "avatar_url", "tel")
 			}).
+			Where("status = ?", req.Type).
 			Order("created_at desc").
 			Find(&exInfo, ids).
 			Count(&count).
@@ -77,12 +78,12 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
 				return db.Select("id", "username", "gender", "avatar_url", "tel")
 			}).
+			Where("status = ?", req.Type).
 			Order("created_at desc").
 			Find(&exInfo).
 			Offset(-1).
 			Count(&count).
 			Error; err == nil {
-			//err = copier.Copy(&exInfo, &ex)
 			return &types.ExhibitionInfoRes{
 					Exhibitions: exInfo,
 					Count:       int(count),
