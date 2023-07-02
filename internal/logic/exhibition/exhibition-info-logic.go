@@ -5,6 +5,7 @@ import (
 	"blog_server/models"
 	"context"
 	"encoding/json"
+	"fmt"
 	"gorm.io/gorm"
 	"strconv"
 	"strings"
@@ -30,18 +31,19 @@ func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ex
 }
 
 func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp *types.ExhibitionInfoRes, err error, msg respx.SucMsg) {
-
+	userid, _ := l.ctx.Value("Id").(json.Number).Int64()
 	DB := l.svcCtx.DB
 	ids := strings.Split(req.Ids, ",")
 
 	var count int64
 	var exInfo []types.ExhibitionInfo
 
-	//获取收藏ids
-	likes, err := likesIds(l)
+	status, err := l.getStatus(userid)
 	if err != nil {
 		return nil, err, msg
 	}
+
+	likes, err := l.getLikesIds(userid)
 
 	if len(ids) > 0 && req.Ids != "" {
 		if err := DB.
@@ -49,15 +51,18 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
 				return db.Select("id", "username", "gender", "avatar_url", "tel")
 			}).
-			Where("status = ?", req.Type).
+			Where("status = ? and user_id = ?", req.Type, userid).
 			Order("created_at desc").
 			Find(&exInfo, ids).
 			Count(&count).
 			Error; err == nil {
 			return &types.ExhibitionInfoRes{
-					Exhibitions: exInfo,
-					Count:       int(count),
-					LikesIds:    likes,
+					Exhibitions:    exInfo,
+					Count:          int(count),
+					InReview:       int(status[0]),
+					Approved:       int(status[1]),
+					ReviewRjection: int(status[2]),
+					LikesIds:       likes,
 				},
 				nil,
 				respx.SucMsg{Msg: "获取成功"}
@@ -78,16 +83,19 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
 				return db.Select("id", "username", "gender", "avatar_url", "tel")
 			}).
-			Where("status = ?", req.Type).
+			Where("status = ? and user_id = ?", req.Type, userid).
 			Order("created_at desc").
 			Find(&exInfo).
 			Offset(-1).
 			Count(&count).
 			Error; err == nil {
 			return &types.ExhibitionInfoRes{
-					Exhibitions: exInfo,
-					Count:       int(count),
-					LikesIds:    likes,
+					Exhibitions:    exInfo,
+					Count:          int(count),
+					InReview:       int(status[0]),
+					Approved:       int(status[1]),
+					ReviewRjection: int(status[2]),
+					LikesIds:       likes,
 				},
 				nil,
 				respx.SucMsg{Msg: "获取成功"}
@@ -97,15 +105,47 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 	}
 }
 
-func likesIds(l *ExhibitionInfoLogic) (ids []int, err error) {
-	userid, _ := l.ctx.Value("Id").(json.Number).Int64()
+func (l *ExhibitionInfoLogic) getStatus(userid int64) (status []int64, err error) {
+	var counts []int64
+	var count1 int64
+	var count2 int64
+	var count3 int64
+	err = l.svcCtx.DB.
+		Model(&models.Exhibition{}).
+		Where("status = ? and user_id = ?", 1, userid).
+		Count(&count1).
+		Error
+
+	err = l.svcCtx.DB.
+		Model(&models.Exhibition{}).
+		Where("status = ? and user_id = ?", 2, userid).
+		Count(&count2).
+		Error
+
+	err = l.svcCtx.DB.
+		Model(&models.Exhibition{}).
+		Where("status = ? and user_id = ?", 3, userid).
+		Count(&count3).
+		Error
+
+	fmt.Println(count1, count2, count3)
+	if err == nil {
+		return append(counts, count1, count2, count3), nil
+	} else {
+		return nil, err
+	}
+
+}
+
+func (l *ExhibitionInfoLogic) getLikesIds(userid int64) (likesIds []int, err error) {
 	if err = l.svcCtx.DB.
 		Model(&models.Likes{}).
 		Select("exhibition_id").
 		Where("user_id = ? and likes_type = ?", userid, true).
-		Scan(&ids).Error; err != nil {
+		Scan(&likesIds).
+		Error; err != nil {
 		return nil, err
 	} else {
-		return ids, nil
+		return likesIds, nil
 	}
 }

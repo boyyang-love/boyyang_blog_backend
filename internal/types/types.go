@@ -232,9 +232,12 @@ type ExhibitionInfoReq struct {
 }
 
 type ExhibitionInfoRes struct {
-	Count       int              `json:"count"`
-	Exhibitions []ExhibitionInfo `json:"exhibitions"`
-	LikesIds    []int            `json:"likes_ids"`
+	Count          int              `json:"count"`
+	Exhibitions    []ExhibitionInfo `json:"exhibitions"`
+	InReview       int              `json:"in_review"`       // 审核中
+	Approved       int              `json:"approved"`        // 审核通过
+	ReviewRjection int              `json:"review_rjection"` //审核驳回
+	LikesIds       []int            `json:"likes_ids"`
 }
 
 type ExhibitionInfo struct {
