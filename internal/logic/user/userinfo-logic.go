@@ -26,14 +26,13 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 }
 
 func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRes, err error, msg respx.SucMsg) {
-	userInfo := types.UserInfoRes{}
 	res := l.svcCtx.DB.
 		Model(&models.User{}).
 		Where("id = ?", req.Id).
-		First(&userInfo)
+		First(&resp)
 	if res.RowsAffected == 0 {
 		return nil, errors.New("不存在该用户"), msg
 	} else {
-		return &userInfo, nil, msg
+		return resp, nil, msg
 	}
 }
