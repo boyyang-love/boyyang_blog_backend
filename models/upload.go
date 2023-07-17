@@ -9,12 +9,12 @@ type Upload struct {
 	DeletedAt *time.Time `json:"deleted_at"`
 	Created   int        `json:"created" gorm:"autoCreateTime"`
 	Updated   int        `json:"updated" gorm:"autoUpdateTime"`
-	Hash      string     `json:"hash"`
-	FileName  string     `json:"file_name"`
-	FilePath  string     `json:"file_path"`
-	Ext       string     `json:"ext"`
-	Size      int64      `json:"size"`
-	UserId    uint       `json:"user_id"`
+	Hash      string     `json:"hash"`      // 文件哈希
+	FileName  string     `json:"file_name"` // 文件名称
+	FilePath  string     `json:"file_path"` // 文件路径
+	Ext       string     `json:"ext"`       // 文件后缀
+	Size      int64      `json:"size"`      // 文件大小
+	UserId    uint       `json:"user_id"`   // 用户id
 }
 
 func (Upload) TableName() string {

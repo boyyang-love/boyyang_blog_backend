@@ -3,7 +3,7 @@ syntax = "v1"
 import "common.api"
 
 type (
-    CreateBlogReq {
+    CreateBlogReq {// 创建博客
         Title string `form:"title"`
         SubTitle string `form:"sub_title"`
         Content string `form:"content"`
@@ -11,40 +11,36 @@ type (
         UserId uint `form:"user_id,optional"`
         Tags string `form:"tags,optional"`
     }
-
     CreateBlogRes {
         Id uint `json:"id"`
     }
 
-    UpdateBlogReq {
+    UpdateBlogReq {// 更新博客
         Id uint `form:"id"`
         Title string `form:"title"`
         SubTitle string `form:"sub_title"`
         Content string `form:"content"`
         Cover string `form:"cover"`
     }
-
     UpdateBlogRes {
         Msg string `json:"msg"`
     }
 
-    DeleteBlogReq {
+    DeleteBlogReq { // 删除博客
         Id uint `form:"id"`
     }
 
-
-    BlogInfoReq {
+    BlogInfoReq { // 获取博客信息
         Ids string `form:"ids,optional"`
         Page string `form:"page,optional"`
         Limit string `form:"limit,optional"`
     }
-
     BlogInfoRes {
         Count int64 `json:"count"`
         BlogInfo []BlogInfo `json:"blog_info"`
     }
 
-    BlogInfo {
+    BlogInfo { // 博客信息内容
         Id uint `json:"id"`
         Created int `json:"created"`
         Updated int `json:"updated"`
@@ -59,10 +55,9 @@ type (
         Tag string `json:"tags"`
     }
 
-    ThumbsUpBlogReq {
+    ThumbsUpBlogReq { // 博客点赞
         Id uint `form:"id"`
     }
-
     ThumbsUpBlogRes {
         Msg string `json:"msg"`
     }
@@ -76,13 +71,13 @@ type (
 service blog-api {
     @handler CreateBlog // 创建博客
     post /blog/create (CreateBlogReq) returns (CreateBlogRes)
-    @handler UpdateBlog
+    @handler UpdateBlog // 更新博客
     post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
-    @handler DeleteBlog
+    @handler DeleteBlog // 删除博客
     get /blog/delete (DeleteBlogReq)
-    @handler Bloginfo
+    @handler Bloginfo // 博客信息
     get /blog/info (BlogInfoReq) returns (BlogInfoRes)
-    @handler ThumbsupBlog
+    @handler ThumbsupBlog // 点赞博客
     get /blog/thumbsup (ThumbsUpBlogReq) returns (ThumbsUpBlogRes)
 }
 

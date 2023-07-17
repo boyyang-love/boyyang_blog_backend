@@ -34,10 +34,10 @@ type (
     group: comment
 )
 service blog-api {
-    @handler CreateComment
+    @handler CreateComment // 新建评论
     post /blog/comment/create (CreateBlogCommentReq) returns (CreateBlogCommentRes)
-    @handler DeleteComment
+    @handler DeleteComment // 删除评论
     get /blog/comment/delete (DeleateBlogCommentReq) returns (DeleateBlogCommentRes)
-    @handler ThumbsupComment
+    @handler ThumbsupComment // 评论点赞
     get /blog/comment/thumbsup (ThumbsUpBlogCommentReq) returns (ThumbsUpBlogCommentRes)
 }
