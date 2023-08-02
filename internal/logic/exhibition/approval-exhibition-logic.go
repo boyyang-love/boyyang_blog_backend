@@ -1,4 +1,4 @@
-package logic
+package exhibition
 
 import (
 	"blog_server/common/errorx"

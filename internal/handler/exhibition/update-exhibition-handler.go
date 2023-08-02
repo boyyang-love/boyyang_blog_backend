@@ -2,7 +2,7 @@ package exhibition
 
 import (
 	"blog_server/common/respx"
-	logic "blog_server/internal/logic/exhibition"
+	"blog_server/internal/logic/exhibition"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -17,7 +17,7 @@ func UpdateExhibitionHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := logic.NewUpdateExhibitionLogic(r.Context(), svcCtx)
+		l := exhibition.NewUpdateExhibitionLogic(r.Context(), svcCtx)
 		resp, err, msg := l.UpdateExhibition(&req)
 		respx.Response(w, resp, err, msg)
 		//if err != nil {

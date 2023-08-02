@@ -34,6 +34,13 @@ type (
     }
 )
 
+// 更新用户密码
+type (
+    UpdateUserPasswordReq {
+        password string `form:"password"`
+    }
+)
+
 // 用户
 @server(
     jwt: Auth
@@ -44,4 +51,6 @@ service blog-api {
     get /users/info (UserInfoReq) returns (UserInfoRes)
     @handler UpdateUserinfo
     post /users/update (UpdateUserInfoReq)
+    @handler UpdateUserPassword
+    post /users/update/password (UpdateUserPasswordReq)
 }

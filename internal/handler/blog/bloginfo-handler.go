@@ -2,7 +2,7 @@ package blog
 
 import (
 	"blog_server/common/respx"
-	logic "blog_server/internal/logic/blog"
+	"blog_server/internal/logic/blog"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -17,7 +17,7 @@ func BloginfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := logic.NewBlogInfoLogic(r.Context(), svcCtx)
+		l := blog.NewBlogInfoLogic(r.Context(), svcCtx)
 		resp, err, msg := l.BlogInfo(&req)
 		respx.Response(w, resp, err, msg)
 		//if err != nil {

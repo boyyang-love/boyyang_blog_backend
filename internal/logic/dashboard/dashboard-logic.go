@@ -1,4 +1,4 @@
-package logic
+package dashboard
 
 import (
 	"blog_server/common/respx"

@@ -2,7 +2,7 @@ package blog
 
 import (
 	"blog_server/common/respx"
-	logic "blog_server/internal/logic/blog"
+	"blog_server/internal/logic/blog"
 	"net/http"
 
 	"blog_server/internal/svc"
@@ -18,7 +18,7 @@ func DeleteBlogHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := logic.NewDeleteBlogLogic(r.Context(), svcCtx)
+		l := blog.NewDeleteBlogLogic(r.Context(), svcCtx)
 		err, msg := l.DeleteBlog(&req)
 		respx.Response(w, nil, err, msg)
 

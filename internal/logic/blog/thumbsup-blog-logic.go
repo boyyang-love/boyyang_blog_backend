@@ -1,4 +1,4 @@
-package logic
+package blog
 
 import (
 	"blog_server/common/respx"

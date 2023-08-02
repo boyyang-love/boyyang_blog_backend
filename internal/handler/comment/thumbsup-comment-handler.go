@@ -2,7 +2,7 @@ package comment
 
 import (
 	"blog_server/common/respx"
-	logic "blog_server/internal/logic/comment"
+	"blog_server/internal/logic/comment"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -17,7 +17,7 @@ func ThumbsupCommentHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := logic.NewThumbsUpCommentLogic(r.Context(), svcCtx)
+		l := comment.NewThumbsUpCommentLogic(r.Context(), svcCtx)
 		resp, err, msg := l.ThumbsUpComment(&req)
 		respx.Response(w, resp, err, msg)
 

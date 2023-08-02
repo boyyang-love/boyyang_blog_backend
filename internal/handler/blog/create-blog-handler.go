@@ -2,7 +2,7 @@ package blog
 
 import (
 	"blog_server/common/respx"
-	logic "blog_server/internal/logic/blog"
+	"blog_server/internal/logic/blog"
 	"net/http"
 
 	"blog_server/internal/svc"
@@ -18,7 +18,7 @@ func CreateBlogHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := logic.NewCreateBlogLogic(r.Context(), svcCtx)
+		l := blog.NewCreateBlogLogic(r.Context(), svcCtx)
 		resp, err, msg := l.CreateBlog(&req)
 		respx.Response(w, resp, err, msg)
 		//if err != nil {

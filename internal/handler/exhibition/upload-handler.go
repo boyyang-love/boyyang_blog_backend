@@ -3,7 +3,7 @@ package exhibition
 import (
 	"blog_server/common/helper"
 	"blog_server/common/respx"
-	logic "blog_server/internal/logic/exhibition"
+	"blog_server/internal/logic/exhibition"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"blog_server/models"
@@ -67,7 +67,7 @@ func UploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		req.Hash = hash
 		req.Ext = path.Ext(fileHeader.Filename)
 
-		l := logic.NewUploadLogic(r.Context(), svcCtx)
+		l := exhibition.NewUploadLogic(r.Context(), svcCtx)
 		resp, err, msg := l.Upload(&req)
 		respx.Response(w, resp, err, msg)
 

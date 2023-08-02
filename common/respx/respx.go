@@ -24,7 +24,7 @@ func Response(w http.ResponseWriter, resp interface{}, err error, msg interface{
 		if msg.(SucMsg).Msg != "" {
 			body.Msg = msg.(SucMsg).Msg
 			if msg.(SucMsg).Code != 0 {
-				body.Code = int(msg.(SucMsg).Code)
+				body.Code = msg.(SucMsg).Code
 			}
 		} else {
 			body.Msg = "ok"

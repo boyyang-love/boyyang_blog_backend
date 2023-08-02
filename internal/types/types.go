@@ -325,3 +325,7 @@ type UpdateUserInfoReq struct {
 	Address         string `form:"address,optional"`
 	BackgroundImage string `form:"background_image,optional"`
 }
+
+type UpdateUserPasswordReq struct {
+	Password string `form:"password"`
+}

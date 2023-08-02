@@ -2,7 +2,7 @@ package like
 
 import (
 	"blog_server/common/respx"
-	logic "blog_server/internal/logic/like"
+	"blog_server/internal/logic/like"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -17,7 +17,7 @@ func FollowHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := logic.NewFollowLogic(r.Context(), svcCtx)
+		l := like.NewFollowLogic(r.Context(), svcCtx)
 		err, msg := l.Follow(&req)
 		respx.Response(w, nil, err, msg)
 		//if err != nil {

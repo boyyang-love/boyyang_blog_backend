@@ -2,7 +2,7 @@ package exhibition
 
 import (
 	"blog_server/common/respx"
-	logic "blog_server/internal/logic/exhibition"
+	"blog_server/internal/logic/exhibition"
 	"net/http"
 
 	"blog_server/internal/svc"
@@ -18,7 +18,7 @@ func DelExhibitionHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := logic.NewDelExhibitionLogic(r.Context(), svcCtx)
+		l := exhibition.NewDelExhibitionLogic(r.Context(), svcCtx)
 		err, msg := l.DelExhibition(&req)
 
 		respx.Response(w, nil, err, msg)

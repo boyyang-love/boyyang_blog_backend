@@ -1,4 +1,4 @@
-package logic
+package like
 
 import (
 	"blog_server/common/respx"

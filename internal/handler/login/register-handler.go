@@ -2,7 +2,7 @@ package login
 
 import (
 	"blog_server/common/respx"
-	logic "blog_server/internal/logic/login"
+	"blog_server/internal/logic/login"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -17,7 +17,7 @@ func RegisterHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := logic.NewRegisterLogic(r.Context(), svcCtx)
+		l := login.NewRegisterLogic(r.Context(), svcCtx)
 		resp, err, msg := l.Register(&req)
 		respx.Response(w, resp, err, msg)
 		//if err != nil {

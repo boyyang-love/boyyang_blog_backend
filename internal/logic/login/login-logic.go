@@ -1,4 +1,4 @@
-package logic
+package login
 
 import (
 	"blog_server/common/helper"
@@ -30,7 +30,6 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error
 	var info types.User
 	res := l.svcCtx.DB.
 		Model(&models.User{}).
-		Debug().
 		Where("username = ? and password = ?", req.Username, helper.MakeHash(req.Password)).
 		First(&info)
 

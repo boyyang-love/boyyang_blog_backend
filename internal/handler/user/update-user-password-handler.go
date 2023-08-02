@@ -9,22 +9,22 @@ import (
 	"net/http"
 )
 
-func UpdateUserinfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func UpdateUserPasswordHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.UpdateUserInfoReq
+		var req types.UpdateUserPasswordReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := user.NewUpdateUserInfoLogic(r.Context(), svcCtx)
-		err, msg := l.UpdateUserInfo(&req)
-		respx.Response(w, nil, err, msg)
+		l := user.NewUpdateUserPasswordLogic(r.Context(), svcCtx)
+		err, msg := l.UpdateUserPassword(&req)
 
+		respx.Response(w, nil, err, msg)
 		//if err != nil {
 		//	httpx.ErrorCtx(r.Context(), w, err)
 		//} else {
-		//	httpx.OkJsonCtx(r.Context(), w, resp)
+		//	httpx.Ok(w)
 		//}
 	}
 }

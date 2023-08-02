@@ -179,6 +179,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/users/update",
 				Handler: user.UpdateUserinfoHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/users/update/password",
+				Handler: user.UpdateUserPasswordHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)

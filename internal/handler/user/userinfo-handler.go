@@ -2,7 +2,7 @@ package user
 
 import (
 	"blog_server/common/respx"
-	logic "blog_server/internal/logic/user"
+	"blog_server/internal/logic/user"
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -17,7 +17,7 @@ func UserinfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := logic.NewUserInfoLogic(r.Context(), svcCtx)
+		l := user.NewUserInfoLogic(r.Context(), svcCtx)
 		resp, err, msg := l.UserInfo(&req)
 		respx.Response(w, resp, err, msg)
 

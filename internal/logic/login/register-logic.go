@@ -1,4 +1,4 @@
-package logic
+package login
 
 import (
 	"blog_server/common/helper"
