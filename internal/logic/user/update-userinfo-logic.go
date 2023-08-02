@@ -45,13 +45,14 @@ func (l *UpdateUserInfoLogic) UpdateUserInfo(req *types.UpdateUserInfoReq) (err 
 				Model(&models.User{}).
 				Where("id = ?", req.Id).
 				Updates(&models.User{
-					Username:  req.Username,
-					Gender:    req.Gender,
-					Age:       req.Age,
-					Address:   req.Address,
-					Tel:       &req.Tel,
-					Email:     &req.Email,
-					AvatarUrl: req.AvatarUrl,
+					Username:        req.Username,
+					Gender:          req.Gender,
+					Age:             req.Age,
+					Address:         req.Address,
+					Tel:             &req.Tel,
+					Email:           &req.Email,
+					AvatarUrl:       req.AvatarUrl,
+					BackgroundImage: req.BackgroundImage,
 				}).Error; err != nil {
 				return err, msg
 			} else {

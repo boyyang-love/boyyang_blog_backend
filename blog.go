@@ -15,7 +15,6 @@ var configFile = flag.String("f", "etc/blog-api.yaml", "the config file")
 
 func main() {
 	flag.Parse()
-
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 
@@ -32,20 +31,8 @@ func main() {
 	)
 	defer server.Stop()
 
-	//hub := wss.NewHub()
-	//go hub.Run()
-	//
-	//server.AddRoute(rest.Route{
-	//	Method: http.MethodGet,
-	//	Path:   "/wss",
-	//	Handler: func(w http.ResponseWriter, r *http.Request) {
-	//		wss.ServeWs(hub, w, r)
-	//	},
-	//})
-
 	ctx := svc.NewServiceContext(c)
-	// websocket
-	go ctx.Hub.HubRun()
+
 	handler.RegisterHandlers(server, ctx)
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)

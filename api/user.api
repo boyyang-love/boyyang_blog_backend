@@ -15,6 +15,7 @@ type (
         Tel int `json:"tel"`
         Email string `json:"email"`
         Address string `json:"address"`
+        BackgroundImage string `json:"background_image"`
     }
 )
 
@@ -25,10 +26,11 @@ type (
         Username string `form:"username,optional"`
         Age int `form:"age,optional"`
         Gender int `form:"gender,optional"`
-        AvatarUrl string `form:"avatarUrl,optional"`
+        AvatarUrl string `form:"avatar_url,optional"`
         Tel int `form:"tel,optional"`
         Email string `form:"email,optional"`
         Address string `form:"address,optional"`
+        BackgroundImage string `form:"background_image,optional"`
     }
 )
 

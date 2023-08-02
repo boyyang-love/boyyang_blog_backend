@@ -303,31 +303,25 @@ type UserInfoReq struct {
 }
 
 type UserInfoRes struct {
-	Id        uint   `json:"id"`
-	Username  string `json:"username"`
-	Age       int    `json:"age"`
-	Gender    int    `json:"gender"`
-	AvatarUrl string `json:"avatar_url"`
-	Tel       int    `json:"tel"`
-	Email     string `json:"email"`
-	Address   string `json:"address"`
+	Id              uint   `json:"id"`
+	Username        string `json:"username"`
+	Age             int    `json:"age"`
+	Gender          int    `json:"gender"`
+	AvatarUrl       string `json:"avatar_url"`
+	Tel             int    `json:"tel"`
+	Email           string `json:"email"`
+	Address         string `json:"address"`
+	BackgroundImage string `json:"background_image"`
 }
 
 type UpdateUserInfoReq struct {
-	Id        uint   `form:"id"`
-	Username  string `form:"username,optional"`
-	Age       int    `form:"age,optional"`
-	Gender    int    `form:"gender,optional"`
-	AvatarUrl string `form:"avatarUrl,optional"`
-	Tel       int    `form:"tel,optional"`
-	Email     string `form:"email,optional"`
-	Address   string `form:"address,optional"`
-}
-
-type WsReq struct {
-	Id uint `json:"id"`
-}
-
-type WsRes struct {
-	Msg string `json:"msg"`
+	Id              uint   `form:"id"`
+	Username        string `form:"username,optional"`
+	Age             int    `form:"age,optional"`
+	Gender          int    `form:"gender,optional"`
+	AvatarUrl       string `form:"avatar_url,optional"`
+	Tel             int    `form:"tel,optional"`
+	Email           string `form:"email,optional"`
+	Address         string `form:"address,optional"`
+	BackgroundImage string `form:"background_image,optional"`
 }

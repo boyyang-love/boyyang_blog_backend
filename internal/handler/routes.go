@@ -11,7 +11,6 @@ import (
 	like "blog_server/internal/handler/like"
 	login "blog_server/internal/handler/login"
 	user "blog_server/internal/handler/user"
-	ws "blog_server/internal/handler/ws"
 	"blog_server/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -179,17 +178,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/users/update",
 				Handler: user.UpdateUserinfoHandler(serverCtx),
-			},
-		},
-		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/ws",
-				Handler: ws.WsHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

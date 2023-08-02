@@ -1,7 +1,6 @@
 package svc
 
 import (
-	"blog_server/common/client"
 	"blog_server/common/helper"
 	"blog_server/internal/config"
 	"fmt"
@@ -13,7 +12,6 @@ type ServiceContext struct {
 	Config config.Config
 	DB     *gorm.DB
 	Client *cos.Client
-	Hub    *client.Hub
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -48,12 +46,10 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	} else {
 		fmt.Println("🐼 Object storage initialization successful‼️ 🐼")
 	}
-	// hub
-	hub := client.NewHub()
+
 	return &ServiceContext{
 		Config: c,
 		DB:     db,
 		Client: clt,
-		Hub:    hub,
 	}
 }
