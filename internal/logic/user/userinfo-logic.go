@@ -6,9 +6,10 @@ import (
 	"blog_server/internal/types"
 	"blog_server/models"
 	"context"
+	"encoding/json"
 	"errors"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	"gorm.io/gorm"
 )
 
 type UserInfoLogic struct {
@@ -26,13 +27,35 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 }
 
 func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRes, err error, msg respx.SucMsg) {
-	res := l.svcCtx.DB.
-		Model(&models.User{}).
-		Where("id = ?", req.Id).
-		First(&resp)
-	if res.RowsAffected == 0 {
-		return nil, errors.New("不存在该用户"), msg
-	} else {
-		return resp, nil, msg
+	// 如果不传ID 则使用token中的ID
+	if req.Id == 0 {
+		id, _ := l.ctx.Value("Id").(json.Number).Int64()
+		req.Id = uint(id)
 	}
+
+	err, userInfo := l.userInfo(req.Id)
+	if err != nil {
+		return nil, err, msg
+	}
+
+	return userInfo, nil, msg
+}
+
+func (l *UserInfoLogic) userInfo(userId uint) (err error, userInfo *types.UserInfoRes) {
+	DB := l.svcCtx.DB
+
+	DB = DB.
+		Model(&models.User{}).
+		Where("id = ?", userId).
+		First(&userInfo)
+
+	if err = DB.Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return errors.New("不存在该用户"), userInfo
+		}
+
+		return err, nil
+	}
+
+	return err, userInfo
 }

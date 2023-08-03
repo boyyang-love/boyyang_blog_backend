@@ -299,7 +299,7 @@ type RegisterRes struct {
 }
 
 type UserInfoReq struct {
-	Id uint `form:"id"`
+	Id uint `form:"id,optional"`
 }
 
 type UserInfoRes struct {

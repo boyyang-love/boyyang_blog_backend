@@ -8,7 +8,10 @@ import (
 
 func MakeHash(s string) string {
 	h := md5.New()
-	io.WriteString(h, s)
+	_, err := io.WriteString(h, s)
+	if err != nil {
+		return ""
+	}
 	hash := fmt.Sprintf("%x", h.Sum(nil))
 	return hash
 }

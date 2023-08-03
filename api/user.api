@@ -3,7 +3,7 @@ syntax = "v1"
 // 用户信息
 type (
     UserInfoReq {
-        Id uint `form:"id"`
+        Id uint `form:"id,optional"`
     }
 
     UserInfoRes {

@@ -16,7 +16,12 @@ func CosFileUpload(client *cos.Client, file multipart.File, fileHeader *multipar
 
 	cloudPath := fmt.Sprintf("%s/%s", path, fileHeader.Filename)
 	f, _ := fileHeader.Open()
-	defer f.Close()
+	defer func(f multipart.File) {
+		err := f.Close()
+		if err != nil {
+
+		}
+	}(f)
 	_, err = client.Object.Put(context.Background(), cloudPath, f, opt)
 
 	if err == nil {
