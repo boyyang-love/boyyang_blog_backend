@@ -1,5 +1,5 @@
 syntax = "v1"
-
+import "public/user.api"
 // 文件上传
 type (
     UploadReq {

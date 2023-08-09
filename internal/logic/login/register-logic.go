@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"github.com/zeromicro/go-zero/core/logx"
+	"gorm.io/gorm"
 )
 
 type RegisterLogic struct {
@@ -26,25 +27,58 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 }
 
 func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRes, err error, msg respx.SucMsg) {
-
-	if err = l.svcCtx.DB.
-		Where("username = ? or tel = ?", req.Username, req.Tel).
-		First(&models.User{}).Error; err != nil {
-		info := models.User{
-			Username: req.Username,
-			Password: helper.MakeHash(req.Password),
-			Tel:      &req.Tel,
-		}
-		if err = l.svcCtx.DB.
-			Model(&models.User{}).
-			Create(&info).Error; err != nil {
-			return nil, err, msg
-		} else {
-			return &types.RegisterRes{
-				Id: info.Id,
-			}, nil, respx.SucMsg{Msg: "账号注册成功"}
-		}
-	} else {
-		return nil, errors.New("用户名已经存在或者该手机号已经注册"), msg
+	resp, err = l.register(req)
+	if err != nil {
+		return nil, err, msg
 	}
+
+	return resp, nil, respx.SucMsg{Msg: "账号注册成功"}
+}
+
+func (l *RegisterLogic) register(req *types.RegisterReq) (resp *types.RegisterRes, err error) {
+	DB := l.svcCtx.DB
+
+	var user struct {
+		Id       uint   `json:"id"`
+		Username string `json:"username"`
+		Tel      int    `json:"tel"`
+	}
+
+	isExistDB := DB.
+		Model(&models.User{}).
+		Where("username = ? or tel = ?", req.Username, req.Tel).
+		First(&user)
+
+	if err = isExistDB.Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			createDB := DB.
+				Model(&models.User{}).
+				Create(
+					&models.User{
+						Username:  req.Username,
+						Password:  helper.MakeHash(req.Password),
+						Tel:       &req.Tel,
+						AvatarUrl: req.AvatarUrl,
+					},
+				).Scan(&user)
+
+			if err = createDB.Error; err != nil {
+				return nil, errors.New("注册失败，请稍后重试")
+			}
+
+			return &types.RegisterRes{Id: user.Id}, nil
+		}
+
+		return resp, err
+	}
+
+	if user.Username == req.Username {
+		return nil, errors.New("用户名不可用")
+	}
+
+	if user.Tel == req.Tel {
+		return nil, errors.New("该手机号已经被注册")
+	}
+
+	return resp, nil
 }

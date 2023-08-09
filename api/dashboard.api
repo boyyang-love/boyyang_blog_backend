@@ -1,7 +1,5 @@
 syntax = "v1"
 
-import "common.api"
-
 type (
     DashboardRes {
         UserInfo DashboardUserInfo `json:"user_info"` // 用户信息

@@ -1,6 +1,6 @@
 syntax = "v1"
 
-import "common.api"
+import "public/user.api"
 //登录
 type (
     LoginReq {
@@ -20,6 +20,7 @@ type (
         Username string `form:"username"`
         Password string `form:"password"`
         Tel int `form:"tel"`
+        AvatarUrl string `form:"avatar_url"`
     }
 
     RegisterRes {

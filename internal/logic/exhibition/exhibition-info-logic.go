@@ -5,7 +5,6 @@ import (
 	"blog_server/models"
 	"context"
 	"encoding/json"
-	"fmt"
 	"gorm.io/gorm"
 	"strconv"
 	"strings"
@@ -128,7 +127,6 @@ func (l *ExhibitionInfoLogic) getStatus(userid int64) (status []int64, err error
 		Count(&count3).
 		Error
 
-	fmt.Println(count1, count2, count3)
 	if err == nil {
 		return append(counts, count1, count2, count3), nil
 	} else {

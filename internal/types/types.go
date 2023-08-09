@@ -65,21 +65,13 @@ type ThumbsUpBlogRes struct {
 }
 
 type User struct {
-	Id        uint   `json:"id"`
-	Username  string `json:"username"`
-	Gender    int    `json:"gender"`
-	AvatarUrl string `json:"avatar_url"`
-	Tel       int    `json:"tel"`
-}
-
-type Comment struct {
-	Id       uint   `json:"id" gorm:"primary_key"`
-	Content  string `json:"des" gorm:"size:2000"`
-	BlogId   uint   `json:"blog_id"`
-	UserId   uint   `json:"user_id"`
-	Tag      string `json:"tag,omitempty"`
-	ThumbsUp *int   `json:"thumbs_up" gorm:"default:0"`
-	UserInfo User   `json:"user_info"`
+	Id              uint    `json:"id"`
+	Username        string  `json:"username"`
+	Gender          int     `json:"gender"`
+	AvatarUrl       string  `json:"avatar_url"`
+	Tel             int     `json:"tel"`
+	BackgroundImage string  `form:"background_image" json:"background_image"`
+	Motto           *string `form:"motto" json:"motto"`
 }
 
 type CreateBlogCommentReq struct {
@@ -186,6 +178,27 @@ type FollowInfoRes struct {
 	FollowingUser []User `json:"following_user"`
 }
 
+type LoginReq struct {
+	Username string `form:"username"`
+	Password string `form:"password"`
+}
+
+type LoginRes struct {
+	Info  User   `json:"info"`
+	Token string `json:"token"`
+}
+
+type RegisterReq struct {
+	Username  string `form:"username"`
+	Password  string `form:"password"`
+	Tel       int    `form:"tel"`
+	AvatarUrl string `form:"avatar_url"`
+}
+
+type RegisterRes struct {
+	Id uint `json:"id"`
+}
+
 type UploadReq struct {
 	Hash     string `json:"hash,optional"`
 	FileName string `json:"file_name,optional"`
@@ -276,26 +289,6 @@ type ApprovalRes struct {
 
 type DelExhibitionReq struct {
 	Id uint `form:"id"`
-}
-
-type LoginReq struct {
-	Username string `form:"username"`
-	Password string `form:"password"`
-}
-
-type LoginRes struct {
-	Info  User   `json:"info"`
-	Token string `json:"token"`
-}
-
-type RegisterReq struct {
-	Username string `form:"username"`
-	Password string `form:"password"`
-	Tel      int    `form:"tel"`
-}
-
-type RegisterRes struct {
-	Id uint `json:"id"`
 }
 
 type UserInfoReq struct {

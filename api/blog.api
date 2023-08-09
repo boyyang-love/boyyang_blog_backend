@@ -1,6 +1,6 @@
 syntax = "v1"
 
-import "common.api"
+import "public/user.api"
 
 type (
     CreateBlogReq {// 创建博客

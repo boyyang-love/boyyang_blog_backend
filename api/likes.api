@@ -1,8 +1,5 @@
 syntax = "v1"
-
-import "common.api"
-import "upload.api"
-
+import "public/user.api"
 type (
     AddLikesReq {// 收藏
         Exhibition_id uint `form:"exhibition_id"`
