@@ -1,5 +1,5 @@
 syntax = "v1"
-
+import "public/user.api"
 // 用户信息
 type (
     UserInfoReq {
@@ -7,15 +7,15 @@ type (
     }
 
     UserInfoRes {
-        Id uint `json:"id"`
-        Username string `json:"username"`
-        Age int `json:"age"`
-        Gender int `json:"gender"`
-        AvatarUrl string `json:"avatar_url"`
-        Tel int `json:"tel"`
-        Email string `json:"email"`
-        Address string `json:"address"`
-        BackgroundImage string `json:"background_image"`
+        UserInfo User `json:"user_info"`                 // 用户基本信息
+        UserOtherInfo UserOtherInfo `json:"user_detail"` // 其它信息
+    }
+
+    UserOtherInfo {
+        Publish int `json:"publish"`    // 发布数
+        Likes int `json:"likes"`        // 收藏数
+        Follows int `json:"follows"`    // 粉丝数
+        ThumbsUp int `json:"thumbs_up"` // 点赞数
     }
 )
 
