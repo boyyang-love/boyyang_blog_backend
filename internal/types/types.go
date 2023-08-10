@@ -65,13 +65,19 @@ type ThumbsUpBlogRes struct {
 }
 
 type User struct {
-	Id              uint    `json:"id"`
-	Username        string  `json:"username"`
-	Gender          int     `json:"gender"`
-	AvatarUrl       string  `json:"avatar_url"`
-	Tel             int     `json:"tel"`
-	BackgroundImage string  `form:"background_image" json:"background_image"`
-	Motto           *string `form:"motto" json:"motto"`
+	Id              uint   `json:"id"`
+	Username        string `json:"username"`
+	Gender          int    `json:"gender"`
+	AvatarUrl       string `json:"avatar_url"`
+	Age             int    `json:"age"`
+	Email           string `json:"email"`
+	Address         string `json:"address"`
+	Tel             int    `json:"tel"`
+	Qq              int    `json:"qq"`
+	Wechat          string `json:"wechat"`
+	GitHub          string `json:"git_hub"`
+	BackgroundImage string `json:"background_image"`
+	Motto           string `json:"motto"`
 }
 
 type CreateBlogCommentReq struct {
@@ -296,15 +302,15 @@ type UserInfoReq struct {
 }
 
 type UserInfoRes struct {
-	Id              uint   `json:"id"`
-	Username        string `json:"username"`
-	Age             int    `json:"age"`
-	Gender          int    `json:"gender"`
-	AvatarUrl       string `json:"avatar_url"`
-	Tel             int    `json:"tel"`
-	Email           string `json:"email"`
-	Address         string `json:"address"`
-	BackgroundImage string `json:"background_image"`
+	UserInfo      User          `json:"user_info"`   // 用户基本信息
+	UserOtherInfo UserOtherInfo `json:"user_detail"` // 其它信息
+}
+
+type UserOtherInfo struct {
+	Publish  int `json:"publish"`   // 发布数
+	Likes    int `json:"likes"`     // 收藏数
+	Follows  int `json:"follows"`   // 粉丝数
+	ThumbsUp int `json:"thumbs_up"` // 点赞数
 }
 
 type UpdateUserInfoReq struct {

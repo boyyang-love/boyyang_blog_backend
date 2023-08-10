@@ -19,7 +19,7 @@ type User struct {
 	Email           *string    `form:"email" json:"email"`
 	Qq              *int       `form:"qq" json:"qq"`
 	Wechat          *string    `form:"wechat" json:"wechat"`
-	GitHub          *string    `form:"gitHub" json:"gitHub"`
+	GitHub          *string    `form:"git_hub" json:"git_hub"`
 	AvatarUrl       string     `form:"avatar_url" json:"avatar_url"`
 	BackgroundImage string     `form:"background_image" json:"background_image"`
 	Motto           *string    `form:"motto" json:"motto"`
