@@ -80,7 +80,7 @@ func (l *UserInfoLogic) userOtherInfo(userId uint) (err error, info *types.UserO
 	}
 
 	if err = DB.Model(&models.Likes{}).
-		Where("user_id = ?", userId).
+		Where("user_id = ? and likes_type = ?", userId, 1).
 		Count(&Likes).
 		Error; err != nil {
 		return err, nil

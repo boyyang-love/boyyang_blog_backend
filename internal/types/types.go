@@ -323,6 +323,7 @@ type UpdateUserInfoReq struct {
 	Email           string `form:"email,optional"`
 	Address         string `form:"address,optional"`
 	BackgroundImage string `form:"background_image,optional"`
+	Motto           string `form:"motto,optional"`
 }
 
 type UpdateUserPasswordReq struct {

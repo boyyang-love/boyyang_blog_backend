@@ -25,14 +25,6 @@ func GenerateJwtToken(g *GenerateJwtStruct, secretKey string, expire int64) (str
 	token, err := claims.SignedString([]byte(secretKey))
 
 	return token, err
-
-	//claims := make(jwt.MapClaims)
-	//claims["exp"] = iat + seconds
-	//claims["iat"] = iat
-	//claims["userId"] = g.Id
-	//token := jwt.New(jwt.SigningMethodHS256)
-	//token.Claims = claims
-	//return token.SignedString([]byte(secretKey))
 }
 
 func ParseJwtToken(tokenStr string, secretKey string) (*GenerateJwtStruct, error) {

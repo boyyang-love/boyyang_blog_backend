@@ -8,6 +8,7 @@ import (
 	"blog_server/models"
 	"context"
 	"errors"
+	"gorm.io/gorm"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -28,13 +29,14 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error, msg respx.SucMsg) {
 	var info types.User
-	res := l.svcCtx.DB.
+	if err = l.svcCtx.DB.
 		Model(&models.User{}).
 		Where("username = ? and password = ?", req.Username, helper.MakeHash(req.Password)).
-		First(&info)
-
-	if res.RowsAffected == 0 {
-		return nil, errors.New("请检查账号或密码是否正确"), msg
+		First(&info).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.New("请检查账号或密码是否正确"), msg
+		}
+		return nil, err, msg
 	} else {
 		token, _ := helper.GenerateJwtToken(
 			&helper.GenerateJwtStruct{

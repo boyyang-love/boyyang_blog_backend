@@ -106,6 +106,7 @@ func (l *UpdateUserInfoLogic) updateUserInfo(req *types.UpdateUserInfoReq) (err 
 			Email:           &req.Email,
 			Address:         req.Address,
 			BackgroundImage: req.BackgroundImage,
+			Motto:           &req.Motto,
 		})
 
 	if err = DB.Error; err != nil {
