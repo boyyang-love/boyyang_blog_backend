@@ -1,4 +1,4 @@
-FROM golang:1.20.5 as builder
+FROM golang:1.21.0 as builder
 
 RUN mkdir /app
 
@@ -6,7 +6,7 @@ ADD . /app/
 
 WORKDIR /app
 
-# RUN GOPROXY=https://goproxy.cn,direct CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+RUN GOPROXY=https://goproxy.cn,direct CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 # RUN GO111MODULE=on GOPROXY=https://goproxy.cn,direct CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
 FROM alpine:latest
