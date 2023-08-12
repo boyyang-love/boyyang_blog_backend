@@ -237,6 +237,7 @@ type CreateExhibitionReq struct {
 	SubTitle string `form:"sub_title,optional"`
 	Des      string `form:"des"`
 	Cover    string `form:"cover"`
+	Tags     string `form:"tags,optional"`
 }
 
 type CreateExhibitionRes struct {

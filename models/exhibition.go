@@ -13,6 +13,7 @@ type Exhibition struct {
 	SubTitle  string     `json:"sub_title"`                  // 图片墙副标题
 	Des       string     `json:"des"`                        // 图片描述
 	Cover     string     `json:"cover"`                      // 图片上传路径
+	Tags      *string    `json:"tags"`                       // 图片标签
 	ThumbsUp  *int       `json:"thumbs_up" gorm:"default:0"` // 点赞数
 	UserId    uint       `json:"user_id"`                    // 该图片上传者 id
 	Status    int        `json:"status" gorm:"default:1"`    // 图片状态 1待审核 2审核通过 3未通过审核

@@ -7,6 +7,7 @@ import (
 	"blog_server/models"
 	"context"
 	"encoding/json"
+	"strings"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -33,12 +34,31 @@ func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq)
 		Des:      req.Des,
 		Cover:    req.Cover,
 		UserId:   uint(userId),
+		Tags:     &req.Tags,
 	}
 	if err = l.svcCtx.DB.
 		Model(&models.Exhibition{}).
 		Create(&exhibition).Error; err != nil {
 		return nil, err, msg
 	} else {
+		if strings.Trim(req.Tags, " ") != "" {
+			// 创建 tags
+			var tags []models.Tag
+			for _, tag := range strings.Split(req.Tags, ",") {
+				tags = append(tags, models.Tag{
+					Name:    tag,
+					ImageId: exhibition.Id,
+					UserId:  uint(userId),
+				})
+			}
+			if err = l.svcCtx.DB.
+				Model(&models.Tag{}).
+				FirstOrCreate(&tags, &tags).
+				Error; err != nil {
+				return nil, err, msg
+			}
+		}
+
 		return &types.CreateExhibitionRes{Id: exhibition.Id},
 			nil,
 			respx.SucMsg{Msg: "图片上传成功"}
