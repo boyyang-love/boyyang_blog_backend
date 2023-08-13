@@ -245,10 +245,11 @@ type CreateExhibitionRes struct {
 }
 
 type ExhibitionInfoReq struct {
-	Ids   string `form:"ids,optional"`
-	Page  string `form:"page,optional"`
-	Limit string `form:"limit,optional"`
-	Type  int    `form:"type,optional"`
+	Ids    string `form:"ids,optional"`
+	Page   int    `form:"page,optional"`
+	Limit  int    `form:"limit,optional"`
+	Type   int    `form:"type,optional"`
+	Public bool   `form:"public,optional"`
 }
 
 type ExhibitionInfoRes struct {
@@ -267,6 +268,7 @@ type ExhibitionInfo struct {
 	SubTitle  string `json:"sub_title"`
 	Des       string `json:"des"`
 	Cover     string `json:"cover"`
+	Tags      string `json:"tags"`
 	UserId    uint   `json:"user_id"`
 	Status    int    `json:"status"`     // 1待审核 2审核通过 3未通过审核
 	RejectRes string `json:"reject_res"` // 驳回原因
@@ -287,7 +289,7 @@ type UpdateExhibitionRes struct {
 type ApprovalReq struct {
 	Id     uint   `form:"id"`
 	Status int    `form:"status"`
-	Reason string `form:"reason"`
+	Reason string `form:"reason,optional"`
 }
 
 type ApprovalRes struct {

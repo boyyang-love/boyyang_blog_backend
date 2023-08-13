@@ -43,19 +43,18 @@ func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq)
 	} else {
 		if strings.Trim(req.Tags, " ") != "" {
 			// 创建 tags
-			var tags []models.Tag
 			for _, tag := range strings.Split(req.Tags, ",") {
-				tags = append(tags, models.Tag{
+				tags := models.Tag{
 					Name:    tag,
 					ImageId: exhibition.Id,
 					UserId:  uint(userId),
-				})
-			}
-			if err = l.svcCtx.DB.
-				Model(&models.Tag{}).
-				FirstOrCreate(&tags, &tags).
-				Error; err != nil {
-				return nil, err, msg
+				}
+				if err = l.svcCtx.DB.
+					Model(&models.Tag{}).
+					FirstOrCreate(&tags, &tags).
+					Error; err != nil {
+					return nil, err, msg
+				}
 			}
 		}
 

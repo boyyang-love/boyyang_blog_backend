@@ -2,15 +2,13 @@ package exhibition
 
 import (
 	"blog_server/common/respx"
+	"blog_server/internal/svc"
+	"blog_server/internal/types"
 	"blog_server/models"
 	"context"
 	"encoding/json"
 	"gorm.io/gorm"
-	"strconv"
 	"strings"
-
-	"blog_server/internal/svc"
-	"blog_server/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -19,6 +17,15 @@ type ExhibitionInfoLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
+}
+
+type Params struct {
+	Ids    string
+	Page   int
+	Limit  int
+	Public bool
+	Type   int
+	UserId uint
 }
 
 func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ExhibitionInfoLogic {
@@ -31,11 +38,15 @@ func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ex
 
 func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp *types.ExhibitionInfoRes, err error, msg respx.SucMsg) {
 	userid, _ := l.ctx.Value("Id").(json.Number).Int64()
-	DB := l.svcCtx.DB
-	ids := strings.Split(req.Ids, ",")
 
-	var count int64
-	var exInfo []types.ExhibitionInfo
+	params := Params{
+		Ids:    req.Ids,
+		Limit:  req.Limit,
+		Page:   req.Page,
+		Type:   req.Type,
+		Public: req.Public,
+		UserId: uint(userid),
+	}
 
 	status, err := l.getStatus(userid)
 	if err != nil {
@@ -43,65 +54,61 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 	}
 
 	likes, err := l.getLikesIds(userid)
-
-	if len(ids) > 0 && req.Ids != "" {
-		if err := DB.
-			Model(&models.Exhibition{}).
-			Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
-				return db.Select("id", "username", "gender", "avatar_url", "tel")
-			}).
-			Where("status = ? and user_id = ?", req.Type, userid).
-			Order("created_at desc").
-			Find(&exInfo, ids).
-			Count(&count).
-			Error; err == nil {
-			return &types.ExhibitionInfoRes{
-					Exhibitions:    exInfo,
-					Count:          int(count),
-					InReview:       int(status[0]),
-					Approved:       int(status[1]),
-					ReviewRjection: int(status[2]),
-					LikesIds:       likes,
-				},
-				nil,
-				respx.SucMsg{Msg: "获取成功"}
-		} else {
-			return nil, err, msg
-		}
-	} else {
-		if req.Page != "" && req.Limit != "" {
-			page, _ := strconv.Atoi(req.Page)
-			limit, _ := strconv.Atoi(req.Limit)
-			DB = DB.
-				Offset((page - 1) * limit).
-				Limit(limit)
-		}
-
-		if err := DB.
-			Model(&models.Exhibition{}).
-			Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
-				return db.Select("id", "username", "gender", "avatar_url", "tel")
-			}).
-			Where("status = ? and user_id = ?", req.Type, userid).
-			Order("created_at desc").
-			Find(&exInfo).
-			Offset(-1).
-			Count(&count).
-			Error; err == nil {
-			return &types.ExhibitionInfoRes{
-					Exhibitions:    exInfo,
-					Count:          int(count),
-					InReview:       int(status[0]),
-					Approved:       int(status[1]),
-					ReviewRjection: int(status[2]),
-					LikesIds:       likes,
-				},
-				nil,
-				respx.SucMsg{Msg: "获取成功"}
-		} else {
-			return nil, err, msg
-		}
+	if err != nil {
+		return nil, err, msg
 	}
+
+	exhibitions, count, err := l.getExhibitionInfo(params)
+
+	if err != nil {
+		return nil, err, msg
+	} else {
+		return &types.ExhibitionInfoRes{
+			Count:          int(count),
+			Exhibitions:    exhibitions,
+			InReview:       int(status[0]),
+			Approved:       int(status[1]),
+			ReviewRjection: int(status[2]),
+			LikesIds:       likes,
+		}, nil, msg
+	}
+
+}
+
+func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params) (exhibitions []types.ExhibitionInfo, count int64, err error) {
+	DB := l.svcCtx.DB
+
+	DB = DB.Model(&models.Exhibition{})
+
+	if params.Page > 0 && params.Limit > 0 {
+		DB = DB.Offset((params.Page - 1) * params.Limit).
+			Limit(params.Limit)
+	}
+
+	if params.Public {
+		DB = DB.Where("status = ?", params.Type)
+	} else {
+		DB = DB.Where("status = ? and user_id = ?", params.Type, params.UserId)
+	}
+
+	if params.Ids != "" {
+		DB = DB.Where("id in (?)", strings.Split(params.Ids, ","))
+	}
+
+	DB = DB.Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
+		return db.Select("id", "username", "gender", "avatar_url", "tel")
+	}).Order("created_at desc")
+
+	if err = DB.
+		Find(&exhibitions).
+		Offset(-1).
+		Count(&count).
+		Error; err != nil {
+		return nil, count, err
+	} else {
+		return exhibitions, count, nil
+	}
+
 }
 
 func (l *ExhibitionInfoLogic) getStatus(userid int64) (status []int64, err error) {
