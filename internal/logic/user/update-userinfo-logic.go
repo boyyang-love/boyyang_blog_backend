@@ -102,11 +102,11 @@ func (l *UpdateUserInfoLogic) updateUserInfo(req *types.UpdateUserInfoReq) (err 
 			Age:             req.Age,
 			Gender:          req.Gender,
 			AvatarUrl:       req.AvatarUrl,
-			Tel:             &req.Tel,
-			Email:           &req.Email,
+			Tel:             req.Tel,
+			Email:           req.Email,
 			Address:         req.Address,
 			BackgroundImage: req.BackgroundImage,
-			Motto:           &req.Motto,
+			Motto:           req.Motto,
 		})
 
 	if err = DB.Error; err != nil {
