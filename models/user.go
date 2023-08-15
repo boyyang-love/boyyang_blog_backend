@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+	"time"
+)
 
 type User struct {
 	Id              uint       `gorm:"primary_key" json:"id"`
@@ -25,6 +29,11 @@ type User struct {
 	Motto           string     `form:"motto" json:"motto"`
 }
 
-func (User) TableName() string {
+func (user *User) TableName() string {
 	return "user"
+}
+
+func (user *User) BeforeCreate(db *gorm.DB) (err error) {
+	user.Id = uint(uuid.New().ID())
+	return
 }

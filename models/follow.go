@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+	"time"
+)
 
 type Follow struct {
 	Id           uint       `json:"id" gorm:"primary_key"`
@@ -14,6 +18,11 @@ type Follow struct {
 	FollowType   bool       `json:"follow_type"`    // true 关注 false 取消关注
 }
 
-func (Follow) TableName() string {
+func (*Follow) TableName() string {
 	return "follow"
+}
+
+func (follow *Follow) BeforeCreate(db *gorm.DB) (err error) {
+	follow.Id = uint(uuid.New().ID())
+	return
 }

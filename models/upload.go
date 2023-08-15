@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+	"time"
+)
 
 type Upload struct {
 	Id        uint       `json:"id" gorm:"primary_key"`
@@ -17,6 +21,11 @@ type Upload struct {
 	UserId    uint       `json:"user_id"`   // 用户id
 }
 
-func (Upload) TableName() string {
+func (*Upload) TableName() string {
 	return "upload"
+}
+
+func (upload *Upload) BeforeCreate(db *gorm.DB) (err error) {
+	upload.Id = uint(uuid.New().ID())
+	return
 }

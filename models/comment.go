@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+	"time"
+)
 
 type Comment struct {
 	Id        uint       `json:"id" gorm:"primary_key" `
@@ -15,6 +19,11 @@ type Comment struct {
 	ThumbsUp  *int       `json:"thumbs_up" gorm:"default:0"` // 该条评论 点赞数
 }
 
-func (Comment) TableName() string {
+func (comment *Comment) TableName() string {
 	return "comment"
+}
+
+func (comment *Comment) BeforeCreate(db *gorm.DB) (err error) {
+	comment.Id = uint(uuid.New().ID())
+	return
 }

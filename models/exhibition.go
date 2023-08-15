@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+	"time"
+)
 
 type Exhibition struct {
 	Id        uint       `json:"id" gorm:"primary_key"`
@@ -20,6 +24,11 @@ type Exhibition struct {
 	RejectRes string     `json:"reject_res"`                 // 状态为3时 驳回原因
 }
 
-func (Exhibition) TableName() string {
+func (exhibition *Exhibition) TableName() string {
 	return "exhibition"
+}
+
+func (exhibition *Exhibition) BeforeCreate(db *gorm.DB) (err error) {
+	exhibition.Id = uint(uuid.New().ID())
+	return
 }

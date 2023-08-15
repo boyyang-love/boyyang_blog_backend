@@ -1,6 +1,7 @@
 package helper
 
 import (
+	"blog_server/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -25,4 +26,17 @@ func InitMysql(args string) (db *gorm.DB, err error) {
 	})
 
 	return db, err
+}
+
+func AutoMigrate(db *gorm.DB) (err error) {
+	err = db.AutoMigrate(&models.User{})
+	err = db.AutoMigrate(&models.Upload{})
+	err = db.AutoMigrate(&models.Exhibition{})
+	err = db.AutoMigrate(&models.Blog{})
+	err = db.AutoMigrate(&models.Comment{})
+	err = db.AutoMigrate(&models.Likes{})
+	err = db.AutoMigrate(&models.Follow{})
+	err = db.AutoMigrate(&models.Tag{})
+
+	return err
 }

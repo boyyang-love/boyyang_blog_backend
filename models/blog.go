@@ -1,9 +1,13 @@
 package models
 
-import "time"
+import (
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+	"time"
+)
 
 type Blog struct {
-	Id           uint       `json:"id" gorm:"primary_key" `
+	Id           uint       `json:"id" gorm:"primary_key"`
 	CreatedAt    time.Time  `json:"created_at"`
 	UpdatedAt    time.Time  `json:"updated_at"`
 	DeletedAt    *time.Time `json:"deleted_at"`
@@ -21,6 +25,11 @@ type Blog struct {
 	Collection   *int       `json:"collection" gorm:"default:0"`        // 收藏数
 }
 
-func (Blog) TableName() string {
+func (*Blog) TableName() string {
 	return "blog"
+}
+
+func (blog *Blog) BeforeCreate(db *gorm.DB) (err error) {
+	blog.Id = uint(uuid.New().ID())
+	return
 }

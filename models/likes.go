@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+	"time"
+)
 
 type Likes struct {
 	Id           uint       `json:"id" gorm:"primary_key"`
@@ -14,6 +18,11 @@ type Likes struct {
 	LikesType    bool       `json:"likes_type"`    // true 收藏 false 取消收藏
 }
 
-func (Likes) TableName() string {
+func (likes *Likes) TableName() string {
 	return "likes"
+}
+
+func (likes *Likes) BeforeCreate(db *gorm.DB) (err error) {
+	likes.Id = uint(uuid.New().ID())
+	return
 }
