@@ -24,7 +24,7 @@ type (
     }
 
     RegisterRes {
-        Id uint `json:"id"`
+        Uid uint `json:"uid"`
     }
 )
 

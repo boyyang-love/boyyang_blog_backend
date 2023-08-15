@@ -33,7 +33,7 @@ func (l *UpdateBlogLogic) UpdateBlog(req *types.UpdateBlogReq) (resp *types.Upda
 	}
 	res := l.svcCtx.DB.
 		Model(&models.Blog{}).
-		Where("id = ?", req.Id).
+		Where("uid = ?", req.Uid).
 		Updates(&blogInfo)
 	if res.Error == nil {
 		return &types.UpdateBlogRes{Msg: "更新成功"}, err, msg

@@ -15,7 +15,7 @@ type (
     }
 
     LikesInfo {
-        Id uint `json:"id"`
+        Uid uint `json:"uid"`
         Created int `json:"created"`
         Updated int `json:"updated"`
         Title     string     `json:"title"`
@@ -27,7 +27,7 @@ type (
     }
 
     LikesInfoIds {
-        ids []int `json:"ids"`
+        Uids []int `json:"uids"`
     }
 )
 

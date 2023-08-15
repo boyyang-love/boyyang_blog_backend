@@ -30,7 +30,7 @@ func (l *ApprovalExhibitionLogic) ApprovalExhibition(req *types.ApprovalReq) (re
 
 	if err = DB.
 		Model(&models.Exhibition{}).
-		Where("id = ?", req.Id).
+		Where("uid = ?", req.Id).
 		Updates(&models.Exhibition{
 			Status:    req.Status,
 			RejectRes: req.Reason,

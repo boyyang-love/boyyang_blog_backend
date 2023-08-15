@@ -8,6 +8,7 @@ import (
 
 type Exhibition struct {
 	Id        uint       `json:"id" gorm:"primary_key"`
+	Uid       uint       `json:"uid" gorm:"primary_key"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at"`
@@ -29,6 +30,6 @@ func (exhibition *Exhibition) TableName() string {
 }
 
 func (exhibition *Exhibition) BeforeCreate(db *gorm.DB) (err error) {
-	exhibition.Id = uint(uuid.New().ID())
+	exhibition.Uid = uint(uuid.New().ID())
 	return
 }

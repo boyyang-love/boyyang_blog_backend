@@ -12,11 +12,11 @@ type (
         Tags string `form:"tags,optional"`
     }
     CreateBlogRes {
-        Id uint `json:"id"`
+        Uid uint `json:"uid"`
     }
 
     UpdateBlogReq {// 更新博客
-        Id uint `form:"id"`
+        Uid uint `form:"uid"`
         Title string `form:"title"`
         SubTitle string `form:"sub_title"`
         Content string `form:"content"`
@@ -27,11 +27,11 @@ type (
     }
 
     DeleteBlogReq { // 删除博客
-        Id uint `form:"id"`
+        Uid uint `form:"uid"`
     }
 
     BlogInfoReq { // 获取博客信息
-        Ids string `form:"ids,optional"`
+        Uids string `form:"uids,optional"`
         Page string `form:"page,optional"`
         Limit string `form:"limit,optional"`
     }
@@ -41,7 +41,7 @@ type (
     }
 
     BlogInfo { // 博客信息内容
-        Id uint `json:"id"`
+        Uid uint `json:"uid"`
         Created int `json:"created"`
         Updated int `json:"updated"`
         Title string `json:"title"`
@@ -56,7 +56,7 @@ type (
     }
 
     ThumbsUpBlogReq { // 博客点赞
-        Id uint `form:"id"`
+        Uid uint `form:"uid"`
     }
     ThumbsUpBlogRes {
         Msg string `json:"msg"`

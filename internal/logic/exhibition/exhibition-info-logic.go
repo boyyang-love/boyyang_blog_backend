@@ -20,7 +20,7 @@ type ExhibitionInfoLogic struct {
 }
 
 type Params struct {
-	Ids    string
+	Uids   string
 	Page   int
 	Limit  int
 	Public bool
@@ -40,7 +40,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 	userid, _ := l.ctx.Value("Id").(json.Number).Int64()
 
 	params := Params{
-		Ids:    req.Ids,
+		Uids:   req.Uids,
 		Limit:  req.Limit,
 		Page:   req.Page,
 		Type:   req.Type,
@@ -91,8 +91,8 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params) (exhibitions []ty
 		DB = DB.Where("status = ? and user_id = ?", params.Type, params.UserId)
 	}
 
-	if params.Ids != "" {
-		DB = DB.Where("id in (?)", strings.Split(params.Ids, ","))
+	if params.Uids != "" {
+		DB = DB.Where("id in (?)", strings.Split(params.Uids, ","))
 	}
 
 	DB = DB.Preload("UserInfo", func(db *gorm.DB) *gorm.DB {

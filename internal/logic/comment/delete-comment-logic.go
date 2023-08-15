@@ -28,7 +28,7 @@ func NewDeleteCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Del
 func (l *DeleteCommentLogic) DeleteComment(req *types.DeleateBlogCommentReq) (resp *types.DeleateBlogCommentRes, err error, msg respx.SucMsg) {
 	res := l.svcCtx.DB.
 		Model(&models.Comment{}).
-		Where("id = ?", req.Id).
+		Where("uid = ?", req.Uid).
 		Delete(&models.Comment{})
 	if res.Error == nil {
 		return &types.DeleateBlogCommentRes{Msg: "删除评论成功"}, nil, msg

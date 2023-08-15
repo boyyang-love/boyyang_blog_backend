@@ -7,7 +7,8 @@ import (
 )
 
 type Comment struct {
-	Id        uint       `json:"id" gorm:"primary_key" `
+	Id        uint       `json:"id" gorm:"primary_key"`
+	Uid       uint       `json:"uid" gorm:"primary_key"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at"`
@@ -24,6 +25,6 @@ func (comment *Comment) TableName() string {
 }
 
 func (comment *Comment) BeforeCreate(db *gorm.DB) (err error) {
-	comment.Id = uint(uuid.New().ID())
+	comment.Uid = uint(uuid.New().ID())
 	return
 }

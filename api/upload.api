@@ -42,14 +42,14 @@ type (
     }
 
     CreateExhibitionRes {
-        Id uint `json:"id"`
+        Uid uint `json:"uid"`
     }
 )
 
 // 获取图片墙信息
 type (
     ExhibitionInfoReq {
-        Ids string `form:"ids,optional"`
+        Uids string `form:"uids,optional"`
         Page int `form:"page,optional"`
         Limit int `form:"limit,optional"`
         Type int `form:"type,optional"`
@@ -66,7 +66,7 @@ type (
     }
 
     ExhibitionInfo {
-        Id uint `json:"id"`
+        Uid uint `json:"id"`
         Created int `json:"created"`
         Title string `json:"title"`
         SubTitle string `json:"sub_title"`

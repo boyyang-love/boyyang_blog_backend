@@ -28,7 +28,7 @@ func (l *LikeLogic) Like(req *types.AddLikesReq) (err error, msg respx.SucMsg) {
 
 	DB := l.svcCtx.DB
 
-	id, err := l.ctx.Value("Id").(json.Number).Int64()
+	uid, err := l.ctx.Value("Id").(json.Number).Int64()
 	if err != nil {
 		return err, msg
 	}
@@ -36,12 +36,12 @@ func (l *LikeLogic) Like(req *types.AddLikesReq) (err error, msg respx.SucMsg) {
 	if req.LikesType == 1 { // 添加收藏
 		if err = DB.
 			Model(&models.Likes{}).
-			Where(&models.Likes{UserId: uint(id), ExhibitionId: req.Exhibition_id}).
+			Where(&models.Likes{UserId: uint(uid), ExhibitionId: req.Exhibition_id}).
 			Assign(&models.Likes{LikesType: true}).
 			FirstOrCreate(
 				&models.Likes{
 					ExhibitionId: req.Exhibition_id,
-					UserId:       uint(id),
+					UserId:       uint(uid),
 					LikesType:    true,
 				}).
 			Error; err == nil {
@@ -52,7 +52,7 @@ func (l *LikeLogic) Like(req *types.AddLikesReq) (err error, msg respx.SucMsg) {
 	} else {
 		if err = DB.
 			Model(&models.Likes{}).
-			Where(&models.Likes{UserId: uint(id), ExhibitionId: req.Exhibition_id}).
+			Where(&models.Likes{UserId: uint(uid), ExhibitionId: req.Exhibition_id}).
 			Update("likes_type", false).
 			Error; err == nil {
 			return nil, respx.SucMsg{Msg: "取消收藏成功"}

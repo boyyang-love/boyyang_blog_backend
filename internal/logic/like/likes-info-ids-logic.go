@@ -37,6 +37,6 @@ func (l *LikesInfoIdsLogic) LikesInfoIds() (resp *types.LikesInfoIds, err error,
 		Scan(&ids).Error; err != nil {
 		return nil, err, msg
 	} else {
-		return &types.LikesInfoIds{Ids: ids}, nil, msg
+		return &types.LikesInfoIds{Uids: ids}, nil, msg
 	}
 }

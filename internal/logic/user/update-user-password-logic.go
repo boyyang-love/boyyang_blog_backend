@@ -53,7 +53,7 @@ func (l *UpdateUserPasswordLogic) updatePassword(userId int64, newPassword strin
 	DB = DB.
 		Model(&models.User{}).
 		Select("password").
-		Where("id=?", userId).
+		Where("uid=?", userId).
 		First(&info)
 
 	if err = DB.Error; err != nil {

@@ -27,14 +27,14 @@ func NewUpdateUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Up
 
 func (l *UpdateUserInfoLogic) UpdateUserInfo(req *types.UpdateUserInfoReq) (err error, msg respx.SucMsg) {
 	// 判断是否存在被修改用户
-	err, isExist := l.isExistUser(req.Id)
+	err, isExist := l.isExistUser(req.Uid)
 	if err != nil {
 		return err, msg
 	}
 
 	if isExist {
 		// 判断新用户名是否重复
-		err, isSameName := l.isSameName(req.Id, req.Username)
+		err, isSameName := l.isSameName(req.Uid, req.Username)
 		if err != nil {
 			return err, msg
 		}
@@ -77,9 +77,9 @@ func (l *UpdateUserInfoLogic) isExistUser(userId uint) (err error, isExist bool)
 func (l *UpdateUserInfoLogic) isSameName(userId uint, name string) (err error, isSameName bool) {
 	var count int64
 	DB := l.svcCtx.DB.
-		Select("id", "username").
+		Select("uid", "username").
 		Model(&models.User{}).
-		Where("username = ? and id != ?", name, userId).
+		Where("username = ? and uid != ?", name, userId).
 		Count(&count)
 	if err = DB.Error; err != nil {
 		return err, isSameName
@@ -96,7 +96,7 @@ func (l *UpdateUserInfoLogic) updateUserInfo(req *types.UpdateUserInfoReq) (err 
 	DB := l.
 		svcCtx.DB.
 		Model(&models.User{}).
-		Where("id =?", req.Id).
+		Where("uid =?", req.Uid).
 		Updates(&models.User{
 			Username:        req.Username,
 			Age:             req.Age,

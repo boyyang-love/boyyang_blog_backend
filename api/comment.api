@@ -11,7 +11,7 @@ type (
     }
 
     DeleateBlogCommentReq {
-        Id uint `form:"id"`
+        Uid uint `form:"uid"`
     }
 
     DeleateBlogCommentRes {
@@ -19,7 +19,7 @@ type (
     }
 
     ThumbsUpBlogCommentReq {
-        Id uint `form:"id"`
+        Uid uint `form:"uid"`
     }
 
     ThumbsUpBlogCommentRes {

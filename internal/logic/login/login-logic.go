@@ -40,7 +40,7 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error
 	} else {
 		token, _ := helper.GenerateJwtToken(
 			&helper.GenerateJwtStruct{
-				Id:       int(info.Id),
+				Id:       info.Uid,
 				Username: info.Username,
 			},
 			l.svcCtx.Config.Auth.AccessSecret,

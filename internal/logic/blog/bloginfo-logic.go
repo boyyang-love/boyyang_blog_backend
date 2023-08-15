@@ -35,15 +35,15 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 
 	userId, _ := l.ctx.Value("Id").(json.Number).Int64()
 
-	ids := strings.Split(req.Ids, ",")
+	ids := strings.Split(req.Uids, ",")
 
-	if len(ids) > 0 && req.Ids != "" {
+	if len(ids) > 0 && req.Uids != "" {
 		err = DB.
 			Model(&models.Blog{}).
 			Preload("UserInfo").
 			Order("created desc").
-			Where("user_id", userId).
-			Find(&blogInfo, ids).
+			Where("user_id = ? and uid in (?)", userId, ids).
+			Find(&blogInfo).
 			Count(&count).
 			Error
 	} else {

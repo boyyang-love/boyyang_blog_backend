@@ -35,7 +35,7 @@ func (l *ThumbsUpBlogLogic) ThumbsUpBlog(req *types.ThumbsUpBlogReq) (resp *type
 
 	DB = DB.
 		Model(&models.Blog{}).
-		Where("id = ?", req.Id).
+		Where("uid = ?", req.Uid).
 		Find(&blogInfo)
 
 	if DB.Error == nil {

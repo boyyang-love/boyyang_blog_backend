@@ -39,7 +39,7 @@ func (l *RegisterLogic) register(req *types.RegisterReq) (resp *types.RegisterRe
 	DB := l.svcCtx.DB
 
 	var user struct {
-		Id       uint   `json:"id"`
+		Uid      uint   `json:"id"`
 		Username string `json:"username"`
 		Tel      int    `json:"tel"`
 	}
@@ -66,7 +66,7 @@ func (l *RegisterLogic) register(req *types.RegisterReq) (resp *types.RegisterRe
 				return nil, errors.New("注册失败，请稍后重试")
 			}
 
-			return &types.RegisterRes{Id: user.Id}, nil
+			return &types.RegisterRes{Uid: user.Uid}, nil
 		}
 
 		return resp, err

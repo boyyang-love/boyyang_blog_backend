@@ -43,10 +43,9 @@ func (l *FollowInfoLogic) FollowInfo() (resp *types.FollowInfoRes, err error, ms
 		}
 		if err =
 			DB.
-				Debug().
-				Select("id", "username", "gender", "avatar_url", "tel").
+				Select("uid", "username", "gender", "avatar_url", "tel").
 				Model(&models.User{}).
-				Where("id in ?", followIds).
+				Where("uid in ?", followIds).
 				Scan(&userInfo).
 				Error; err != nil {
 			return nil, err, msg

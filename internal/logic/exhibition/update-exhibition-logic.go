@@ -29,7 +29,7 @@ func (l *UpdateExhibitionLogic) UpdateExhibition(req *types.UpdateExhibitionReq)
 
 	if err = DB.
 		Model(&models.Exhibition{}).
-		Where("id = ?", req.Id).
+		Where("uid = ?", req.Id).
 		Updates(&models.Exhibition{
 			Title:    req.Title,
 			SubTitle: req.SubTitle,

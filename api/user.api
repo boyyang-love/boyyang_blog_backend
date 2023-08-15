@@ -3,7 +3,7 @@ import "public/user.api"
 // 用户信息
 type (
     UserInfoReq {
-        Id uint `form:"id,optional"`
+        Uid uint `form:"uid,optional"`
     }
 
     UserInfoRes {
@@ -22,7 +22,7 @@ type (
 // 更新用户信息
 type (
     UpdateUserInfoReq {
-        Id uint `form:"id"`
+        Uid uint `form:"uid"`
         Username string `form:"username,optional"`
         Age int `form:"age,optional"`
         Gender int `form:"gender,optional"`

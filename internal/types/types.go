@@ -11,11 +11,11 @@ type CreateBlogReq struct {
 }
 
 type CreateBlogRes struct {
-	Id uint `json:"id"`
+	Uid uint `json:"uid"`
 }
 
 type UpdateBlogReq struct {
-	Id       uint   `form:"id"`
+	Uid      uint   `form:"uid"`
 	Title    string `form:"title"`
 	SubTitle string `form:"sub_title"`
 	Content  string `form:"content"`
@@ -27,11 +27,11 @@ type UpdateBlogRes struct {
 }
 
 type DeleteBlogReq struct {
-	Id uint `form:"id"`
+	Uid uint `form:"uid"`
 }
 
 type BlogInfoReq struct {
-	Ids   string `form:"ids,optional"`
+	Uids  string `form:"uids,optional"`
 	Page  string `form:"page,optional"`
 	Limit string `form:"limit,optional"`
 }
@@ -42,7 +42,7 @@ type BlogInfoRes struct {
 }
 
 type BlogInfo struct {
-	Id         uint   `json:"id"`
+	Uid        uint   `json:"uid"`
 	Created    int    `json:"created"`
 	Updated    int    `json:"updated"`
 	Title      string `json:"title"`
@@ -57,7 +57,7 @@ type BlogInfo struct {
 }
 
 type ThumbsUpBlogReq struct {
-	Id uint `form:"id"`
+	Uid uint `form:"uid"`
 }
 
 type ThumbsUpBlogRes struct {
@@ -66,6 +66,7 @@ type ThumbsUpBlogRes struct {
 
 type User struct {
 	Id              uint   `json:"id"`
+	Uid             uint   `json:"uid"`
 	Username        string `json:"username"`
 	Gender          int    `json:"gender"`
 	AvatarUrl       string `json:"avatar_url"`
@@ -90,7 +91,7 @@ type CreateBlogCommentRes struct {
 }
 
 type DeleateBlogCommentReq struct {
-	Id uint `form:"id"`
+	Uid uint `form:"uid"`
 }
 
 type DeleateBlogCommentRes struct {
@@ -98,7 +99,7 @@ type DeleateBlogCommentRes struct {
 }
 
 type ThumbsUpBlogCommentReq struct {
-	Id uint `form:"id"`
+	Uid uint `form:"uid"`
 }
 
 type ThumbsUpBlogCommentRes struct {
@@ -118,32 +119,19 @@ type Dashboard struct {
 }
 
 type DashboardUserInfo struct {
-	ThumbsUp  *int `json:"thumbs_up" gorm:"default:0"` // 获赞数
-	Like      *int `json:"like" gorm:"default:0"`      // 收藏数
-	Publish   *int `json:"publish" gorm:"default:0"`   // 上传数
-	Following *int `json:"following"`
-	DashboardUser
+	ThumbsUp      *int `json:"thumbs_up" gorm:"default:0"` // 获赞数
+	Like          *int `json:"like" gorm:"default:0"`      // 收藏数
+	Publish       *int `json:"publish" gorm:"default:0"`   // 上传数
+	Following     *int `json:"following"`
+	DashboardUser User `json:"dashboard_user"`
 }
 
 type DashboardExhibition struct {
-	Id     uint   `json:"id"`
+	Uid    uint   `json:"uid"`
 	Title  string `json:"title"`
 	Des    string `json:"des"`
 	Cover  string `json:"cover"`
 	UserId uint   `json:"user_id"`
-}
-
-type DashboardUser struct {
-	Id        uint    `json:"id"`
-	Username  string  `json:"username"`
-	Gender    int     `json:"gender"`
-	Age       int     `json:"age"`
-	Email     *string `json:"email"`
-	Qq        *int    `json:"qq"`
-	Wechat    *string `json:"wechat"`
-	GitHub    *string `json:"gitHub"`
-	AvatarUrl string  `json:"avatar_url"`
-	Motto     *string `json:"motto"`
 }
 
 type AddLikesReq struct {
@@ -160,7 +148,7 @@ type LikesInfoRes struct {
 }
 
 type LikesInfo struct {
-	Id       uint   `json:"id"`
+	Uid      uint   `json:"uid"`
 	Created  int    `json:"created"`
 	Updated  int    `json:"updated"`
 	Title    string `json:"title"`
@@ -172,7 +160,7 @@ type LikesInfo struct {
 }
 
 type LikesInfoIds struct {
-	Ids []int `json:"ids"`
+	Uids []int `json:"uids"`
 }
 
 type AddAndUnFollowReq struct {
@@ -202,7 +190,7 @@ type RegisterReq struct {
 }
 
 type RegisterRes struct {
-	Id uint `json:"id"`
+	Uid uint `json:"uid"`
 }
 
 type UploadReq struct {
@@ -241,11 +229,11 @@ type CreateExhibitionReq struct {
 }
 
 type CreateExhibitionRes struct {
-	Id uint `json:"id"`
+	Uid uint `json:"uid"`
 }
 
 type ExhibitionInfoReq struct {
-	Ids    string `form:"ids,optional"`
+	Uids   string `form:"uids,optional"`
 	Page   int    `form:"page,optional"`
 	Limit  int    `form:"limit,optional"`
 	Type   int    `form:"type,optional"`
@@ -262,7 +250,7 @@ type ExhibitionInfoRes struct {
 }
 
 type ExhibitionInfo struct {
-	Id        uint   `json:"id"`
+	Uid       uint   `json:"id"`
 	Created   int    `json:"created"`
 	Title     string `json:"title"`
 	SubTitle  string `json:"sub_title"`
@@ -301,7 +289,7 @@ type DelExhibitionReq struct {
 }
 
 type UserInfoReq struct {
-	Id uint `form:"id,optional"`
+	Uid uint `form:"uid,optional"`
 }
 
 type UserInfoRes struct {
@@ -317,7 +305,7 @@ type UserOtherInfo struct {
 }
 
 type UpdateUserInfoReq struct {
-	Id              uint   `form:"id"`
+	Uid             uint   `form:"uid"`
 	Username        string `form:"username,optional"`
 	Age             int    `form:"age,optional"`
 	Gender          int    `form:"gender,optional"`

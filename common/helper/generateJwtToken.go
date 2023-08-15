@@ -6,7 +6,7 @@ import (
 )
 
 type GenerateJwtStruct struct {
-	Id       int
+	Id       uint
 	Username string
 	jwt.RegisteredClaims
 }

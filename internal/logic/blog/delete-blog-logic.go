@@ -28,7 +28,7 @@ func NewDeleteBlogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 func (l *DeleteBlogLogic) DeleteBlog(req *types.DeleteBlogReq) (err error, msg respx.SucMsg) {
 	if err = l.svcCtx.DB.
 		Model(&models.Blog{}).
-		Where("id = ?", req.Id).
+		Where("uid = ?", req.Uid).
 		Delete(&models.Blog{}).
 		Error; err == nil {
 		return nil, respx.SucMsg{Msg: "博客删除成功"}

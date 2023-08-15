@@ -29,7 +29,7 @@ func NewThumbsUpCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *T
 func (l *ThumbsUpCommentLogic) ThumbsUpComment(req *types.ThumbsUpBlogCommentReq) (resp *types.ThumbsUpBlogCommentRes, err error, msg respx.SucMsg) {
 	res := l.svcCtx.DB.
 		Model(&models.Comment{}).
-		Where("id = ?", req.Id).
+		Where("uid = ?", req.Uid).
 		Update("thumbs_up", gorm.Expr("thumbs_up + ?", 1))
 	if res.Error == nil {
 		return &types.ThumbsUpBlogCommentRes{Msg: "点赞成功"}, nil, msg

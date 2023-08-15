@@ -28,14 +28,14 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 
 func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRes, err error, msg respx.SucMsg) {
 	// 如果不传ID 则使用token中的ID
-	if req.Id == 0 {
+	if req.Uid == 0 {
 		id, _ := l.ctx.Value("Id").(json.Number).Int64()
-		req.Id = uint(id)
+		req.Uid = uint(id)
 	}
 
-	err, userInfo := l.userInfo(req.Id)
+	err, userInfo := l.userInfo(req.Uid)
 
-	err, otherInfo := l.userOtherInfo(req.Id)
+	err, otherInfo := l.userOtherInfo(req.Uid)
 	if err != nil {
 		return nil, err, msg
 	}
@@ -51,7 +51,7 @@ func (l *UserInfoLogic) userInfo(userId uint) (err error, info *types.User) {
 	var userInfo *types.User
 
 	if err = DB.Model(&models.User{}).
-		Where("id = ?", userId).
+		Where("uid = ?", userId).
 		First(&userInfo).
 		Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

@@ -29,19 +29,19 @@ func NewDashboardLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Dashboa
 func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg respx.SucMsg) {
 
 	DB := l.svcCtx.DB
-	id, err := l.ctx.Value("Id").(json.Number).Int64()
+	uid, err := l.ctx.Value("Id").(json.Number).Int64()
 	if err != nil {
 		return nil, err, msg
 	}
 
 	// 用户信息
-	userInfo, err := getDashboardUserInfo(DB, uint(id))
+	userInfo, err := getDashboardUserInfo(DB, uint(uid))
 	// dashboard
-	dashboard, err := getDashboardData(DB, uint(id))
+	dashboard, err := getDashboardData(DB, uint(uid))
 	// cardData
-	cardData, err := getDashboardCard(DB, uint(id))
+	cardData, err := getDashboardCard(DB, uint(uid))
 	// exhibition
-	exhibition, err := getDashboardExhibition(DB, uint(id))
+	exhibition, err := getDashboardExhibition(DB, uint(uid))
 
 	if err == nil {
 		return &types.DashboardRes{
@@ -112,11 +112,11 @@ func getDashboardData(DB *gorm.DB, id uint) (dashboard []types.Dashboard, err er
 }
 
 // 用户信息
-func getDashboardUserInfo(DB *gorm.DB, id uint) (userInfo types.DashboardUser, err error) {
+func getDashboardUserInfo(DB *gorm.DB, id uint) (userInfo types.User, err error) {
 	// userinfo
 	err = DB.
 		Model(models.User{}).
-		Where("id = ?", id).
+		Where("uid = ?", id).
 		Scan(&userInfo).
 		Error
 

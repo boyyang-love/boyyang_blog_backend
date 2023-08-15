@@ -62,7 +62,7 @@ func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.Crea
 				return nil, err, msg
 			}
 		}
-		return &types.CreateBlogRes{Id: blog.Id},
+		return &types.CreateBlogRes{Uid: blog.Uid},
 			nil,
 			respx.SucMsg{
 				Msg: "博客发布成功！",

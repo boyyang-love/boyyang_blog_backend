@@ -46,7 +46,7 @@ func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq)
 			for _, tag := range strings.Split(req.Tags, ",") {
 				tags := models.Tag{
 					Name:    tag,
-					ImageId: exhibition.Id,
+					ImageId: exhibition.Uid,
 					UserId:  uint(userId),
 				}
 				if err = l.svcCtx.DB.
@@ -58,7 +58,7 @@ func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq)
 			}
 		}
 
-		return &types.CreateExhibitionRes{Id: exhibition.Id},
+		return &types.CreateExhibitionRes{Uid: exhibition.Id},
 			nil,
 			respx.SucMsg{Msg: "图片上传成功"}
 	}
