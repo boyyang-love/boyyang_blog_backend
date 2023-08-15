@@ -250,7 +250,7 @@ type ExhibitionInfoRes struct {
 }
 
 type ExhibitionInfo struct {
-	Uid       uint   `json:"id"`
+	Uid       uint   `json:"uid"`
 	Created   int    `json:"created"`
 	Title     string `json:"title"`
 	SubTitle  string `json:"sub_title"`
@@ -264,28 +264,28 @@ type ExhibitionInfo struct {
 }
 
 type UpdateExhibitionReq struct {
-	Id       uint   `form:"id"`
+	Uid      uint   `form:"uid"`
 	Title    string `form:"title,optional"`
 	SubTitle string `form:"sub_title,optional"`
 	Des      string `form:"des,optional"`
 }
 
 type UpdateExhibitionRes struct {
-	Id uint `json:"id"`
+	Uid uint `json:"uid"`
 }
 
 type ApprovalReq struct {
-	Id     uint   `form:"id"`
+	Uid    uint   `form:"uid"`
 	Status int    `form:"status"`
 	Reason string `form:"reason,optional"`
 }
 
 type ApprovalRes struct {
-	Id uint `json:"id"`
+	Uid uint `json:"Uid"`
 }
 
 type DelExhibitionReq struct {
-	Id uint `form:"id"`
+	Uid uint `form:"uid"`
 }
 
 type UserInfoReq struct {

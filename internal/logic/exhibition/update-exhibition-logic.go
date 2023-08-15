@@ -29,13 +29,13 @@ func (l *UpdateExhibitionLogic) UpdateExhibition(req *types.UpdateExhibitionReq)
 
 	if err = DB.
 		Model(&models.Exhibition{}).
-		Where("uid = ?", req.Id).
+		Where("uid = ?", req.Uid).
 		Updates(&models.Exhibition{
 			Title:    req.Title,
 			SubTitle: req.SubTitle,
 			Des:      req.Des,
 		}).Error; err == nil {
-		return &types.UpdateExhibitionRes{Id: req.Id}, nil, respx.SucMsg{Msg: "更新成功"}
+		return &types.UpdateExhibitionRes{Uid: req.Uid}, nil, respx.SucMsg{Msg: "更新成功"}
 	} else {
 		return nil, err, msg
 	}

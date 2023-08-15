@@ -30,12 +30,12 @@ func (l *ApprovalExhibitionLogic) ApprovalExhibition(req *types.ApprovalReq) (re
 
 	if err = DB.
 		Model(&models.Exhibition{}).
-		Where("uid = ?", req.Id).
+		Where("uid = ?", req.Uid).
 		Updates(&models.Exhibition{
 			Status:    req.Status,
 			RejectRes: req.Reason,
 		}).Error; err == nil {
-		return &types.ApprovalRes{Id: req.Id}, err, respx.SucMsg{Msg: "状态更新成功"}
+		return &types.ApprovalRes{Uid: req.Uid}, err, respx.SucMsg{Msg: "状态更新成功"}
 	} else {
 		return nil, errorx.NewDefaultError(err.Error()), msg
 	}

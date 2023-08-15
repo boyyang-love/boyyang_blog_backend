@@ -66,7 +66,7 @@ type (
     }
 
     ExhibitionInfo {
-        Uid uint `json:"id"`
+        Uid uint `json:"uid"`
         Created int `json:"created"`
         Title string `json:"title"`
         SubTitle string `json:"sub_title"`
@@ -83,33 +83,33 @@ type (
 // 更新图片墙信息
 type (
     updateExhibitionReq {
-        Id uint `form:"id"`
+        Uid uint `form:"uid"`
         Title string `form:"title,optional"`
         SubTitle string `form:"sub_title,optional"`
         Des string `form:"des,optional"`
     }
 
     updateExhibitionRes {
-        Id uint `json:"id"`
+        Uid uint `json:"uid"`
     }
 )
 
 // 审批图片
 type (
     approvalReq {
-        Id uint `form:"id"`
+        Uid uint `form:"uid"`
         Status int `form:"status"`
         Reason string `form:"reason,optional"`
     }
 
     approvalRes {
-        Id uint `json:"id"`
+        Uid uint `json:"Uid"`
     }
 )
 
 type (
     delExhibitionReq {
-        Id uint `form:"id"`
+        Uid uint `form:"uid"`
     }
 )
 

@@ -28,7 +28,7 @@ func NewDelExhibitionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Del
 func (l *DelExhibitionLogic) DelExhibition(req *types.DelExhibitionReq) (err error, msg respx.SucMsg) {
 	if err = l.svcCtx.DB.
 		Model(&models.Exhibition{}).
-		Where("uid = ?", req.Id).
+		Where("uid = ?", req.Uid).
 		Delete(&models.Exhibition{}).
 		Error; err != nil {
 		return err, msg
