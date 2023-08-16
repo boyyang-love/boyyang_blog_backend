@@ -30,6 +30,7 @@ func (exhibition *Exhibition) TableName() string {
 }
 
 func (exhibition *Exhibition) BeforeCreate(db *gorm.DB) (err error) {
-	exhibition.Uid = uint(uuid.New().ID())
-	return
+	uid, err := uuid.NewUUID()
+	exhibition.Uid = uint(uid.ID())
+	return err
 }

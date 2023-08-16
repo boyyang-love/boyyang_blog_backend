@@ -37,7 +37,7 @@ func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ex
 }
 
 func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp *types.ExhibitionInfoRes, err error, msg respx.SucMsg) {
-	userid, _ := l.ctx.Value("Id").(json.Number).Int64()
+	userid, _ := l.ctx.Value("Uid").(json.Number).Int64()
 
 	params := Params{
 		Uids:   req.Uids,

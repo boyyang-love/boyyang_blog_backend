@@ -27,7 +27,7 @@ func NewLikesInfoIdsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Like
 }
 
 func (l *LikesInfoIdsLogic) LikesInfoIds() (resp *types.LikesInfoIds, err error, msg respx.SucMsg) {
-	userid, _ := l.ctx.Value("Id").(json.Number).Int64()
+	userid, _ := l.ctx.Value("Uid").(json.Number).Int64()
 	var ids []int
 	if err = l.svcCtx.DB.
 		Model(&models.Likes{}).

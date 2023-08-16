@@ -25,6 +25,7 @@ func (tag *Tag) TableName() string {
 }
 
 func (tag *Tag) BeforeCreate(db *gorm.DB) (err error) {
-	tag.Uid = uint(uuid.New().ID())
-	return
+	uid, err := uuid.NewUUID()
+	tag.Uid = uint(uid.ID())
+	return err
 }

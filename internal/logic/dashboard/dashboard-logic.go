@@ -29,7 +29,7 @@ func NewDashboardLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Dashboa
 func (l *DashboardLogic) Dashboard() (resp *types.DashboardRes, err error, msg respx.SucMsg) {
 
 	DB := l.svcCtx.DB
-	uid, err := l.ctx.Value("Id").(json.Number).Int64()
+	uid, err := l.ctx.Value("Uid").(json.Number).Int64()
 	if err != nil {
 		return nil, err, msg
 	}

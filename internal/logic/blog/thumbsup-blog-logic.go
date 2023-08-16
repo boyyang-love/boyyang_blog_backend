@@ -29,7 +29,7 @@ func NewThumbsUpBlogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Thum
 }
 
 func (l *ThumbsUpBlogLogic) ThumbsUpBlog(req *types.ThumbsUpBlogReq) (resp *types.ThumbsUpBlogRes, err error, msg respx.SucMsg) {
-	id, err := l.ctx.Value("Id").(json.Number).Int64()
+	id, err := l.ctx.Value("Uid").(json.Number).Int64()
 	var blogInfo models.Blog
 	DB := l.svcCtx.DB
 

@@ -27,7 +27,7 @@ func NewCreateCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cre
 
 func (l *CreateCommentLogic) CreateComment(req *types.CreateBlogCommentReq) (resp *types.CreateBlogCommentRes, err error, msg respx.SucMsg) {
 
-	userId, err := l.ctx.Value("Id").(json.Number).Int64()
+	userId, err := l.ctx.Value("Uid").(json.Number).Int64()
 	comment := models.Comment{
 		Content: req.Content,
 		BlogId:  req.BlogId,

@@ -27,6 +27,7 @@ func (*Upload) TableName() string {
 }
 
 func (upload *Upload) BeforeCreate(db *gorm.DB) (err error) {
-	upload.Uid = uint(uuid.New().ID())
-	return
+	uid, err := uuid.NewUUID()
+	upload.Uid = uint(uid.ID())
+	return err
 }

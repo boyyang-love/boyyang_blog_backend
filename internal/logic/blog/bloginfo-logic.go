@@ -33,7 +33,7 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 	var count int64
 	var blogInfo []models.Blog
 
-	userId, _ := l.ctx.Value("Id").(json.Number).Int64()
+	userId, _ := l.ctx.Value("Uid").(json.Number).Int64()
 
 	ids := strings.Split(req.Uids, ",")
 

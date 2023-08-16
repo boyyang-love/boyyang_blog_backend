@@ -29,7 +29,7 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRes, err error, msg respx.SucMsg) {
 	// 如果不传ID 则使用token中的ID
 	if req.Uid == 0 {
-		id, _ := l.ctx.Value("Id").(json.Number).Int64()
+		id, _ := l.ctx.Value("Uid").(json.Number).Int64()
 		req.Uid = uint(id)
 	}
 

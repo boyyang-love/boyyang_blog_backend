@@ -103,7 +103,7 @@ type (
     }
 
     approvalRes {
-        Uid uint `json:"Uid"`
+        Uid uint `json:"uid"`
     }
 )
 

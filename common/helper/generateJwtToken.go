@@ -6,7 +6,7 @@ import (
 )
 
 type GenerateJwtStruct struct {
-	Id       uint
+	Uid      uint
 	Username string
 	jwt.RegisteredClaims
 }
@@ -14,7 +14,7 @@ type GenerateJwtStruct struct {
 func GenerateJwtToken(g *GenerateJwtStruct, secretKey string, expire int64) (string, error) {
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		GenerateJwtStruct{
-			Id:       g.Id,
+			Uid:      g.Uid,
 			Username: g.Username,
 			RegisteredClaims: jwt.RegisteredClaims{
 				ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(expire * 1000 * 1000))),

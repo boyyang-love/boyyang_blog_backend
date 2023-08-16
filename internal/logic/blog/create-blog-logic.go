@@ -26,7 +26,7 @@ func NewCreateBlogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Create
 }
 
 func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.CreateBlogRes, err error, msg respx.SucMsg) {
-	userId, _ := l.ctx.Value("Id").(json.Number).Int64()
+	userId, _ := l.ctx.Value("Uid").(json.Number).Int64()
 	blog := &models.Blog{
 		Title:    req.Title,
 		SubTitle: req.SubTitle,

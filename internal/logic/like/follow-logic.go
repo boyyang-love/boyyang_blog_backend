@@ -26,7 +26,7 @@ func NewFollowLogic(ctx context.Context, svcCtx *svc.ServiceContext) *FollowLogi
 
 func (l *FollowLogic) Follow(req *types.AddAndUnFollowReq) (err error, msg respx.SucMsg) {
 	DB := l.svcCtx.DB
-	id, err := l.ctx.Value("Id").(json.Number).Int64()
+	id, err := l.ctx.Value("Uid").(json.Number).Int64()
 	if err != nil {
 		return err, msg
 	}

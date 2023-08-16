@@ -49,7 +49,7 @@ func (l *LikesInfoLogic) LikesInfo(req *types.LikesInfoReq) (resp *types.LikesIn
 }
 
 func (l *LikesInfoLogic) getLikesIds() (ids []uint, err error) {
-	userid, _ := l.ctx.Value("Id").(json.Number).Int64()
+	userid, _ := l.ctx.Value("Uid").(json.Number).Int64()
 	DB := l.svcCtx.DB
 	var likesIds []uint
 

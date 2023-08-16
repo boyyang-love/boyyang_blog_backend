@@ -27,7 +27,7 @@ func NewFollowInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Follow
 }
 
 func (l *FollowInfoLogic) FollowInfo() (resp *types.FollowInfoRes, err error, msg respx.SucMsg) {
-	id, err := l.ctx.Value("Id").(json.Number).Int64() // 用户id
+	id, err := l.ctx.Value("Uid").(json.Number).Int64() // 用户id
 	var followInfo []models.Follow
 	DB := l.svcCtx.DB
 	if err = DB.

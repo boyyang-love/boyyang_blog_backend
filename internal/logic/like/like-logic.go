@@ -28,7 +28,7 @@ func (l *LikeLogic) Like(req *types.AddLikesReq) (err error, msg respx.SucMsg) {
 
 	DB := l.svcCtx.DB
 
-	uid, err := l.ctx.Value("Id").(json.Number).Int64()
+	uid, err := l.ctx.Value("Uid").(json.Number).Int64()
 	if err != nil {
 		return err, msg
 	}

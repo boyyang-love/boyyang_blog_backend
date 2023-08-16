@@ -24,6 +24,7 @@ func (*Follow) TableName() string {
 }
 
 func (follow *Follow) BeforeCreate(db *gorm.DB) (err error) {
-	follow.Uid = uint(uuid.New().ID())
-	return
+	uid, err := uuid.NewUUID()
+	follow.Uid = uint(uid.ID())
+	return err
 }

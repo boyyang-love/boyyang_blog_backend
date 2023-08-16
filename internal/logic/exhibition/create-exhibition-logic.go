@@ -27,7 +27,7 @@ func NewCreateExhibitionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 }
 
 func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq) (resp *types.CreateExhibitionRes, err error, msg respx.SucMsg) {
-	userId, _ := l.ctx.Value("Id").(json.Number).Int64()
+	userId, _ := l.ctx.Value("Uid").(json.Number).Int64()
 	exhibition := models.Exhibition{
 		Title:    req.Title,
 		SubTitle: req.SubTitle,
