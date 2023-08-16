@@ -30,10 +30,10 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	if err != nil {
 		fmt.Printf("🚀🛸Mysql database initialization failed 💢(%s) \n", err.Error())
 	} else {
-		//err := helper.AutoMigrate(db)
-		//if err != nil {
-		//	fmt.Printf("Mysql database autoMigrate failed 💢(%s) \n", err.Error())
-		//}
+		err := helper.AutoMigrate(db)
+		if err != nil {
+			fmt.Printf("Mysql database autoMigrate failed 💢(%s) \n", err.Error())
+		}
 		fmt.Println("Mysql database initialization successful 🚀")
 	}
 	clt := helper.InitCloudBase(cloudBase.ClientUrl, cloudBase.ClientSecretId, cloudBase.ClientSecretKey)

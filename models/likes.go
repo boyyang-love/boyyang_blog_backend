@@ -7,16 +7,17 @@ import (
 )
 
 type Likes struct {
-	Id           uint       `json:"id" gorm:"primary_key"`
-	Uid          uint       `json:"uid" gorm:"primary_key"`
-	CreatedAt    time.Time  `json:"created_at"`
-	UpdatedAt    time.Time  `json:"updated_at"`
-	DeletedAt    *time.Time `json:"deleted_at"`
-	Created      int        `json:"created" gorm:"autoCreateTime"`
-	Updated      int        `json:"updated" gorm:"autoUpdateTime"`
-	ExhibitionId uint       `json:"exhibition_id"` // 收藏图片 id
-	UserId       uint       `json:"user_id"`       // 收藏者 id
-	LikesType    bool       `json:"likes_type"`    // true 收藏 false 取消收藏
+	Id        uint       `json:"id" gorm:"primary_key"`
+	Uid       uint       `json:"uid" gorm:"primary_key"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `json:"deleted_at"`
+	Created   int        `json:"created" gorm:"autoCreateTime"`
+	Updated   int        `json:"updated" gorm:"autoUpdateTime"`
+	UserId    uint       `json:"user_id" gorm:"comment:收藏者ID"` // 收藏者 id
+	LikesId   uint       `json:"likes_id" gorm:"comment:收藏ID"`
+	LikesType bool       `json:"likes_type" gorm:"comment:true 收藏 false 取消收藏"` // true 收藏 false 取消收藏
+	Type      int        `json:"type"`                                         // 1 图片 2 博客
 }
 
 func (likes *Likes) TableName() string {

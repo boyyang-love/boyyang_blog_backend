@@ -145,7 +145,7 @@ func (l *ExhibitionInfoLogic) getStatus(userid int64) (status []int64, err error
 func (l *ExhibitionInfoLogic) getLikesIds(userid int64) (likesIds []int, err error) {
 	if err = l.svcCtx.DB.
 		Model(&models.Likes{}).
-		Select("exhibition_id").
+		Select("likes_id").
 		Where("user_id = ? and likes_type = ?", userid, true).
 		Scan(&likesIds).
 		Error; err != nil {

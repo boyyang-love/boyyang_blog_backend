@@ -52,7 +52,7 @@ type BlogInfo struct {
 	ThumbsUp   *int   `json:"thumbs_up"`
 	Collection *int   `json:"collection"`
 	UserId     uint   `json:"user_id"`
-	UserInfo   User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
+	UserInfo   User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:Uid"`
 	Tag        string `json:"tags"`
 }
 
@@ -135,8 +135,9 @@ type DashboardExhibition struct {
 }
 
 type AddLikesReq struct {
-	Exhibition_id uint `form:"exhibition_id"`
-	LikesType     int  `form:"likes_type"`
+	Uid       uint `form:"uid"`        // 图片ID 或者是博客ID
+	LikesType int  `form:"likes_type"` // 1 true 0 false
+	Type      int  `form:"type"`       // 1  图片 2 博客
 }
 
 type LikesInfoReq struct {
