@@ -52,7 +52,7 @@ type BlogInfo struct {
 	ThumbsUp   *int   `json:"thumbs_up"`
 	Collection *int   `json:"collection"`
 	UserId     uint   `json:"user_id"`
-	UserInfo   User   `json:"user_info"`
+	UserInfo   User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
 	Tag        string `json:"tags"`
 }
 
@@ -260,7 +260,7 @@ type ExhibitionInfo struct {
 	UserId    uint   `json:"user_id"`
 	Status    int    `json:"status"`     // 1待审核 2审核通过 3未通过审核
 	RejectRes string `json:"reject_res"` // 驳回原因
-	UserInfo  User   `json:"user_info,omitempty" gorm:"foreignKey:UserId"`
+	UserInfo  User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
 }
 
 type UpdateExhibitionReq struct {
@@ -281,7 +281,7 @@ type ApprovalReq struct {
 }
 
 type ApprovalRes struct {
-	Uid uint `json:"Uid"`
+	Uid uint `json:"uid"`
 }
 
 type DelExhibitionReq struct {

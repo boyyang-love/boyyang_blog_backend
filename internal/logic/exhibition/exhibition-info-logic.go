@@ -96,7 +96,7 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params) (exhibitions []ty
 	}
 
 	DB = DB.Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
-		return db.Select("id", "username", "gender", "avatar_url", "tel")
+		return db.Select("uid", "username", "gender", "avatar_url", "tel")
 	}).Order("created_at desc")
 
 	if err = DB.

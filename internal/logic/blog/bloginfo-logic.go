@@ -7,7 +7,6 @@ import (
 	"blog_server/models"
 	"context"
 	"encoding/json"
-	"github.com/jinzhu/copier"
 	"strconv"
 	"strings"
 
@@ -31,7 +30,7 @@ func NewBlogInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *BlogInfo
 func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRes, err error, msg respx.SucMsg) {
 	DB := l.svcCtx.DB
 	var count int64
-	var blogInfo []models.Blog
+	var blogInfo []types.BlogInfo
 
 	userId, _ := l.ctx.Value("Uid").(json.Number).Int64()
 
@@ -68,10 +67,8 @@ func (l *BlogInfoLogic) BlogInfo(req *types.BlogInfoReq) (resp *types.BlogInfoRe
 	}
 
 	if err == nil {
-		var info []types.BlogInfo
-		_ = copier.Copy(&info, &blogInfo)
 		return &types.BlogInfoRes{
-			BlogInfo: info,
+			BlogInfo: blogInfo,
 			Count:    count,
 		}, nil, msg
 	} else {

@@ -51,7 +51,7 @@ type (
         ThumbsUp *int `json:"thumbs_up"`
         Collection *int `json:"collection"`
         UserId uint `json:"user_id"`
-        UserInfo User `json:"user_info"`
+        UserInfo User `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:Uid"`
         Tag string `json:"tags"`
     }
 
