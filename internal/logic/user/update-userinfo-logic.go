@@ -56,11 +56,11 @@ func (l *UpdateUserInfoLogic) UpdateUserInfo(req *types.UpdateUserInfoReq) (err 
 // 查看当前用户是否存在
 func (l *UpdateUserInfoLogic) isExistUser(userId uint) (err error, isExist bool) {
 	var user struct {
-		Id int `json:"id"`
+		Uid int `json:"uid"`
 	}
 	DB := l.svcCtx.DB.Model(&models.User{}).
-		Select("id").
-		Where("id = ?", userId).
+		Select("uid").
+		Where("uid = ?", userId).
 		First(&user)
 
 	if err = DB.Error; err != nil {
