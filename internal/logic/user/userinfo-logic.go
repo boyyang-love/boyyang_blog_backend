@@ -73,7 +73,7 @@ func (l *UserInfoLogic) userOtherInfo(userId uint) (err error, info *types.UserO
 	var ThumbsUp []int
 
 	if err = DB.Model(&models.Exhibition{}).
-		Where("user_id = ?", userId).
+		Where("user_id = ? and status = ?", userId, 2).
 		Count(&Publish).
 		Error; err != nil {
 		return err, nil
@@ -87,7 +87,7 @@ func (l *UserInfoLogic) userOtherInfo(userId uint) (err error, info *types.UserO
 	}
 
 	if err = DB.Model(&models.Follow{}).
-		Where("follow_user_id", userId).
+		Where("follow_user_id = ? and follow_type = ?", userId, 1).
 		Count(&Follows).
 		Error; err != nil {
 		return err, nil

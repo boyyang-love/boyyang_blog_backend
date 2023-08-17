@@ -67,16 +67,15 @@ func getDashboardData(DB *gorm.DB, id uint) (dashboard []types.Dashboard, err er
 	m := make(map[string]types.Dashboard)
 
 	DB.
-		Debug().
 		Model(&models.Blog{}).
-		Where("user_id", id).
+		Where("user_id = ?", id).
 		Select("count(*) blog_publish_value", "DATE_FORMAT(created_at,'%Y-%m-%d') name").
 		Group("name").
 		Scan(&blogDashboard)
 
 	DB.
 		Model(&models.Exhibition{}).
-		Where("user_id", id).
+		Where("user_id = ? and status = ?", id, 2).
 		Select("count(*) exhibitions_publish_value", "DATE_FORMAT(created_at,'%Y-%m-%d') name").
 		Group("name").
 		Scan(&publishDashboard)
