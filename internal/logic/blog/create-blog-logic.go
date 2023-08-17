@@ -44,23 +44,21 @@ func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.Crea
 	} else {
 		if strings.Trim(req.Tags, " ") != "" {
 			// 创建tags
-			var tags []models.Tag
 			for _, tag := range strings.Split(req.Tags, ",") {
-				tags = append(tags, models.Tag{
-					Name:   tag,
-					BlogId: blog.Id,
-					UserId: uint(userId),
-				})
+				if err = l.svcCtx.DB.
+					Model(&models.Tag{}).
+					FirstOrCreate(
+						&models.Tag{
+							Name:   tag,
+							BlogId: blog.Id,
+							UserId: uint(userId),
+						},
+					).
+					Error; err != nil {
+					return nil, err, msg
+				}
 			}
-			if err = l.svcCtx.DB.
-				Model(&models.Tag{}).
-				FirstOrCreate(
-					&models.Tag{},
-					&tags,
-				).
-				Error; err != nil {
-				return nil, err, msg
-			}
+
 		}
 		return &types.CreateBlogRes{Uid: blog.Uid},
 			nil,
