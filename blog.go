@@ -4,6 +4,7 @@ import (
 	"blog_server/internal/config"
 	"blog_server/internal/handler"
 	"blog_server/internal/svc"
+	"blog_server/job"
 	"flag"
 	"fmt"
 	"github.com/zeromicro/go-zero/core/conf"
@@ -34,6 +35,8 @@ func main() {
 	ctx := svc.NewServiceContext(c)
 
 	handler.RegisterHandlers(server, ctx)
+
+	go job.CronRun(ctx)
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()

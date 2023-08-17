@@ -109,6 +109,7 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params) (exhibitions []ty
 		Order("created_at desc")
 
 	if err = DB.
+		Model(&models.Exhibition{}).
 		Find(&exhibitions).
 		Offset(-1).
 		Count(&count).
