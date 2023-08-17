@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type Likes struct {
+type Star struct {
 	Id        uint       `json:"id" gorm:"primary_key"`
 	Uid       uint       `json:"uid" gorm:"primary_key"`
 	CreatedAt time.Time  `json:"created_at"`
@@ -14,18 +14,18 @@ type Likes struct {
 	DeletedAt *time.Time `json:"deleted_at"`
 	Created   int        `json:"created" gorm:"autoCreateTime"`
 	Updated   int        `json:"updated" gorm:"autoUpdateTime"`
-	UserId    uint       `json:"user_id"` // 收藏者 id
-	LikesId   uint       `json:"likes_id"`
-	LikesType bool       `json:"likes_type"` // true 收藏 false 取消收藏
-	Type      int        `json:"type"`       // 1 图片 2 博客
+	UserId    uint       `json:"user_id"`
+	StarId    uint       `json:"star_id"`
+	StarType  bool       `json:"star_type"` // 0 取消star 1 star
+	Type      int        `json:"type"`      // 1 图片 2 博客
 }
 
-func (likes *Likes) TableName() string {
-	return "likes"
+func (star *Star) TableName() string {
+	return "star"
 }
 
-func (likes *Likes) BeforeCreate(db *gorm.DB) (err error) {
+func (star *Star) BeforeCreate(db *gorm.DB) (err error) {
 	uid, err := uuid.NewUUID()
-	likes.Uid = uint(uid.ID())
+	star.Uid = uint(uid.ID())
 	return err
 }

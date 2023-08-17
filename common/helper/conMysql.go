@@ -38,6 +38,7 @@ func AutoMigrate(db *gorm.DB) (err error) {
 	//&models.Likes{},
 	//&models.Follow{},
 	//&models.Tag{},
+	//&models.Star{},
 	)
 
 	return err

@@ -10,6 +10,7 @@ import (
 	exhibition "blog_server/internal/handler/exhibition"
 	like "blog_server/internal/handler/like"
 	login "blog_server/internal/handler/login"
+	star "blog_server/internal/handler/star"
 	user "blog_server/internal/handler/user"
 	"blog_server/internal/svc"
 
@@ -183,6 +184,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/users/update/password",
 				Handler: user.UpdateUserPasswordHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/star",
+				Handler: star.StarHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

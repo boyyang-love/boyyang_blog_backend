@@ -247,7 +247,8 @@ type ExhibitionInfoRes struct {
 	InReview       int              `json:"in_review"`       // 审核中
 	Approved       int              `json:"approved"`        // 审核通过
 	ReviewRjection int              `json:"review_rjection"` //审核驳回
-	LikesIds       []int            `json:"likes_ids"`
+	LikesIds       []int            `json:"likes_ids"`       // 收藏ID集合
+	StarIds        []int            `json:"star_ids"`        // star ID集合
 }
 
 type ExhibitionInfo struct {
@@ -259,6 +260,7 @@ type ExhibitionInfo struct {
 	Cover     string `json:"cover"`
 	Tags      string `json:"tags"`
 	UserId    uint   `json:"user_id"`
+	ThumbsUp  uint   `json:"thumbs_up"`
 	Status    int    `json:"status"`     // 1待审核 2审核通过 3未通过审核
 	RejectRes string `json:"reject_res"` // 驳回原因
 	UserInfo  User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
@@ -320,4 +322,10 @@ type UpdateUserInfoReq struct {
 
 type UpdateUserPasswordReq struct {
 	Password string `form:"password"`
+}
+
+type StarReq struct {
+	Uid      uint `form:"uid"`
+	StarType int  `form:"star_type"` // 0 取消star 1 star
+	Type     int  `form:"type"`      // 1 图片 2 博客
 }

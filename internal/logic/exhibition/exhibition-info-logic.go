@@ -58,6 +58,11 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 		return nil, err, msg
 	}
 
+	star, err := l.getStarIds(userid)
+	if err != nil {
+		return nil, err, msg
+	}
+
 	exhibitions, count, err := l.getExhibitionInfo(params)
 
 	if err != nil {
@@ -70,6 +75,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			Approved:       int(status[1]),
 			ReviewRjection: int(status[2]),
 			LikesIds:       likes,
+			StarIds:        star,
 		}, nil, msg
 	}
 
@@ -95,9 +101,12 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params) (exhibitions []ty
 		DB = DB.Where("id in (?)", strings.Split(params.Uids, ","))
 	}
 
-	DB = DB.Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
-		return db.Select("uid", "username", "gender", "avatar_url", "tel")
-	}).Order("created_at desc")
+	DB = DB.
+		Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
+			return db.Select("uid", "username", "gender", "avatar_url", "tel")
+		}).
+		Order("thumbs_up desc").
+		Order("created_at desc")
 
 	if err = DB.
 		Find(&exhibitions).
@@ -152,5 +161,18 @@ func (l *ExhibitionInfoLogic) getLikesIds(userid int64) (likesIds []int, err err
 		return nil, err
 	} else {
 		return likesIds, nil
+	}
+}
+
+func (l *ExhibitionInfoLogic) getStarIds(userid int64) (starIds []int, err error) {
+	if err = l.svcCtx.DB.
+		Model(&models.Star{}).
+		Select("star_id").
+		Where("user_id = ? and star_type = ?", userid, 1).
+		Scan(&starIds).
+		Error; err != nil {
+		return nil, err
+	} else {
+		return starIds, nil
 	}
 }
