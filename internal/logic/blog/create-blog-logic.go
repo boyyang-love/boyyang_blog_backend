@@ -45,15 +45,14 @@ func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.Crea
 		if strings.Trim(req.Tags, " ") != "" {
 			// 创建tags
 			for _, tag := range strings.Split(req.Tags, ",") {
+				tags := models.Tag{
+					Name:   tag,
+					BlogId: blog.Uid,
+					UserId: uint(userId),
+				}
 				if err = l.svcCtx.DB.
 					Model(&models.Tag{}).
-					FirstOrCreate(
-						&models.Tag{
-							Name:   tag,
-							BlogId: blog.Id,
-							UserId: uint(userId),
-						},
-					).
+					FirstOrCreate(&tags, &tags).
 					Error; err != nil {
 					return nil, err, msg
 				}

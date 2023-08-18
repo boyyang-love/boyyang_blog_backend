@@ -84,34 +84,40 @@ type (
 
 // 更新图片墙信息
 type (
-    updateExhibitionReq {
+    UpdateExhibitionReq {
         Uid uint `form:"uid"`
         Title string `form:"title,optional"`
         SubTitle string `form:"sub_title,optional"`
         Des string `form:"des,optional"`
     }
 
-    updateExhibitionRes {
+    UpdateExhibitionRes {
         Uid uint `json:"uid"`
     }
 )
 
 // 审批图片
 type (
-    approvalReq {
+    ApprovalReq {
         Uid uint `form:"uid"`
         Status int `form:"status"`
         Reason string `form:"reason,optional"`
     }
 
-    approvalRes {
+    ApprovalRes {
         Uid uint `json:"uid"`
     }
 )
 
 type (
-    delExhibitionReq {
+    DelExhibitionReq {
         Uid uint `form:"uid"`
+    }
+)
+
+type (
+    DelUploadReq {
+        key string `form:"key"`
     }
 )
 
@@ -131,9 +137,11 @@ service blog-api {
     @handler ExhibitionInfo
     get /exhibition/info (ExhibitionInfoReq) returns (ExhibitionInfoRes)
     @handler UpdateExhibition
-    post /exhibition/update (updateExhibitionReq) returns (updateExhibitionRes)
+    post /exhibition/update (UpdateExhibitionReq) returns (UpdateExhibitionRes)
     @handler ApprovalExhibition
-    post /exhibition/approval (approvalReq) returns (approvalRes)
+    post /exhibition/approval (ApprovalReq) returns (ApprovalRes)
     @handler DelExhibition
-    post /exhibition/del (delExhibitionReq)
+    post /exhibition/del (DelExhibitionReq)
+    @handler DelUpload
+    get /upload/del (DelUploadReq)
 }

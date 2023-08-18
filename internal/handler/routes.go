@@ -164,6 +164,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/exhibition/del",
 				Handler: exhibition.DelExhibitionHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/upload/del",
+				Handler: exhibition.DelUploadHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)

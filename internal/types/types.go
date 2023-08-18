@@ -291,6 +291,10 @@ type DelExhibitionReq struct {
 	Uid uint `form:"uid"`
 }
 
+type DelUploadReq struct {
+	Key string `form:"key"`
+}
+
 type UserInfoReq struct {
 	Uid uint `form:"uid,optional"`
 }
@@ -318,6 +322,9 @@ type UpdateUserInfoReq struct {
 	Address         string `form:"address,optional"`
 	BackgroundImage string `form:"background_image,optional"`
 	Motto           string `form:"motto,optional"`
+	Qq              int    `form:"qq,optional"`
+	Wechat          string `form:"wechat,optional"`
+	GitHub          string `form:"git_hub,optional"`
 }
 
 type UpdateUserPasswordReq struct {
