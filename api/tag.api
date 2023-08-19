@@ -1,0 +1,17 @@
+syntax = "v1"
+
+type (
+    TagsInfoRes {
+        TagsInfo []string `json:"tags"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: tag
+)
+
+service blog-api {
+    @handler TagsInfo
+    get /tags/info returns (TagsInfoRes)
+}

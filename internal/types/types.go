@@ -336,3 +336,7 @@ type StarReq struct {
 	StarType int  `form:"star_type"` // 0 取消star 1 star
 	Type     int  `form:"type"`      // 1 图片 2 博客
 }
+
+type TagsInfoRes struct {
+	TagsInfo []string `json:"tags"`
+}

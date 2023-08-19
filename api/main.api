@@ -9,4 +9,5 @@ import (
 	"upload.api"
 	"user.api"
 	"star.api"
+	"tag.api"
 )
