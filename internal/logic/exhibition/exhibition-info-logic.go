@@ -106,6 +106,7 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params) (exhibitions []ty
 			return db.Select("uid", "username", "gender", "avatar_url", "tel")
 		}).
 		Order("thumbs_up desc").
+		Order("updated desc").
 		Order("created_at desc")
 
 	if err = DB.
