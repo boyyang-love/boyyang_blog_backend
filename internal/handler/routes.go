@@ -11,6 +11,7 @@ import (
 	like "blog_server/internal/handler/like"
 	login "blog_server/internal/handler/login"
 	star "blog_server/internal/handler/star"
+	tag "blog_server/internal/handler/tag"
 	user "blog_server/internal/handler/user"
 	"blog_server/internal/svc"
 
@@ -200,6 +201,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/star",
 				Handler: star.StarHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/tags/info",
+				Handler: tag.TagsInfoHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
