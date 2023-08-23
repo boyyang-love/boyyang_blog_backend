@@ -10,6 +10,7 @@ import (
 	exhibition "blog_server/internal/handler/exhibition"
 	like "blog_server/internal/handler/like"
 	login "blog_server/internal/handler/login"
+	search "blog_server/internal/handler/search"
 	star "blog_server/internal/handler/star"
 	tag "blog_server/internal/handler/tag"
 	user "blog_server/internal/handler/user"
@@ -212,6 +213,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/tags/info",
 				Handler: tag.TagsInfoHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/search",
+				Handler: search.SearchHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
