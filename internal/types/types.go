@@ -239,6 +239,7 @@ type ExhibitionInfoReq struct {
 	Limit  int    `form:"limit,optional"`
 	Type   int    `form:"type,optional"`
 	Public bool   `form:"public,optional"`
+	Sort   string `form:"sort,optional"` // Created  ThumbsUp
 }
 
 type ExhibitionInfoRes struct {

@@ -26,6 +26,7 @@ type Params struct {
 	Public bool
 	Type   int
 	UserId uint
+	Sort   string
 }
 
 func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ExhibitionInfoLogic {
@@ -46,6 +47,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 		Type:   req.Type,
 		Public: req.Public,
 		UserId: uint(userid),
+		Sort:   req.Sort,
 	}
 
 	status, err := l.getStatus(userid)
@@ -105,9 +107,7 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params) (exhibitions []ty
 		Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
 			return db.Select("uid", "username", "gender", "avatar_url", "tel")
 		}).
-		Order("thumbs_up desc").
-		Order("updated desc").
-		Order("created_at desc")
+		Order(params.Sort)
 
 	if err = DB.
 		Model(&models.Exhibition{}).
