@@ -24,7 +24,7 @@ func (likes *Likes) TableName() string {
 	return "likes"
 }
 
-func (likes *Likes) BeforeCreate(db *gorm.DB) (err error) {
+func (likes *Likes) BeforeCreate(*gorm.DB) (err error) {
 	uid, err := uuid.NewUUID()
 	likes.Uid = uint(uid.ID())
 	return err

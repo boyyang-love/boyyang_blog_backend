@@ -24,7 +24,7 @@ func (star *Star) TableName() string {
 	return "star"
 }
 
-func (star *Star) BeforeCreate(db *gorm.DB) (err error) {
+func (star *Star) BeforeCreate(*gorm.DB) (err error) {
 	uid, err := uuid.NewUUID()
 	star.Uid = uint(uid.ID())
 	return err

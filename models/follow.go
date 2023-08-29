@@ -23,7 +23,7 @@ func (*Follow) TableName() string {
 	return "follow"
 }
 
-func (follow *Follow) BeforeCreate(db *gorm.DB) (err error) {
+func (follow *Follow) BeforeCreate(*gorm.DB) (err error) {
 	uid, err := uuid.NewUUID()
 	follow.Uid = uint(uid.ID())
 	return err

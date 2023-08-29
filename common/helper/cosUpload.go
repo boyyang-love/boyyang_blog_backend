@@ -7,7 +7,7 @@ import (
 	"mime/multipart"
 )
 
-func CosFileUpload(client *cos.Client, file multipart.File, fileHeader *multipart.FileHeader, path string) (url string, err error) {
+func CosFileUpload(client *cos.Client, fileHeader *multipart.FileHeader, path string) (url string, err error) {
 	opt := &cos.ObjectPutOptions{
 		ObjectPutHeaderOptions: &cos.ObjectPutHeaderOptions{
 			ContentType: "image/jpeg",

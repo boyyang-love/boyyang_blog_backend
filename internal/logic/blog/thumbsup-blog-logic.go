@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"gorm.io/gorm"
+	"strconv"
 	"strings"
 
 	"blog_server/internal/svc"
@@ -42,7 +43,7 @@ func (l *ThumbsUpBlogLogic) ThumbsUpBlog(req *types.ThumbsUpBlogReq) (resp *type
 		thumbsIds := strings.Split(blogInfo.ThumbsUpList, ",")
 		isThumbed := false
 		for _, thumbsId := range thumbsIds {
-			if thumbsId == string(id) {
+			if thumbsId == strconv.FormatInt(id, 10) {
 				isThumbed = true
 				break
 			}

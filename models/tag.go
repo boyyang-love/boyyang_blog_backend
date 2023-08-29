@@ -24,7 +24,7 @@ func (tag *Tag) TableName() string {
 	return "tag"
 }
 
-func (tag *Tag) BeforeCreate(db *gorm.DB) (err error) {
+func (tag *Tag) BeforeCreate(*gorm.DB) (err error) {
 	uid, err := uuid.NewUUID()
 	tag.Uid = uint(uid.ID())
 	return err

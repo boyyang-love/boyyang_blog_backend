@@ -45,7 +45,7 @@ func UploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		url, err := helper.CosFileUpload(svcCtx.Client, file, fileHeader, "images")
+		url, err := helper.CosFileUpload(svcCtx.Client, fileHeader, "images")
 		if err != nil {
 			httpx.Error(w, err)
 

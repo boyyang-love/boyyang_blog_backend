@@ -24,7 +24,7 @@ func (comment *Comment) TableName() string {
 	return "comment"
 }
 
-func (comment *Comment) BeforeCreate(db *gorm.DB) (err error) {
+func (comment *Comment) BeforeCreate(*gorm.DB) (err error) {
 	uid, err := uuid.NewUUID()
 	comment.Uid = uint(uid.ID())
 	return err

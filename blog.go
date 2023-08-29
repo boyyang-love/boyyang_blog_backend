@@ -42,6 +42,6 @@ func main() {
 	server.Start()
 }
 
-func notAllowedFn(w http.ResponseWriter) {
+func notAllowedFn(http.ResponseWriter) {
 
 }

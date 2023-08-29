@@ -34,7 +34,7 @@ func (user *User) TableName() string {
 	return "user"
 }
 
-func (user *User) BeforeCreate(db *gorm.DB) (err error) {
+func (user *User) BeforeCreate(*gorm.DB) (err error) {
 	uid, err := uuid.NewUUID()
 	user.Uid = uint(uid.ID())
 	return err
