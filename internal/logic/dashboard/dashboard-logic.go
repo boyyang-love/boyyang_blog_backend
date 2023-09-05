@@ -116,7 +116,7 @@ func getDashboardUserInfo(DB *gorm.DB, id uint) (userInfo types.User, err error)
 	err = DB.
 		Model(models.User{}).
 		Where("uid = ?", id).
-		Scan(&userInfo).
+		Find(&userInfo).
 		Error
 
 	return userInfo, err
