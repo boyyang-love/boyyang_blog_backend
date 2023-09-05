@@ -227,6 +227,9 @@ type CreateExhibitionReq struct {
 	Des      string `form:"des"`
 	Cover    string `form:"cover"`
 	Tags     string `form:"tags,optional"`
+	Type     string `form:"type,optional"`
+	Size     int    `form:"size,optional"`
+	Wh       string `form:"wh"`
 }
 
 type CreateExhibitionRes struct {
@@ -234,12 +237,13 @@ type CreateExhibitionRes struct {
 }
 
 type ExhibitionInfoReq struct {
-	Uids   string `form:"uids,optional"`
-	Page   int    `form:"page,optional"`
-	Limit  int    `form:"limit,optional"`
-	Type   int    `form:"type,optional"`
-	Public bool   `form:"public,optional"`
-	Sort   string `form:"sort,optional"` // Created  ThumbsUp
+	Uids     string `form:"uids,optional"`
+	Page     int    `form:"page,optional"`
+	Limit    int    `form:"limit,optional"`
+	Type     int    `form:"type,optional"`
+	Public   bool   `form:"public,optional"`
+	Sort     string `form:"sort,optional"` // Created  ThumbsUp
+	Keywords string `form:"keywords,optional"`
 }
 
 type ExhibitionInfoRes struct {
@@ -265,6 +269,9 @@ type ExhibitionInfo struct {
 	Status    int    `json:"status"`     // 1待审核 2审核通过 3未通过审核
 	RejectRes string `json:"reject_res"` // 驳回原因
 	UserInfo  User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
+	Type      string `json:"type"`
+	Size      int    `json:"size"`
+	Wh        string `json:"wh"`
 }
 
 type UpdateExhibitionReq struct {

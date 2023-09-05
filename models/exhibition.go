@@ -23,6 +23,9 @@ type Exhibition struct {
 	UserId    uint       `json:"user_id"`                    // 该图片上传者 id
 	Status    int        `json:"status" gorm:"default:1"`    // 图片状态 1待审核 2审核通过 3未通过审核
 	RejectRes string     `json:"reject_res"`                 // 状态为3时 驳回原因
+	Size      int        `json:"size"`                       // 图片大小
+	Wh        string     `json:"wh"`                         // 图片宽高
+	Type      string     `json:"type"`                       // 图片类型
 }
 
 func (exhibition *Exhibition) TableName() string {

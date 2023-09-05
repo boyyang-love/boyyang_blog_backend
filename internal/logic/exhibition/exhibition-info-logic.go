@@ -6,6 +6,7 @@ import (
 	"blog_server/internal/types"
 	"blog_server/models"
 	"context"
+	"database/sql"
 	"encoding/json"
 	"gorm.io/gorm"
 	"strings"
@@ -20,13 +21,14 @@ type ExhibitionInfoLogic struct {
 }
 
 type Params struct {
-	Uids   string
-	Page   int
-	Limit  int
-	Public bool
-	Type   int
-	UserId uint
-	Sort   string
+	Uids     string
+	Page     int
+	Limit    int
+	Public   bool
+	Type     int
+	UserId   uint
+	Sort     string
+	Keywords string
 }
 
 func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ExhibitionInfoLogic {
@@ -41,13 +43,14 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 	userid, _ := l.ctx.Value("Uid").(json.Number).Int64()
 
 	params := Params{
-		Uids:   req.Uids,
-		Limit:  req.Limit,
-		Page:   req.Page,
-		Type:   req.Type,
-		Public: req.Public,
-		UserId: uint(userid),
-		Sort:   req.Sort,
+		Uids:     req.Uids,
+		Limit:    req.Limit,
+		Page:     req.Page,
+		Type:     req.Type,
+		Public:   req.Public,
+		UserId:   uint(userid),
+		Sort:     req.Sort,
+		Keywords: req.Keywords,
 	}
 
 	status, err := l.getStatus(userid)
@@ -101,6 +104,10 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params) (exhibitions []ty
 
 	if params.Uids != "" {
 		DB = DB.Where("id in (?)", strings.Split(params.Uids, ","))
+	}
+
+	if params.Keywords != "" {
+		DB = DB.Where("tags like @keywords or title like @keywords", sql.Named("keywords", "%"+params.Keywords+"%"))
 	}
 
 	DB = DB.

@@ -35,6 +35,9 @@ func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq)
 		Cover:    req.Cover,
 		UserId:   uint(userId),
 		Tags:     &req.Tags,
+		Type:     req.Type,
+		Size:     req.Size,
+		Wh:       req.Wh,
 	}
 	if err = l.svcCtx.DB.
 		Model(&models.Exhibition{}).
