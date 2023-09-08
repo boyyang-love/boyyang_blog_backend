@@ -2,7 +2,7 @@ syntax = "v1"
 import "public/user.api"
 type (
     AddLikesReq {                                 // 收藏
-        uid uint `form:"uid"`           // 图片ID 或者是博客ID
+        uid uint `form:"uid"`                     // 图片ID 或者是博客ID
         LikesType int `form:"likes_type"`         // 1 true 0 false
         Type int `form:"type"`                    // 1  图片 2 博客
     }

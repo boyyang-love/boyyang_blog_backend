@@ -57,6 +57,7 @@ type (
         Limit int `form:"limit,optional"`
         Type int `form:"type,optional"`
         Public bool `form:"public,optional"`
+        IsLike bool `form:"is_like,optional"`
         Sort string `form:"sort,optional"` // Created  ThumbsUp
         Keywords string `form:"keywords,optional"`
     }
@@ -84,7 +85,7 @@ type (
         Status int `json:"status"`           // 1待审核 2审核通过 3未通过审核
         RejectRes string `json:"reject_res"` // 驳回原因
         UserInfo User `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
-        Type string  `json:"type"`
+        Type string `json:"type"`
         Size int `json:"size"`
         Wh string `json:"wh"`
     }

@@ -242,6 +242,7 @@ type ExhibitionInfoReq struct {
 	Limit    int    `form:"limit,optional"`
 	Type     int    `form:"type,optional"`
 	Public   bool   `form:"public,optional"`
+	IsLike   bool   `form:"is_like,optional"`
 	Sort     string `form:"sort,optional"` // Created  ThumbsUp
 	Keywords string `form:"keywords,optional"`
 }
@@ -390,4 +391,18 @@ type SearchBlogInfos struct {
 	ThumbsUp     int    `json:"thumbs_up" gorm:"default:0"`  // 点赞数
 	ThumbsUpList string `json:"thumbs_up_list"`              // 点赞id集合
 	Collection   *int   `json:"collection" gorm:"default:0"` // 收藏数
+}
+
+type TrayReq struct {
+	Page  int `form:"page,optional"`
+	Limit int `form:"limit,optional"`
+}
+
+type TrayRes struct {
+	TrayExhibitions []TrayExhibitionInfo `json:"exhibitions"`
+}
+
+type TrayExhibitionInfo struct {
+	Uid   uint   `json:"uid"`
+	Cover string `json:"cover"`
 }

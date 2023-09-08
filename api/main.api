@@ -11,4 +11,5 @@ import (
 	"star.api"
 	"tag.api"
 	"search.api"
+	"tray.api"
 )

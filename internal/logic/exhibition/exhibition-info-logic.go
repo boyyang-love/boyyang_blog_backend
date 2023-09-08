@@ -29,6 +29,7 @@ type Params struct {
 	UserId   uint
 	Sort     string
 	Keywords string
+	IsLike   bool
 }
 
 func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ExhibitionInfoLogic {
@@ -51,6 +52,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 		UserId:   uint(userid),
 		Sort:     req.Sort,
 		Keywords: req.Keywords,
+		IsLike:   req.IsLike,
 	}
 
 	status, err := l.getStatus(userid)
@@ -68,8 +70,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 		return nil, err, msg
 	}
 
-	exhibitions, count, err := l.getExhibitionInfo(params)
-
+	exhibitions, count, err := l.getExhibitionInfo(params, likes)
 	if err != nil {
 		return nil, err, msg
 	} else {
@@ -86,7 +87,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 
 }
 
-func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params) (exhibitions []types.ExhibitionInfo, count int64, err error) {
+func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params, likesIds []int) (exhibitions []types.ExhibitionInfo, count int64, err error) {
 	DB := l.svcCtx.DB
 
 	DB = DB.Model(&models.Exhibition{})
@@ -103,11 +104,15 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params) (exhibitions []ty
 	}
 
 	if params.Uids != "" {
-		DB = DB.Where("id in (?)", strings.Split(params.Uids, ","))
+		DB = DB.Where("uid in (?)", strings.Split(params.Uids, ","))
 	}
 
 	if params.Keywords != "" {
 		DB = DB.Where("tags like @keywords or title like @keywords", sql.Named("keywords", "%"+params.Keywords+"%"))
+	}
+
+	if params.IsLike {
+		DB = DB.Where("uid in (?)", likesIds)
 	}
 
 	DB = DB.

@@ -34,6 +34,9 @@ func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRe
 	}
 
 	err, userInfo := l.userInfo(req.Uid)
+	if err != nil {
+		return nil, err, msg
+	}
 
 	err, otherInfo := l.userOtherInfo(req.Uid)
 	if err != nil {

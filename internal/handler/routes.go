@@ -13,6 +13,7 @@ import (
 	search "blog_server/internal/handler/search"
 	star "blog_server/internal/handler/star"
 	tag "blog_server/internal/handler/tag"
+	tray "blog_server/internal/handler/tray"
 	user "blog_server/internal/handler/user"
 	"blog_server/internal/svc"
 
@@ -227,5 +228,15 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/tray",
+				Handler: tray.TrayExhibitionHandler(serverCtx),
+			},
+		},
 	)
 }
