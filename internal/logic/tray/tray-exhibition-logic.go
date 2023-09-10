@@ -29,7 +29,6 @@ func NewTrayExhibitionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Tr
 func (l *TrayExhibitionLogic) TrayExhibition(req *types.TrayReq) (resp *types.TrayRes, err error, msg respx.SucMsg) {
 	fmt.Println(req.Page, req.Limit)
 	ex, err := l.exhibitions()
-	fmt.Print(ex)
 	if err != nil {
 		return nil, err, msg
 	}
