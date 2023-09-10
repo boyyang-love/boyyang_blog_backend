@@ -2,12 +2,10 @@ package tray
 
 import (
 	"blog_server/common/respx"
-	"blog_server/models"
-	"context"
-	"fmt"
-
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
+	"blog_server/models"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -27,23 +25,27 @@ func NewTrayExhibitionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Tr
 }
 
 func (l *TrayExhibitionLogic) TrayExhibition(req *types.TrayReq) (resp *types.TrayRes, err error, msg respx.SucMsg) {
-	fmt.Println(req.Page, req.Limit)
-	ex, err := l.exhibitions()
+	ex, count, err := l.exhibitions()
 	if err != nil {
 		return nil, err, msg
 	}
 
-	return &types.TrayRes{TrayExhibitions: ex}, err, respx.SucMsg{Msg: "获取成功"}
+	return &types.TrayRes{
+		Count:           count,
+		TrayExhibitions: ex,
+	}, err, respx.SucMsg{Msg: "获取成功"}
 }
 
-func (l *TrayExhibitionLogic) exhibitions() (resp []types.TrayExhibitionInfo, err error) {
+func (l *TrayExhibitionLogic) exhibitions() (resp []types.TrayExhibitionInfo, count int64, err error) {
 	DB := l.svcCtx.DB
 	if err = DB.
 		Model(&models.Exhibition{}).
+		Where("status = ?", 2).
 		Order("created desc").
-		Find(&resp).Error; err != nil {
-		return nil, err
+		Find(&resp).
+		Count(&count).Error; err != nil {
+		return nil, count, err
 	} else {
-		return resp, err
+		return resp, count, err
 	}
 }

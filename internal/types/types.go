@@ -399,6 +399,7 @@ type TrayReq struct {
 }
 
 type TrayRes struct {
+	Count           int64                `json:"count"`
 	TrayExhibitions []TrayExhibitionInfo `json:"exhibitions"`
 }
 
