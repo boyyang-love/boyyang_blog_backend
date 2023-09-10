@@ -1,7 +1,10 @@
 package tray
 
 import (
+	"blog_server/common/respx"
+	"blog_server/models"
 	"context"
+	"fmt"
 
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
@@ -23,7 +26,25 @@ func NewTrayExhibitionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Tr
 	}
 }
 
-func (l *TrayExhibitionLogic) TrayExhibition(req *types.TrayReq) (resp *types.TrayRes, err error) {
-	// todo: add your logic here and delete this line
-	return
+func (l *TrayExhibitionLogic) TrayExhibition(req *types.TrayReq) (resp *types.TrayRes, err error, msg respx.SucMsg) {
+	fmt.Println(req.Page, req.Limit)
+	ex, err := l.exhibitions()
+	fmt.Print(ex)
+	if err != nil {
+		return nil, err, msg
+	}
+
+	return &types.TrayRes{TrayExhibitions: ex}, err, respx.SucMsg{Msg: "获取成功"}
+}
+
+func (l *TrayExhibitionLogic) exhibitions() (resp []types.TrayExhibitionInfo, err error) {
+	DB := l.svcCtx.DB
+	if err = DB.
+		Model(&models.Exhibition{}).
+		Order("created desc").
+		Find(&resp).Error; err != nil {
+		return nil, err
+	} else {
+		return resp, err
+	}
 }
