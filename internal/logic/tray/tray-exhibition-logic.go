@@ -25,7 +25,7 @@ func NewTrayExhibitionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Tr
 }
 
 func (l *TrayExhibitionLogic) TrayExhibition(req *types.TrayReq) (resp *types.TrayRes, err error, msg respx.SucMsg) {
-	ex, count, err := l.exhibitions()
+	ex, count, err := l.exhibitions(*req)
 	if err != nil {
 		return nil, err, msg
 	}
@@ -36,8 +36,13 @@ func (l *TrayExhibitionLogic) TrayExhibition(req *types.TrayReq) (resp *types.Tr
 	}, err, respx.SucMsg{Msg: "获取成功"}
 }
 
-func (l *TrayExhibitionLogic) exhibitions() (resp []types.TrayExhibitionInfo, count int64, err error) {
+func (l *TrayExhibitionLogic) exhibitions(req types.TrayReq) (resp []types.TrayExhibitionInfo, count int64, err error) {
 	DB := l.svcCtx.DB
+
+	if req.Page != 0 && req.Limit != 0 {
+		DB = DB.Offset((req.Page - 1) * req.Limit).Limit(req.Limit)
+	}
+
 	if err = DB.
 		Model(&models.Exhibition{}).
 		Where("status = ?", 2).
