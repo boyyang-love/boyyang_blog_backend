@@ -41,12 +41,12 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodGet,
 				Path:    "/blog/info",
-				Handler: blog.BloginfoHandler(serverCtx),
+				Handler: blog.BlogInfoHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/blog/thumbsup",
-				Handler: blog.ThumbsupBlogHandler(serverCtx),
+				Handler: blog.ThumbsUpBlogHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

@@ -75,9 +75,9 @@ service blog-api {
     post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
     @handler DeleteBlog // 删除博客
     get /blog/delete (DeleteBlogReq)
-    @handler Bloginfo // 博客信息
+    @handler BlogInfo // 博客信息
     get /blog/info (BlogInfoReq) returns (BlogInfoRes)
-    @handler ThumbsupBlog // 点赞博客
+    @handler ThumbsUpBlog // 点赞博客
     get /blog/thumbsup (ThumbsUpBlogReq) returns (ThumbsUpBlogRes)
 }
 
