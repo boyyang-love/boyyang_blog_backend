@@ -37,15 +37,15 @@ func (l *StarLogic) Star(req *types.StarReq) (err error, msg respx.SucMsg) {
 			Where("star_id = ?", req.Uid).
 			Assign("star_type", req.StarType).
 			FirstOrCreate(&models.Star{
-				UserId:   uint(userId),
-				StarId:   req.Uid,
+				UserId:   uint32(userId),
+				StarId:   uint32(req.Uid),
 				StarType: true,
 				Type:     req.Type,
 			}).
 			Error; err != nil {
 			return err, msg
 		} else {
-			err = l.updateStar(req.Uid, req.Type, 1)
+			err = l.updateStar(uint(req.Uid), req.Type, 1)
 			if err != nil {
 				return err, msg
 			}
@@ -59,7 +59,7 @@ func (l *StarLogic) Star(req *types.StarReq) (err error, msg respx.SucMsg) {
 			Error; err != nil {
 			return err, msg
 		} else {
-			err = l.updateStar(req.Uid, req.Type, -1)
+			err = l.updateStar(uint(req.Uid), req.Type, -1)
 			if err != nil {
 				return err, msg
 			}

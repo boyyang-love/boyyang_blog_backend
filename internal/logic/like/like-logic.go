@@ -41,7 +41,7 @@ func (l *LikeLogic) Like(req *types.AddLikesReq) (err error, msg respx.SucMsg) {
 			FirstOrCreate(
 				&models.Likes{
 					LikesId:   req.Uid,
-					UserId:    uint(uid),
+					UserId:    uint32(uid),
 					LikesType: true,
 					Type:      req.Type,
 				}).

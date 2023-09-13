@@ -8,7 +8,7 @@ import (
 
 type Upload struct {
 	Id        uint       `json:"id" gorm:"primary_key"`
-	Uid       uint       `json:"uid" gorm:"primary_key"`
+	Uid       uint32     `json:"uid" gorm:"primary_key"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at"`
@@ -19,7 +19,7 @@ type Upload struct {
 	FilePath  string     `json:"file_path"` // 文件路径
 	Ext       string     `json:"ext"`       // 文件后缀
 	Size      int64      `json:"size"`      // 文件大小
-	UserId    uint       `json:"user_id"`   // 用户id
+	UserId    uint32     `json:"user_id"`   // 用户id
 }
 
 func (*Upload) TableName() string {
@@ -28,6 +28,6 @@ func (*Upload) TableName() string {
 
 func (upload *Upload) BeforeCreate(*gorm.DB) (err error) {
 	uid, err := uuid.NewUUID()
-	upload.Uid = uint(uid.ID())
+	upload.Uid = uid.ID()
 	return err
 }

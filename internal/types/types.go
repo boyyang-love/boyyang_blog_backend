@@ -11,11 +11,11 @@ type CreateBlogReq struct {
 }
 
 type CreateBlogRes struct {
-	Uid uint `json:"uid"`
+	Uid uint32 `json:"uid"`
 }
 
 type UpdateBlogReq struct {
-	Uid      uint   `form:"uid"`
+	Uid      uint32 `form:"uid"`
 	Title    string `form:"title"`
 	SubTitle string `form:"sub_title"`
 	Content  string `form:"content"`
@@ -27,7 +27,7 @@ type UpdateBlogRes struct {
 }
 
 type DeleteBlogReq struct {
-	Uid uint `form:"uid"`
+	Uid uint32 `form:"uid"`
 }
 
 type BlogInfoReq struct {
@@ -42,7 +42,7 @@ type BlogInfoRes struct {
 }
 
 type BlogInfo struct {
-	Uid        uint   `json:"uid"`
+	Uid        uint32 `json:"uid"`
 	Created    int    `json:"created"`
 	Updated    int    `json:"updated"`
 	Title      string `json:"title"`
@@ -57,7 +57,7 @@ type BlogInfo struct {
 }
 
 type ThumbsUpBlogReq struct {
-	Uid uint `form:"uid"`
+	Uid uint32 `form:"uid"`
 }
 
 type ThumbsUpBlogRes struct {
@@ -83,7 +83,7 @@ type User struct {
 
 type CreateBlogCommentReq struct {
 	Content string `form:"content" gorm:"size:2000"`
-	BlogId  uint   `form:"blog_id"`
+	BlogId  uint32 `form:"blog_id"`
 }
 
 type CreateBlogCommentRes struct {
@@ -91,7 +91,7 @@ type CreateBlogCommentRes struct {
 }
 
 type DeleateBlogCommentReq struct {
-	Uid uint `form:"uid"`
+	Uid uint32 `form:"uid"`
 }
 
 type DeleateBlogCommentRes struct {
@@ -99,7 +99,7 @@ type DeleateBlogCommentRes struct {
 }
 
 type ThumbsUpBlogCommentReq struct {
-	Uid uint `form:"uid"`
+	Uid uint32 `form:"uid"`
 }
 
 type ThumbsUpBlogCommentRes struct {
@@ -127,7 +127,7 @@ type DashboardUserInfo struct {
 }
 
 type DashboardExhibition struct {
-	Uid    uint   `json:"uid"`
+	Uid    uint32 `json:"uid"`
 	Title  string `json:"title"`
 	Des    string `json:"des"`
 	Cover  string `json:"cover"`
@@ -135,13 +135,13 @@ type DashboardExhibition struct {
 }
 
 type AddLikesReq struct {
-	Uid       uint `form:"uid"`        // 图片ID 或者是博客ID
-	LikesType int  `form:"likes_type"` // 1 true 0 false
-	Type      int  `form:"type"`       // 1  图片 2 博客
+	Uid       uint32 `form:"uid"`        // 图片ID 或者是博客ID
+	LikesType int    `form:"likes_type"` // 1 true 0 false
+	Type      int    `form:"type"`       // 1  图片 2 博客
 }
 
 type LikesInfoReq struct {
-	ExhibitionId uint `form:"exhibition_id,optional"`
+	ExhibitionId uint32 `form:"exhibition_id,optional"`
 }
 
 type LikesInfoRes struct {
@@ -149,7 +149,7 @@ type LikesInfoRes struct {
 }
 
 type LikesInfo struct {
-	Uid      uint   `json:"uid"`
+	Uid      uint32 `json:"uid"`
 	Created  int    `json:"created"`
 	Updated  int    `json:"updated"`
 	Title    string `json:"title"`
@@ -157,16 +157,16 @@ type LikesInfo struct {
 	Des      string `json:"des"`
 	Cover    string `json:"cover"`                      // 图片上传路径
 	ThumbsUp *int   `json:"thumbs_up" gorm:"default:0"` // 点赞数
-	UserId   uint   `json:"user_id"`                    // 该图片上传者 id
+	UserId   uint32 `json:"user_id"`                    // 该图片上传者 id
 }
 
 type LikesInfoIds struct {
-	Uids []int `json:"uids"`
+	Uids []uint32 `json:"uids"`
 }
 
 type AddAndUnFollowReq struct {
-	FollowId   uint `form:"follow_id"`
-	FollowType int  `form:"follow_type"` // 1 添加 0 取消
+	FollowId   uint32 `form:"follow_id"`
+	FollowType int    `form:"follow_type"` // 1 添加 0 取消
 }
 
 type FollowInfoRes struct {
@@ -191,7 +191,7 @@ type RegisterReq struct {
 }
 
 type RegisterRes struct {
-	Uid uint `json:"uid"`
+	Uid uint32 `json:"uid"`
 }
 
 type UploadReq struct {
@@ -305,7 +305,7 @@ type DelUploadReq struct {
 }
 
 type UserInfoReq struct {
-	Uid uint `form:"uid,optional"`
+	Uid uint32 `form:"uid,optional"`
 }
 
 type UserInfoRes struct {
@@ -321,7 +321,7 @@ type UserOtherInfo struct {
 }
 
 type UpdateUserInfoReq struct {
-	Uid             uint   `form:"uid"`
+	Uid             uint32 `form:"uid"`
 	Username        string `form:"username,optional"`
 	Age             int    `form:"age,optional"`
 	Gender          int    `form:"gender,optional"`
@@ -341,9 +341,9 @@ type UpdateUserPasswordReq struct {
 }
 
 type StarReq struct {
-	Uid      uint `form:"uid"`
-	StarType int  `form:"star_type"` // 0 取消star 1 star
-	Type     int  `form:"type"`      // 1 图片 2 博客
+	Uid      uint32 `form:"uid"`
+	StarType int    `form:"star_type"` // 0 取消star 1 star
+	Type     int    `form:"type"`      // 1 图片 2 博客
 }
 
 type TagsInfoRes struct {
@@ -364,7 +364,7 @@ type SearchRes struct {
 }
 
 type SearchExhibitionInfos struct {
-	Uid       uint    `json:"uid" gorm:"primary_key"`
+	Uid       uint32  `json:"uid" gorm:"primary_key"`
 	Created   int     `json:"created" gorm:"autoCreateTime"`
 	Updated   int     `json:"updated" gorm:"autoUpdateTime"`
 	Title     string  `json:"title"`                      // 图片墙标题
@@ -373,20 +373,20 @@ type SearchExhibitionInfos struct {
 	Cover     string  `json:"cover"`                      // 图片上传路径
 	Tags      *string `json:"tags"`                       // 图片标签
 	ThumbsUp  *int    `json:"thumbs_up" gorm:"default:0"` // 点赞数
-	UserId    uint    `json:"user_id"`                    // 该图片上传者 id
+	UserId    uint32  `json:"user_id"`                    // 该图片上传者 id
 	Status    int     `json:"status" gorm:"default:1"`    // 图片状态 1待审核 2审核通过 3未通过审核
 	RejectRes string  `json:"reject_res"`                 // 状态为3时 驳回原因
 }
 
 type SearchBlogInfos struct {
-	Uid          uint   `json:"uid" gorm:"primary_key"`
+	Uid          uint32 `json:"uid" gorm:"primary_key"`
 	Created      int    `json:"created" gorm:"autoCreateTime"`
 	Updated      int    `json:"updated" gorm:"autoUpdateTime"`
 	Title        string `json:"title"`                       // 博客标题
 	SubTitle     string `json:"sub_title"`                   // 博客副标题
 	Content      string `json:"des" gorm:"size:10000"`       // 博客内容
 	Cover        string `json:"cover,omitempty"`             // 背景图片
-	UserId       uint   `json:"user_id"`                     // 博客作者
+	UserId       uint32 `json:"user_id"`                     // 博客作者
 	Tag          string `json:"tag,omitempty"`               // 博客标签
 	ThumbsUp     int    `json:"thumbs_up" gorm:"default:0"`  // 点赞数
 	ThumbsUpList string `json:"thumbs_up_list"`              // 点赞id集合

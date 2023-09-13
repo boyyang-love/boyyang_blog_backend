@@ -8,7 +8,7 @@ import (
 
 type User struct {
 	Id              uint       `gorm:"primary_key" json:"id"`
-	Uid             uint       `json:"uid" gorm:"primary_key"`
+	Uid             uint32     `json:"uid" gorm:"primary_key"`
 	CreatedAt       time.Time  `json:"created_at"`
 	UpdatedAt       time.Time  `json:"updated_at"`
 	DeletedAt       *time.Time `json:"deleted_at"`
@@ -36,6 +36,6 @@ func (user *User) TableName() string {
 
 func (user *User) BeforeCreate(*gorm.DB) (err error) {
 	uid, err := uuid.NewUUID()
-	user.Uid = uint(uid.ID())
+	user.Uid = uid.ID()
 	return err
 }

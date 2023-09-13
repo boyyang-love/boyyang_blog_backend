@@ -36,7 +36,7 @@ func (l *FollowInfoLogic) FollowInfo() (resp *types.FollowInfoRes, err error, ms
 		Scan(&followInfo).Error; err != nil {
 		return nil, err, msg
 	} else {
-		var followIds []uint      // 用户关注列表 following id
+		var followIds []uint32    // 用户关注列表 following id
 		var userInfo []types.User // 关注列表用户信息
 		for _, follow := range followInfo {
 			followIds = append(followIds, follow.FollowUserId)

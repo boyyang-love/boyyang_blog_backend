@@ -28,6 +28,7 @@ func main() {
 			"https://prod-2g5hif5wbec83baa-1301921121.tcloudbaseapp.com",
 		),
 	)
+
 	defer server.Stop()
 
 	ctx := svc.NewServiceContext(c)

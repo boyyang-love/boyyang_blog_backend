@@ -30,8 +30,8 @@ func (l *CreateCommentLogic) CreateComment(req *types.CreateBlogCommentReq) (res
 	userId, err := l.ctx.Value("Uid").(json.Number).Int64()
 	comment := models.Comment{
 		Content: req.Content,
-		BlogId:  req.BlogId,
-		UserId:  uint(userId),
+		BlogId:  uint32(req.BlogId),
+		UserId:  uint32(userId),
 	}
 	res := l.svcCtx.DB.Model(&models.Comment{}).Create(&comment)
 	if res.Error == nil {

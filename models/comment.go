@@ -8,15 +8,15 @@ import (
 
 type Comment struct {
 	Id        uint       `json:"id" gorm:"primary_key"`
-	Uid       uint       `json:"uid" gorm:"primary_key"`
+	Uid       uint32     `json:"uid" gorm:"primary_key"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at"`
 	Created   int        `json:"created" gorm:"autoCreateTime"`
 	Updated   int        `json:"updated" gorm:"autoUpdateTime"`
 	Content   string     `json:"des" gorm:"size:2000"`       // 评论内容
-	BlogId    uint       `json:"blog_id"`                    // 被评论 博客 id
-	UserId    uint       `json:"user_id"`                    // 评论者 id
+	BlogId    uint32     `json:"blog_id"`                    // 被评论 博客 id
+	UserId    uint32     `json:"user_id"`                    // 评论者 id
 	ThumbsUp  *int       `json:"thumbs_up" gorm:"default:0"` // 该条评论 点赞数
 }
 
@@ -26,6 +26,6 @@ func (comment *Comment) TableName() string {
 
 func (comment *Comment) BeforeCreate(*gorm.DB) (err error) {
 	uid, err := uuid.NewUUID()
-	comment.Uid = uint(uid.ID())
+	comment.Uid = uid.ID()
 	return err
 }

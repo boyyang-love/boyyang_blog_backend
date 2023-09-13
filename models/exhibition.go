@@ -8,7 +8,7 @@ import (
 
 type Exhibition struct {
 	Id        uint       `json:"id" gorm:"primary_key"`
-	Uid       uint       `json:"uid" gorm:"primary_key"`
+	Uid       uint32     `json:"uid" gorm:"primary_key"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at"`
@@ -20,7 +20,7 @@ type Exhibition struct {
 	Cover     string     `json:"cover"`                      // 图片上传路径
 	Tags      *string    `json:"tags"`                       // 图片标签
 	ThumbsUp  *int       `json:"thumbs_up" gorm:"default:0"` // 点赞数
-	UserId    uint       `json:"user_id"`                    // 该图片上传者 id
+	UserId    uint32     `json:"user_id"`                    // 该图片上传者 id
 	Status    int        `json:"status" gorm:"default:1"`    // 图片状态 1待审核 2审核通过 3未通过审核
 	RejectRes string     `json:"reject_res"`                 // 状态为3时 驳回原因
 	Size      int        `json:"size"`                       // 图片大小
@@ -34,6 +34,6 @@ func (exhibition *Exhibition) TableName() string {
 
 func (exhibition *Exhibition) BeforeCreate(*gorm.DB) (err error) {
 	uid, err := uuid.NewUUID()
-	exhibition.Uid = uint(uid.ID())
+	exhibition.Uid = uid.ID()
 	return err
 }

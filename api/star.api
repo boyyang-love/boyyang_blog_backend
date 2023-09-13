@@ -2,7 +2,7 @@ syntax = "v1"
 
 type (
     StarReq {
-        Uid uint `form:"uid"`
+        Uid uint32 `form:"uid"`
         StarType int `form:"star_type"`  // 0 取消star 1 star
         Type int `form:"type"`           // 1 图片 2 博客
     }

@@ -58,7 +58,7 @@ func UploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			FilePath: url,
 			Ext:      path.Ext(fileHeader.Filename),
 			Size:     fileHeader.Size,
-			UserId:   claims.Uid,
+			UserId:   uint32(claims.Uid),
 		})
 
 		req.FilePath = url

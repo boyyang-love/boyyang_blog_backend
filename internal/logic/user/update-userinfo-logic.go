@@ -27,14 +27,14 @@ func NewUpdateUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Up
 
 func (l *UpdateUserInfoLogic) UpdateUserInfo(req *types.UpdateUserInfoReq) (err error, msg respx.SucMsg) {
 	// 判断是否存在被修改用户
-	err, isExist := l.isExistUser(req.Uid)
+	err, isExist := l.isExistUser(uint(req.Uid))
 	if err != nil {
 		return err, msg
 	}
 
 	if isExist {
 		// 判断新用户名是否重复
-		err, isSameName := l.isSameName(req.Uid, req.Username)
+		err, isSameName := l.isSameName(uint(req.Uid), req.Username)
 		if err != nil {
 			return err, msg
 		}

@@ -32,7 +32,7 @@ func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.Crea
 		SubTitle: req.SubTitle,
 		Content:  req.Content,
 		Cover:    req.Cover,
-		UserId:   uint(userId),
+		UserId:   uint32(userId),
 		Tag:      req.Tags,
 	}
 
@@ -48,7 +48,7 @@ func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.Crea
 				tags := models.Tag{
 					Name:   tag,
 					BlogId: blog.Uid,
-					UserId: uint(userId),
+					UserId: uint32(userId),
 				}
 				if err = l.svcCtx.DB.
 					Model(&models.Tag{}).
@@ -59,7 +59,7 @@ func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.Crea
 			}
 
 		}
-		return &types.CreateBlogRes{Uid: blog.Uid},
+		return &types.CreateBlogRes{Uid: uint32(uint(blog.Uid))},
 			nil,
 			respx.SucMsg{
 				Msg: "博客发布成功！",

@@ -66,7 +66,7 @@ func (l *RegisterLogic) register(req *types.RegisterReq) (resp *types.RegisterRe
 				return nil, errors.New("注册失败，请稍后重试")
 			}
 
-			return &types.RegisterRes{Uid: user.Uid}, nil
+			return &types.RegisterRes{Uid: uint32(user.Uid)}, nil
 		}
 
 		return resp, err

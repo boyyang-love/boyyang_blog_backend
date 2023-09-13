@@ -26,7 +26,7 @@ func NewLikesInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LikesIn
 
 func (l *LikesInfoLogic) LikesInfo(req *types.LikesInfoReq) (resp *types.LikesInfoRes, err error, msg respx.SucMsg) {
 
-	var ids []uint
+	var ids []uint32
 	var likesInfos []types.LikesInfo
 	if req.ExhibitionId == 0 {
 		ids, err = l.getLikesIds()
@@ -48,10 +48,10 @@ func (l *LikesInfoLogic) LikesInfo(req *types.LikesInfoReq) (resp *types.LikesIn
 	}
 }
 
-func (l *LikesInfoLogic) getLikesIds() (ids []uint, err error) {
+func (l *LikesInfoLogic) getLikesIds() (ids []uint32, err error) {
 	userid, _ := l.ctx.Value("Uid").(json.Number).Int64()
 	DB := l.svcCtx.DB
-	var likesIds []uint
+	var likesIds []uint32
 
 	if err = DB.
 		Model(&models.Likes{}).

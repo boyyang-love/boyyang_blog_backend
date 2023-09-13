@@ -31,19 +31,19 @@ func (l *FollowLogic) Follow(req *types.AddAndUnFollowReq) (err error, msg respx
 		return err, msg
 	}
 
-	if req.FollowId == uint(id) {
+	if req.FollowId == uint32(id) {
 		return nil, respx.SucMsg{Msg: "不能关注自己", Code: 1}
 	}
 
 	if req.FollowType == 1 { //关注
 		if err = DB.
 			Model(&models.Follow{}).
-			Where(&models.Follow{FollowUserId: req.FollowId, UserId: uint(id)}).
+			Where(&models.Follow{FollowUserId: req.FollowId, UserId: uint32(id)}).
 			Assign(&models.Follow{FollowType: true}).
 			FirstOrCreate(
 				&models.Follow{
 					FollowUserId: req.FollowId,
-					UserId:       uint(id),
+					UserId:       uint32(id),
 					FollowType:   true,
 				}).
 			Error; err == nil {

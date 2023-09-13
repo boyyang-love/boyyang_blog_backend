@@ -3,7 +3,7 @@ syntax = "v1"
 type (
     CreateBlogCommentReq {
         Content string `form:"content" gorm:"size:2000"`
-        BlogId uint `form:"blog_id"`
+        BlogId uint32 `form:"blog_id"`
     }
 
     CreateBlogCommentRes {
@@ -11,7 +11,7 @@ type (
     }
 
     DeleateBlogCommentReq {
-        Uid uint `form:"uid"`
+        Uid uint32 `form:"uid"`
     }
 
     DeleateBlogCommentRes {
@@ -19,7 +19,7 @@ type (
     }
 
     ThumbsUpBlogCommentReq {
-        Uid uint `form:"uid"`
+        Uid uint32 `form:"uid"`
     }
 
     ThumbsUpBlogCommentRes {

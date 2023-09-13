@@ -21,7 +21,7 @@ type (
         DashboardUser User `json:"dashboard_user"`
     }
     DashboardExhibition {
-        Uid uint `json:"uid"`
+        Uid uint32 `json:"uid"`
         Title string `json:"title"`
         Des string `json:"des"`
         Cover string `json:"cover"`

@@ -33,7 +33,7 @@ func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq)
 		SubTitle: req.SubTitle,
 		Des:      req.Des,
 		Cover:    req.Cover,
-		UserId:   uint(userId),
+		UserId:   uint32(userId),
 		Tags:     &req.Tags,
 		Type:     req.Type,
 		Size:     req.Size,
@@ -50,7 +50,7 @@ func (l *CreateExhibitionLogic) CreateExhibition(req *types.CreateExhibitionReq)
 				tags := models.Tag{
 					Name:    tag,
 					ImageId: exhibition.Uid,
-					UserId:  uint(userId),
+					UserId:  uint32(userId),
 				}
 				if err = l.svcCtx.DB.
 					Model(&models.Tag{}).

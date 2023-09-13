@@ -30,15 +30,15 @@ func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRe
 	// 如果不传ID 则使用token中的ID
 	if req.Uid == 0 {
 		id, _ := l.ctx.Value("Uid").(json.Number).Int64()
-		req.Uid = uint(id)
+		req.Uid = uint32(id)
 	}
 
-	err, userInfo := l.userInfo(req.Uid)
+	err, userInfo := l.userInfo(uint(req.Uid))
 	if err != nil {
 		return nil, err, msg
 	}
 
-	err, otherInfo := l.userOtherInfo(req.Uid)
+	err, otherInfo := l.userOtherInfo(uint(req.Uid))
 	if err != nil {
 		return nil, err, msg
 	}
