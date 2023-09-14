@@ -79,6 +79,7 @@ type User struct {
 	GitHub          string `json:"git_hub"`
 	BackgroundImage string `json:"background_image"`
 	Motto           string `json:"motto"`
+	Role            string `json:"role"`
 }
 
 type CreateBlogCommentReq struct {

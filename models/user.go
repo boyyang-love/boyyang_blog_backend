@@ -28,6 +28,7 @@ type User struct {
 	AvatarUrl       string     `form:"avatar_url" json:"avatar_url"`
 	BackgroundImage string     `form:"background_image" json:"background_image"`
 	Motto           string     `form:"motto" json:"motto"`
+	Role            string     `form:"role" json:"role" gorm:"default:user"`
 }
 
 func (user *User) TableName() string {
