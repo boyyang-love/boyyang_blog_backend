@@ -1,10 +1,10 @@
 syntax = "v1"
 import "public/user.api"
 type (
-    AddLikesReq {                                 // 收藏
+    AddLikesReq {                                   // 收藏
         uid uint32 `form:"uid"`                     // 图片ID 或者是博客ID
-        LikesType int `form:"likes_type"`         // 1 true 0 false
-        Type int `form:"type"`                    // 1  图片 2 博客
+        LikesType int `form:"likes_type"`           // 1 true 0 false
+        Type int `form:"type"`                      // 1  图片 2 博客
     }
 
     LikesInfoReq {// 获取收藏
@@ -22,8 +22,8 @@ type (
         Title string `json:"title"`
         SubTitle string `json:"sub_title"`
         Des string `json:"des"`
-        Cover string `json:"cover"`                               // 图片上传路径
-        ThumbsUp *int `json:"thumbs_up" gorm:"default:0"`         // 点赞数
+        Cover string `json:"cover"`                                 // 图片上传路径
+        ThumbsUp *int `json:"thumbs_up" gorm:"default:0"`           // 点赞数
         UserId uint32 `json:"user_id"`                              // 该图片上传者 id
     }
 
@@ -49,7 +49,7 @@ type (
     group: like
 )
 service blog-api {
-    @handler Like
+    @handler Like // 收藏
     post /like (AddLikesReq)
     @handler LikesInfo
     get /likes/info (LikesInfoReq) returns (LikesInfoRes)

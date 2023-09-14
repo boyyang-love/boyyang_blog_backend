@@ -29,12 +29,10 @@ type (
 )
 
 
-// 用户
 @server(
     group: login
 )
 
-    // 登录注册
 service blog-api {
     @handler Login
     post /login (LoginReq) returns (LoginRes)

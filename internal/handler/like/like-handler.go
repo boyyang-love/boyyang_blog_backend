@@ -20,10 +20,5 @@ func LikeHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := like.NewLikeLogic(r.Context(), svcCtx)
 		err, msg := l.Like(&req)
 		respx.Response(w, nil, err, msg)
-		//if err != nil {
-		//	httpx.ErrorCtx(r.Context(), w, err)
-		//} else {
-		//	httpx.Ok(w)
-		//}
 	}
 }

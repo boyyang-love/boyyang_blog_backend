@@ -21,10 +21,5 @@ func StarHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := star.NewStarLogic(r.Context(), svcCtx)
 		err, msg := l.Star(&req)
 		respx.Response(w, nil, err, msg)
-		//if err != nil {
-		//	httpx.ErrorCtx(r.Context(), w, err)
-		//} else {
-		//	httpx.Ok(w)
-		//}
 	}
 }

@@ -19,5 +19,3 @@ COPY --from=builder /app/etc  etc
 EXPOSE 80
 
 CMD ["/app/main"]
-
-

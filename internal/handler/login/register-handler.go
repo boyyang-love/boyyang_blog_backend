@@ -20,10 +20,5 @@ func RegisterHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := login.NewRegisterLogic(r.Context(), svcCtx)
 		resp, err, msg := l.Register(&req)
 		respx.Response(w, resp, err, msg)
-		//if err != nil {
-		//	httpx.ErrorCtx(r.Context(), w, err)
-		//} else {
-		//	httpx.OkJsonCtx(r.Context(), w, resp)
-		//}
 	}
 }

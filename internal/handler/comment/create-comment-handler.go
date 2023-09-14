@@ -20,11 +20,5 @@ func CreateCommentHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := comment.NewCreateCommentLogic(r.Context(), svcCtx)
 		resp, err, msg := l.CreateComment(&req)
 		respx.Response(w, resp, err, msg)
-
-		//if err != nil {
-		//	httpx.ErrorCtx(r.Context(), w, err)
-		//} else {
-		//	httpx.OkJsonCtx(r.Context(), w, resp)
-		//}
 	}
 }

@@ -12,10 +12,5 @@ func FollowInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := like.NewFollowInfoLogic(r.Context(), svcCtx)
 		resp, err, msg := l.FollowInfo()
 		respx.Response(w, resp, err, msg)
-		//if err != nil {
-		//	httpx.ErrorCtx(r.Context(), w, err)
-		//} else {
-		//	httpx.OkJsonCtx(r.Context(), w, resp)
-		//}
 	}
 }

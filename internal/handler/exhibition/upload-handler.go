@@ -70,11 +70,5 @@ func UploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := exhibition.NewUploadLogic(r.Context(), svcCtx)
 		resp, err, msg := l.Upload(&req)
 		respx.Response(w, resp, err, msg)
-
-		//if err != nil {
-		//	httpx.ErrorCtx(r.Context(), w, err)
-		//} else {
-		//	httpx.OkJsonCtx(r.Context(), w, resp)
-		//}
 	}
 }

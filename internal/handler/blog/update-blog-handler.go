@@ -20,11 +20,5 @@ func UpdateBlogHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := blog.NewUpdateBlogLogic(r.Context(), svcCtx)
 		resp, err, msg := l.UpdateBlog(&req)
 		respx.Response(w, resp, err, msg)
-
-		//if err != nil {
-		//	httpx.ErrorCtx(r.Context(), w, err)
-		//} else {
-		//	httpx.OkJsonCtx(r.Context(), w, resp)
-		//}
 	}
 }

@@ -20,11 +20,5 @@ func ThumbsupCommentHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := comment.NewThumbsUpCommentLogic(r.Context(), svcCtx)
 		resp, err, msg := l.ThumbsUpComment(&req)
 		respx.Response(w, resp, err, msg)
-
-		//if err != nil {
-		//	httpx.ErrorCtx(r.Context(), w, err)
-		//} else {
-		//	httpx.OkJsonCtx(r.Context(), w, resp)
-		//}
 	}
 }

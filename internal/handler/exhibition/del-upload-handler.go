@@ -21,10 +21,5 @@ func DelUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := exhibition.NewDelUploadLogic(r.Context(), svcCtx)
 		err, msg := l.DelUpload(&req)
 		respx.Response(w, nil, err, msg)
-		//if err != nil {
-		//	httpx.ErrorCtx(r.Context(), w, err)
-		//} else {
-		//	httpx.Ok(w)
-		//}
 	}
 }
