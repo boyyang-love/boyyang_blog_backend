@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	admin "blog_server/internal/handler/admin"
 	blog "blog_server/internal/handler/blog"
 	comment "blog_server/internal/handler/comment"
 	dashboard "blog_server/internal/handler/dashboard"
@@ -238,5 +239,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: tray.TrayExhibitionHandler(serverCtx),
 			},
 		},
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/admin/exhibitions",
+				Handler: admin.ExhibitionAdminInfoHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)
 }

@@ -12,4 +12,5 @@ import (
 	"tag.api"
 	"search.api"
 	"tray.api"
+	"admin.api"
 )

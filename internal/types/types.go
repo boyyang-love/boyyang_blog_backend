@@ -408,3 +408,33 @@ type TrayExhibitionInfo struct {
 	Uid   uint   `json:"uid"`
 	Cover string `json:"cover"`
 }
+
+type AdminExhibitionsReq struct {
+	Page  int    `form:"page"`
+	Limit int    `form:"limit"`
+	Type  int    `form:"type"`
+	Sort  string `form:"sort,optional"`
+}
+
+type AdminExhibitionsRes struct {
+	Count       int64                 `json:"count"`
+	Exhibitions []AdminExhibitionInfo `json:"exhibitions"`
+}
+
+type AdminExhibitionInfo struct {
+	Uid       uint   `json:"uid"`
+	Created   int    `json:"created"`
+	Title     string `json:"title"`
+	SubTitle  string `json:"sub_title"`
+	Des       string `json:"des"`
+	Cover     string `json:"cover"`
+	Tags      string `json:"tags"`
+	UserId    uint   `json:"user_id"`
+	ThumbsUp  uint   `json:"thumbs_up"`
+	Status    int    `json:"status"`     // 1待审核 2审核通过 3未通过审核
+	RejectRes string `json:"reject_res"` // 驳回原因
+	UserInfo  User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
+	Type      string `json:"type"`
+	Size      int    `json:"size"`
+	Wh        string `json:"wh"`
+}
