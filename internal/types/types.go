@@ -19,7 +19,7 @@ type UpdateBlogReq struct {
 	Title    string `form:"title"`
 	SubTitle string `form:"sub_title"`
 	Content  string `form:"content"`
-	Cover    string `form:"cover"`
+	Cover    string `form:"cover,optional"`
 }
 
 type UpdateBlogRes struct {

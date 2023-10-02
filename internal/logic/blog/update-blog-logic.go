@@ -36,7 +36,7 @@ func (l *UpdateBlogLogic) UpdateBlog(req *types.UpdateBlogReq) (resp *types.Upda
 		Where("uid = ?", req.Uid).
 		Updates(&blogInfo)
 	if res.Error == nil {
-		return &types.UpdateBlogRes{Msg: "更新成功"}, err, msg
+		return &types.UpdateBlogRes{Msg: "更新成功"}, err, respx.SucMsg{Msg: "更新成功"}
 	} else {
 		return nil, res.Error, msg
 	}
