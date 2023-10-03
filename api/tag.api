@@ -1,8 +1,23 @@
 syntax = "v1"
 
 type (
+    CreateTagReq {
+        Name string `form:"name"`
+        Type string `form:"type"`
+    }
+)
+
+type (
+    TagsInfoReq {
+        Type string `form:"type"`
+    }
     TagsInfoRes {
-        TagsInfo []string `json:"tags"`
+        TagsInfo []TagInfo `json:"tags_info"`
+    }
+    TagInfo {
+        Uid uint32 `json:"uid"`
+        Name string `json:"name"`
+        Type string `json:"type"`
     }
 )
 
@@ -12,6 +27,8 @@ type (
 )
 
 service blog-api {
+    @handler CreateTag
+    post /tags/create (CreateTagReq)
     @handler TagsInfo
-    get /tags/info returns (TagsInfoRes)
+    get /tags/info (TagsInfoReq) returns (TagsInfoRes)
 }

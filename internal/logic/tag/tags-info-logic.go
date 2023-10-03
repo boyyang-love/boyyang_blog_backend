@@ -1,6 +1,8 @@
 package tag
 
 import (
+	"blog_server/common/respx"
+	"blog_server/models"
 	"context"
 
 	"blog_server/internal/svc"
@@ -23,8 +25,22 @@ func NewTagsInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *TagsInfo
 	}
 }
 
-func (l *TagsInfoLogic) TagsInfo() (resp *types.TagsInfoRes, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+func (l *TagsInfoLogic) TagsInfo(req *types.TagsInfoReq) (resp *types.TagsInfoRes, err error, msg respx.SucMsg) {
+	DB := l.svcCtx.DB
+	var tagsInfo []types.TagInfo
+	if err = DB.
+		Debug().
+		Model(&models.Tag{}).
+		Select("uid", "name", "type").
+		Where("type = ?", req.Type).
+		Find(&tagsInfo).
+		Error; err != nil {
+		return nil, err, msg
+	} else {
+		return &types.TagsInfoRes{
+				TagsInfo: tagsInfo,
+			}, nil, respx.SucMsg{
+				Msg: "获取成功!",
+			}
+	}
 }

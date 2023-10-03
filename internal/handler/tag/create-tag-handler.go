@@ -2,24 +2,25 @@ package tag
 
 import (
 	"blog_server/common/respx"
-	"blog_server/internal/logic/tag"
-	"blog_server/internal/types"
 	"net/http"
 
+	"blog_server/internal/logic/tag"
 	"blog_server/internal/svc"
+	"blog_server/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func TagsInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func CreateTagHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.TagsInfoReq
+		var req types.CreateTagReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
-		l := tag.NewTagsInfoLogic(r.Context(), svcCtx)
-		resp, err, msg := l.TagsInfo(&req)
 
-		respx.Response(w, resp, err, msg)
+		l := tag.NewCreateTagLogic(r.Context(), svcCtx)
+		err, msg := l.CreateTag(&req)
+
+		respx.Response(w, nil, err, msg)
 	}
 }

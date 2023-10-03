@@ -28,7 +28,7 @@ type (
         UserInfo User `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
         Type string `json:"type"`
         Size int `json:"size"`
-        Wh string `json:"wh"`
+        Px string `json:"px"`
     }
 )
 

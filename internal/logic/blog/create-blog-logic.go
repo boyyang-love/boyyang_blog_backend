@@ -8,7 +8,6 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/zeromicro/go-zero/core/logx"
-	"strings"
 )
 
 type CreateBlogLogic struct {
@@ -42,23 +41,6 @@ func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.Crea
 		Error; err != nil {
 		return nil, err, msg
 	} else {
-		if strings.Trim(req.Tags, " ") != "" {
-			// 创建tags
-			for _, tag := range strings.Split(req.Tags, ",") {
-				tags := models.Tag{
-					Name:   tag,
-					BlogId: blog.Uid,
-					UserId: uint32(userId),
-				}
-				if err = l.svcCtx.DB.
-					Model(&models.Tag{}).
-					FirstOrCreate(&tags, &tags).
-					Error; err != nil {
-					return nil, err, msg
-				}
-			}
-
-		}
 		return &types.CreateBlogRes{Uid: uint32(uint(blog.Uid))},
 			nil,
 			respx.SucMsg{

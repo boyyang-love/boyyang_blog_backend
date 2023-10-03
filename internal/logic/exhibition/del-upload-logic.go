@@ -2,10 +2,10 @@ package exhibition
 
 import (
 	"blog_server/common/respx"
-	"context"
-
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
+	"blog_server/models"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,9 +25,56 @@ func NewDelUploadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DelUplo
 }
 
 func (l *DelUploadLogic) DelUpload(req *types.DelUploadReq) (err error, msg respx.SucMsg) {
-	_, err = l.svcCtx.Client.Object.Delete(context.Background(), req.Key)
+	err, isExhibitionsUse := l.exhibitionNoUse(req)
 	if err != nil {
 		return err, msg
 	}
-	return nil, respx.SucMsg{Msg: "图片删除成功"}
+	err, isBlogUse := l.blogNoUse(req)
+	if err != nil {
+		return err, msg
+	}
+
+	if isExhibitionsUse && isBlogUse {
+		_, err = l.svcCtx.Client.Object.Delete(context.Background(), req.Key)
+		if err != nil {
+			return err, msg
+		}
+		return nil, respx.SucMsg{Msg: "图片删除成功"}
+	} else {
+		return nil, respx.SucMsg{Msg: "当前图片有其它引用"}
+	}
+}
+
+func (l *DelUploadLogic) exhibitionNoUse(req *types.DelUploadReq) (err error, isNoUse bool) {
+	var count int64
+	DB := l.svcCtx.DB
+	if err = DB.
+		Model(&models.Exhibition{}).
+		Where("cover = ?", req.Key).
+		Count(&count).Error; err != nil {
+		return err, false
+	} else {
+		if count >= 1 {
+			return nil, false
+		} else {
+			return nil, true
+		}
+	}
+}
+
+func (l *DelUploadLogic) blogNoUse(req *types.DelUploadReq) (err error, isNoUse bool) {
+	var count int64
+	DB := l.svcCtx.DB
+	if err = DB.
+		Model(&models.Blog{}).
+		Where("cover = ?", req.Key).
+		Count(&count).Error; err != nil {
+		return err, false
+	} else {
+		if count >= 1 {
+			return nil, false
+		} else {
+			return nil, true
+		}
+	}
 }

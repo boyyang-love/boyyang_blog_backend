@@ -24,8 +24,10 @@ type Exhibition struct {
 	Status    int        `json:"status" gorm:"default:1"`    // 图片状态 1待审核 2审核通过 3未通过审核
 	RejectRes string     `json:"reject_res"`                 // 状态为3时 驳回原因
 	Size      int        `json:"size"`                       // 图片大小
-	Wh        string     `json:"wh"`                         // 图片宽高
+	Px        string     `json:"px"`                         // 图片宽高
 	Type      string     `json:"type"`                       // 图片类型
+	Rgb       string     `json:"rgb"`                        // 图片主题色
+	Palette   string     `json:"palette"`                    // 调色板
 }
 
 func (exhibition *Exhibition) TableName() string {

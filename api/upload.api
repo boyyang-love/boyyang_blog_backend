@@ -41,7 +41,9 @@ type (
         Tags string `form:"tags,optional"`
         Type string `form:"type,optional"`
         Size int `form:"size,optional"`
-        Wh string `form:"wh"`
+        Px string `form:"px"`
+        Rgb string `form:"rgb,optional"`
+        Palette string `form:"palette,optional"`
     }
 
     CreateExhibitionRes {
@@ -87,7 +89,9 @@ type (
         UserInfo User `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
         Type string `json:"type"`
         Size int `json:"size"`
-        Wh string `json:"wh"`
+        Px string `json:"px"`
+        Rgb string `json:"rgb"`
+        Palette string `json:"palette"`
     }
 )
 

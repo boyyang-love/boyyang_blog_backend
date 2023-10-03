@@ -230,7 +230,9 @@ type CreateExhibitionReq struct {
 	Tags     string `form:"tags,optional"`
 	Type     string `form:"type,optional"`
 	Size     int    `form:"size,optional"`
-	Wh       string `form:"wh"`
+	Px       string `form:"px"`
+	Rgb      string `form:"rgb,optional"`
+	Palette  string `form:"palette,optional"`
 }
 
 type CreateExhibitionRes struct {
@@ -273,7 +275,9 @@ type ExhibitionInfo struct {
 	UserInfo  User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
 	Type      string `json:"type"`
 	Size      int    `json:"size"`
-	Wh        string `json:"wh"`
+	Px        string `json:"px"`
+	Rgb       string `json:"rgb"`
+	Palette   string `json:"palette"`
 }
 
 type UpdateExhibitionReq struct {
@@ -347,8 +351,23 @@ type StarReq struct {
 	Type     int    `form:"type"`      // 1 图片 2 博客
 }
 
+type CreateTagReq struct {
+	Name string `form:"name"`
+	Type string `form:"type"`
+}
+
+type TagsInfoReq struct {
+	Type string `form:"type"`
+}
+
 type TagsInfoRes struct {
-	TagsInfo []string `json:"tags"`
+	TagsInfo []TagInfo `json:"tags_info"`
+}
+
+type TagInfo struct {
+	Uid  uint32 `json:"uid"`
+	Name string `json:"name"`
+	Type string `json:"type"`
 }
 
 type SearchReq struct {
@@ -436,5 +455,5 @@ type AdminExhibitionInfo struct {
 	UserInfo  User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
 	Type      string `json:"type"`
 	Size      int    `json:"size"`
-	Wh        string `json:"wh"`
+	Px        string `json:"px"`
 }
