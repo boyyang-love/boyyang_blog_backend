@@ -13,4 +13,5 @@ import (
 	"search.api"
 	"tray.api"
 	"admin.api"
+	"article.api"
 )

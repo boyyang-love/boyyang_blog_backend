@@ -1,0 +1,66 @@
+syntax = "v1"
+
+import "public/user.api"
+
+type (
+    CreateArticleReq {
+        Title string `form:"title"`
+        SubTitle string `form:"sub_title"`
+        Content string `form:"content"`
+        Cover string `form:"cover"`
+        Tag string `form:"tag"`
+    }
+
+    UpdateArticleReq {
+        Uid  uint32 `form:"uid"`
+        Title string `form:"title"`
+        SubTitle string `form:"subtitle"`
+        Content string `form:"content"`
+        Tag string `form:"tag,optional"`
+    }
+
+    DeleteArticleReq {
+        Uid uint32 `form:"uid"`
+    }
+
+    InfoArticleReq {
+        Uid uint32 `form:"uid,optional"`
+        Page int `form:"page,optional"`
+        Limit int `form:"limit,optional"`
+        Keyword string `form:"keyword,optional"`
+    }
+
+    InfoArticleRes {
+        Count int64 `json:"count,omitempty"`
+        ArticleInfo []ArticleInfo `json:"article_info,omitempty"`
+    }
+
+    ArticleInfo {
+        Uid uint32 `json:"uid"`
+        Created int `json:"created"`
+        Updated int `json:"updated"`
+        Title string `json:"title"`
+        SubTitle string `json:"sub_title"`
+        Content string `json:"content"`
+        Cover string `json:"cover"`
+        UserId uint `json:"user_id"`
+        UserInfo User `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:Uid"`
+        Tag string `json:"tags"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: article
+)
+
+service blog-api {
+    @handler CreateArticle
+    post /article/create (CreateArticleReq)
+    @handler UpdateArticle
+    post /article/update (UpdateArticleReq)
+    @handler DeleteArticle
+    get /article/delete (DeleteArticleReq)
+    @handler InfoArticle
+    get /article/info (InfoArticleReq) returns (InfoArticleRes)
+}

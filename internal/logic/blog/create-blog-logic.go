@@ -44,8 +44,7 @@ func (l *CreateBlogLogic) CreateBlog(req *types.CreateBlogReq) (resp *types.Crea
 		return &types.CreateBlogRes{Uid: uint32(uint(blog.Uid))},
 			nil,
 			respx.SucMsg{
-				Msg: "博客发布成功！",
+				Msg: "博客发布成功!",
 			}
 	}
-
 }

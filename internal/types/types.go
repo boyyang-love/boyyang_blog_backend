@@ -457,3 +457,48 @@ type AdminExhibitionInfo struct {
 	Size      int    `json:"size"`
 	Px        string `json:"px"`
 }
+
+type CreateArticleReq struct {
+	Title    string `form:"title"`
+	SubTitle string `form:"sub_title"`
+	Content  string `form:"content"`
+	Cover    string `form:"cover"`
+	Tag      string `form:"tag"`
+}
+
+type UpdateArticleReq struct {
+	Uid      uint32 `form:"uid"`
+	Title    string `form:"title"`
+	SubTitle string `form:"subtitle"`
+	Content  string `form:"content"`
+	Tag      string `form:"tag,optional"`
+}
+
+type DeleteArticleReq struct {
+	Uid uint32 `form:"uid"`
+}
+
+type InfoArticleReq struct {
+	Uid     uint32 `form:"uid,optional"`
+	Page    int    `form:"page,optional"`
+	Limit   int    `form:"limit,optional"`
+	Keyword string `form:"keyword,optional"`
+}
+
+type InfoArticleRes struct {
+	Count       int64         `json:"count,omitempty"`
+	ArticleInfo []ArticleInfo `json:"article_info,omitempty"`
+}
+
+type ArticleInfo struct {
+	Uid      uint32 `json:"uid"`
+	Created  int    `json:"created"`
+	Updated  int    `json:"updated"`
+	Title    string `json:"title"`
+	SubTitle string `json:"sub_title"`
+	Content  string `json:"content"`
+	Cover    string `json:"cover"`
+	UserId   uint   `json:"user_id"`
+	UserInfo User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:Uid"`
+	Tag      string `json:"tags"`
+}

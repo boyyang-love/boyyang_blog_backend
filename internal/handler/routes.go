@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	admin "blog_server/internal/handler/admin"
+	article "blog_server/internal/handler/article"
 	blog "blog_server/internal/handler/blog"
 	comment "blog_server/internal/handler/comment"
 	dashboard "blog_server/internal/handler/dashboard"
@@ -252,6 +253,32 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/admin/exhibitions",
 				Handler: admin.ExhibitionAdminInfoHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/article/create",
+				Handler: article.CreateArticleHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/article/update",
+				Handler: article.UpdateArticleHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/article/delete",
+				Handler: article.DeleteArticleHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/article/info",
+				Handler: article.InfoArticleHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
