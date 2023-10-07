@@ -4,6 +4,7 @@ import (
 	"blog_server/common/respx"
 	"blog_server/models"
 	"context"
+	"strings"
 
 	"blog_server/internal/svc"
 	"blog_server/internal/types"
@@ -28,8 +29,10 @@ func NewTagsInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *TagsInfo
 func (l *TagsInfoLogic) TagsInfo(req *types.TagsInfoReq) (resp *types.TagsInfoRes, err error, msg respx.SucMsg) {
 	DB := l.svcCtx.DB
 	var tagsInfo []types.TagInfo
+	if req.Uids != "" {
+		DB = DB.Where("uid in (?)", strings.Split(req.Uids, ","))
+	}
 	if err = DB.
-		Debug().
 		Model(&models.Tag{}).
 		Select("uid", "name", "type").
 		Where("type = ?", req.Type).

@@ -269,7 +269,8 @@ type ExhibitionInfo struct {
 	Cover     string `json:"cover"`
 	Tags      string `json:"tags"`
 	UserId    uint   `json:"user_id"`
-	ThumbsUp  uint   `json:"thumbs_up"`
+	ThumbsUp  int    `json:"thumbs_up"`
+	Download  int    `json:"download"`
 	Status    int    `json:"status"`     // 1待审核 2审核通过 3未通过审核
 	RejectRes string `json:"reject_res"` // 驳回原因
 	UserInfo  User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
@@ -307,6 +308,19 @@ type DelExhibitionReq struct {
 
 type DelUploadReq struct {
 	Key string `form:"key"`
+}
+
+type UpdateDownloadReq struct {
+	Uid uint `form:"uid"`
+}
+
+type SimilarReq struct {
+	Tag   string `form:"tag"`
+	Color string `form:"color"`
+}
+
+type SimilarRes struct {
+	Infos []ExhibitionInfo `json:"infos"`
 }
 
 type UserInfoReq struct {
@@ -358,6 +372,7 @@ type CreateTagReq struct {
 
 type TagsInfoReq struct {
 	Type string `form:"type"`
+	Uids string `form:"uids,optional"`
 }
 
 type TagsInfoRes struct {

@@ -9,7 +9,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -32,7 +31,7 @@ type Info struct {
 }
 
 func (l *UpdateUserPasswordLogic) UpdateUserPassword(req *types.UpdateUserPasswordReq) (err error, msg respx.SucMsg) {
-	userId, err := l.ctx.Value("Id").(json.Number).Int64()
+	userId, err := l.ctx.Value("Uid").(json.Number).Int64()
 	if err != nil {
 		return errors.New("token 解析失败"), msg
 	}

@@ -84,7 +84,6 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			StarIds:        star,
 		}, nil, msg
 	}
-
 }
 
 func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params, likesIds []int) (exhibitions []types.ExhibitionInfo, count int64, err error) {
@@ -122,6 +121,7 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params, likesIds []int) (
 		Order(params.Sort)
 
 	if err = DB.
+		Debug().
 		Model(&models.Exhibition{}).
 		Find(&exhibitions).
 		Offset(-1).

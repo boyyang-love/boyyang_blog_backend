@@ -10,6 +10,7 @@ type (
 type (
     TagsInfoReq {
         Type string `form:"type"`
+        Uids string `form:"uids,optional"`
     }
     TagsInfoRes {
         TagsInfo []TagInfo `json:"tags_info"`
