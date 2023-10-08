@@ -30,6 +30,14 @@ type (
         Size int `json:"size"`
         Px string `json:"px"`
     }
+
+    AdminStatRes {
+        UserCount int64 `json:"user_count"`
+        ImageCount int64 `json:"image_count"`
+        ImageDownloadCount int64 `json:"image_download_count"`
+        BlogCount int64 `json:"blog_count"`
+        ArticleCount int64 `json:"article_count"`
+    }
 )
 
 // admin
@@ -40,4 +48,6 @@ type (
 service blog-api {
     @handler ExhibitionAdminInfo // 创建博客
     get /admin/exhibitions (AdminExhibitionsReq) returns (AdminExhibitionsRes)
+    @handler StatAdmin
+    get /admin/stat returns (AdminStatRes)
 }

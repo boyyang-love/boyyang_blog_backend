@@ -12,6 +12,7 @@ import (
 	exhibition "blog_server/internal/handler/exhibition"
 	like "blog_server/internal/handler/like"
 	login "blog_server/internal/handler/login"
+	notice "blog_server/internal/handler/notice"
 	search "blog_server/internal/handler/search"
 	star "blog_server/internal/handler/star"
 	tag "blog_server/internal/handler/tag"
@@ -264,6 +265,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/admin/exhibitions",
 				Handler: admin.ExhibitionAdminInfoHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/admin/stat",
+				Handler: admin.StatAdminHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)
@@ -289,6 +295,32 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/article/info",
 				Handler: article.InfoArticleHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/notice/create",
+				Handler: notice.CreateNoticeHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/notice/update",
+				Handler: notice.UpdateNoticeHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/notice/delete",
+				Handler: notice.DeleteNoticeHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/notice/info",
+				Handler: notice.InfoNoticeHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

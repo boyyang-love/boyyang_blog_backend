@@ -52,7 +52,6 @@ func (l *SearchLogic) Search(req *types.SearchReq) (resp *types.SearchRes, err e
 
 func (l *SearchLogic) searchExhibitionInfos(req *types.SearchReq) (resp []types.SearchExhibitionInfos, count int64, err error) {
 	if err = l.svcCtx.DB.
-		Debug().
 		Model(&models.Exhibition{}).
 		Offset((req.Page-1)*req.Limit).
 		Limit(req.Limit).

@@ -474,6 +474,14 @@ type AdminExhibitionInfo struct {
 	Px        string `json:"px"`
 }
 
+type AdminStatRes struct {
+	UserCount          int64 `json:"user_count"`
+	ImageCount         int64 `json:"image_count"`
+	ImageDownloadCount int64 `json:"image_download_count"`
+	BlogCount          int64 `json:"blog_count"`
+	ArticleCount       int64 `json:"article_count"`
+}
+
 type CreateArticleReq struct {
 	Title    string `form:"title"`
 	SubTitle string `form:"sub_title"`
@@ -517,4 +525,33 @@ type ArticleInfo struct {
 	UserId   uint   `json:"user_id"`
 	UserInfo User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:Uid"`
 	Tag      string `json:"tags"`
+}
+
+type NoticeCreateReq struct {
+	Content string `form:"content"`
+}
+
+type NoticeUpdateReq struct {
+	Uid     uint32 `form:"uid"`
+	Content string `form:"content"`
+}
+
+type NoticeDeleteReq struct {
+	Uid uint32 `form:"uid"`
+}
+
+type NoticeInfoReq struct {
+	Page  int `form:"page"`
+	Limit int `form:"limit"`
+}
+
+type NoticeInfoRes struct {
+	Count int64        `json:"count"`
+	Infos []NoticeInfo `json:"infos"`
+}
+
+type NoticeInfo struct {
+	Uid     uint32 `json:"uid"`
+	UserId  uint32 `json:"user_id"`
+	Content string `json:"content"`
 }
