@@ -248,6 +248,7 @@ type ExhibitionInfoReq struct {
 	IsLike   bool   `form:"is_like,optional"`
 	Sort     string `form:"sort,optional"` // Created  ThumbsUp
 	Keywords string `form:"keywords,optional"`
+	Tags     string `form:"tags,optional"`
 }
 
 type ExhibitionInfoRes struct {
@@ -464,7 +465,7 @@ type AdminExhibitionInfo struct {
 	Cover     string `json:"cover"`
 	Tags      string `json:"tags"`
 	UserId    uint   `json:"user_id"`
-	ThumbsUp  uint   `json:"thumbs_up"`
+	ThumbsUp  int    `json:"thumbs_up"`
 	Status    int    `json:"status"`     // 1待审核 2审核通过 3未通过审核
 	RejectRes string `json:"reject_res"` // 驳回原因
 	UserInfo  User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`

@@ -62,6 +62,7 @@ type (
         IsLike bool `form:"is_like,optional"`
         Sort string `form:"sort,optional"` // Created  ThumbsUp
         Keywords string `form:"keywords,optional"`
+        Tags string `form:"tags,optional"`
     }
 
     ExhibitionInfoRes {

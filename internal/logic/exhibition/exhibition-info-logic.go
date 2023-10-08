@@ -30,6 +30,7 @@ type Params struct {
 	Sort     string
 	Keywords string
 	IsLike   bool
+	Tags     string
 }
 
 func NewExhibitionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ExhibitionInfoLogic {
@@ -53,6 +54,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 		Sort:     req.Sort,
 		Keywords: req.Keywords,
 		IsLike:   req.IsLike,
+		Tags:     req.Tags,
 	}
 
 	status, err := l.getStatus(userid)
@@ -108,6 +110,10 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params, likesIds []int) (
 
 	if params.Keywords != "" {
 		DB = DB.Where("tags like @keywords or title like @keywords", sql.Named("keywords", "%"+params.Keywords+"%"))
+	}
+
+	if params.Tags != "" {
+		DB = DB.Where("tags like @tags", sql.Named("tags", "%"+params.Tags+"%"))
 	}
 
 	if params.IsLike {

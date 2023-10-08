@@ -22,7 +22,7 @@ type (
         Cover string `json:"cover"`
         Tags string `json:"tags"`
         UserId uint `json:"user_id"`
-        ThumbsUp uint `json:"thumbs_up"`
+        ThumbsUp int `json:"thumbs_up"`
         Status int `json:"status"`           // 1待审核 2审核通过 3未通过审核
         RejectRes string `json:"reject_res"` // 驳回原因
         UserInfo User `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
