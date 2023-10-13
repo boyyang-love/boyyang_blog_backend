@@ -7,8 +7,8 @@ require (
 	github.com/google/uuid v1.3.1
 	github.com/gorilla/websocket v1.5.0
 	github.com/robfig/cron/v3 v3.0.1
-	github.com/tencentyun/cos-go-sdk-v5 v0.7.43
-	github.com/zeromicro/go-zero v1.5.5
+	github.com/tencentyun/cos-go-sdk-v5 v0.7.44
+	github.com/zeromicro/go-zero v1.5.6
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.4
 )
@@ -56,8 +56,8 @@ require (
 	golang.org/x/text v0.13.0 // indirect
 	google.golang.org/genproto v0.0.0-20230822172742-b8732ec3820d // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20230822172742-b8732ec3820d // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20230822172742-b8732ec3820d // indirect
-	google.golang.org/grpc v1.58.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20230913181813-007df8e322eb // indirect
+	google.golang.org/grpc v1.58.2 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

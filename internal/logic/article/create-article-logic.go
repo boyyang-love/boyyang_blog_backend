@@ -35,6 +35,7 @@ func (l *CreateArticleLogic) CreateArticle(req *types.CreateArticleReq) (err err
 			SubTitle: req.SubTitle,
 			Content:  req.Content,
 			Cover:    req.Cover,
+			Images:   req.Images,
 			UserId:   uint32(userId),
 			Tag:      req.Tag,
 		}).

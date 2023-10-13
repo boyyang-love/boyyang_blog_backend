@@ -100,8 +100,12 @@ github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.563/go.mod 
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/kms v1.0.563/go.mod h1:uom4Nvi9W+Qkom0exYiJ9VWJjXwyxtPYTkKkaLMlfE0=
 github.com/tencentyun/cos-go-sdk-v5 v0.7.43 h1:aPCPWy85T3C3Ga3hn7va2DC4c0hAf8Dx0kpKj/uB/vw=
 github.com/tencentyun/cos-go-sdk-v5 v0.7.43/go.mod h1:LUFnaqRmGk6pEHOaRmdn2dCZR2j0cSsM5xowWFPTPao=
+github.com/tencentyun/cos-go-sdk-v5 v0.7.44 h1:Vvz28KVdmSUrwTH2MWgAMlhzUAh+lQBSSAW1J7qJDW8=
+github.com/tencentyun/cos-go-sdk-v5 v0.7.44/go.mod h1:LUFnaqRmGk6pEHOaRmdn2dCZR2j0cSsM5xowWFPTPao=
 github.com/zeromicro/go-zero v1.5.5 h1:qEHnDuCBu/gDBmfWEZXYow6ZmWmzsrJTjtjSMVm4SiY=
 github.com/zeromicro/go-zero v1.5.5/go.mod h1:AGCspTFitHzYjl5ddAmYWLfdt341+BrhefqlwO45UbU=
+github.com/zeromicro/go-zero v1.5.6 h1:vBzrLaj+xQySBAeMBA6vhPxNgasz0T3WE60s98H0Bb4=
+github.com/zeromicro/go-zero v1.5.6/go.mod h1:FX2a2MQd5EvAYO7neJBm2GAmPU5XfFnj3JMM/qj+kpY=
 go.opentelemetry.io/otel v1.17.0 h1:MW+phZ6WZ5/uk2nd93ANk/6yJ+dVrvNWUjGhnnFU5jM=
 go.opentelemetry.io/otel v1.17.0/go.mod h1:I2vmBGtFaODIVMBSTPVDlJSzBDNf93k60E6Ft0nyjo0=
 go.opentelemetry.io/otel/exporters/jaeger v1.17.0 h1:D7UpUy2Xc2wsi1Ras6V40q806WM07rqoCWzXu7Sqy+4=
@@ -144,8 +148,12 @@ google.golang.org/genproto/googleapis/api v0.0.0-20230822172742-b8732ec3820d h1:
 google.golang.org/genproto/googleapis/api v0.0.0-20230822172742-b8732ec3820d/go.mod h1:KjSP20unUpOx5kyQUFa7k4OJg0qeJ7DEZflGDu2p6Bk=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20230822172742-b8732ec3820d h1:uvYuEyMHKNt+lT4K3bN6fGswmK8qSvcreM3BwjDh+y4=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20230822172742-b8732ec3820d/go.mod h1:+Bk1OCOj40wS2hwAMA+aCW9ypzm63QTBBHp6lQ3p+9M=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20230913181813-007df8e322eb h1:Isk1sSH7bovx8Rti2wZK0UZF6oraBDK74uoyLEEVFN0=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20230913181813-007df8e322eb/go.mod h1:+Bk1OCOj40wS2hwAMA+aCW9ypzm63QTBBHp6lQ3p+9M=
 google.golang.org/grpc v1.58.0 h1:32JY8YpPMSR45K+c3o6b8VL73V+rR8k+DeMIr4vRH8o=
 google.golang.org/grpc v1.58.0/go.mod h1:tgX3ZQDlNJGU96V6yHh1T/JeoBQ2TXdr43YbYSsCJk0=
+google.golang.org/grpc v1.58.2 h1:SXUpjxeVF3FKrTYQI4f4KvbGD5u2xccdYdurwowix5I=
+google.golang.org/grpc v1.58.2/go.mod h1:tgX3ZQDlNJGU96V6yHh1T/JeoBQ2TXdr43YbYSsCJk0=
 google.golang.org/protobuf v1.26.0-rc.1/go.mod h1:jlhhOSvTdKEhbULTjvd4ARK9grFBp09yW+WbY/TyQbw=
 google.golang.org/protobuf v1.26.0/go.mod h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQnmE0givc=
 google.golang.org/protobuf v1.31.0 h1:g0LDEJHgrBl9N9r17Ru3sqWhkIx2NB67okBHPwC7hs8=

@@ -14,8 +14,9 @@ type Tag struct {
 	DeletedAt *time.Time `json:"deleted_at"`
 	Created   int        `json:"created" gorm:"autoCreateTime"`
 	Updated   int        `json:"updated" gorm:"autoUpdateTime"`
-	Name      string     `json:"name"` // 标签名称
-	Type      string     `json:"type"` // 标签类型
+	Name      string     `json:"name"`     // 标签名称
+	Type      string     `json:"type"`     // 标签类型
+	UserId    uint32     `json:"user_id" ` // 创建该标签用户
 }
 
 func (tag *Tag) TableName() string {

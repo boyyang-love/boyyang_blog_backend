@@ -18,6 +18,7 @@ type Article struct {
 	SubTitle  string     `json:"sub_title"`                  // 文章副标题
 	Content   string     `json:"des" gorm:"size:20000"`      // 文章内容
 	Cover     string     `json:"cover,omitempty"`            // 背景图片
+	Images    string     `json:"images,omitempty"`           // 文章图片
 	UserId    uint32     `json:"user_id"`                    // 文章作者
 	Tag       string     `json:"tag,omitempty"`              // 文章标签
 	ThumbsUp  *int       `json:"thumbs_up" gorm:"default:0"` // 点赞数

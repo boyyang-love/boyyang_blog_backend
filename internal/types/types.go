@@ -487,6 +487,7 @@ type CreateArticleReq struct {
 	SubTitle string `form:"sub_title"`
 	Content  string `form:"content"`
 	Cover    string `form:"cover"`
+	Images   string `form:"images"`
 	Tag      string `form:"tag"`
 }
 
@@ -507,11 +508,13 @@ type InfoArticleReq struct {
 	Page    int    `form:"page,optional"`
 	Limit   int    `form:"limit,optional"`
 	Keyword string `form:"keyword,optional"`
+	UserId  uint32 `form:"user_id,optional"`
 }
 
 type InfoArticleRes struct {
-	Count       int64         `json:"count,omitempty"`
-	ArticleInfo []ArticleInfo `json:"article_info,omitempty"`
+	Count       int64         `json:"count"`
+	ArticleInfo []ArticleInfo `json:"article_info"`
+	CardInfo    CardInfo      `json:"card_info"`
 }
 
 type ArticleInfo struct {
@@ -522,9 +525,18 @@ type ArticleInfo struct {
 	SubTitle string `json:"sub_title"`
 	Content  string `json:"content"`
 	Cover    string `json:"cover"`
+	Images   string `json:"images"`
 	UserId   uint   `json:"user_id"`
 	UserInfo User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:Uid"`
 	Tag      string `json:"tags"`
+}
+
+type CardInfo struct {
+	Follow  int64 `json:"follow"`  // 关注
+	Fans    int64 `json:"fans"`    // 粉丝
+	Thumb   int64 `json:"thumb"`   // 获赞
+	Article int64 `json:"article"` // 文章
+	Comment int64 `json:"comment"` // 评论
 }
 
 type NoticeCreateReq struct {

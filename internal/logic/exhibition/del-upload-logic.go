@@ -6,7 +6,6 @@ import (
 	"blog_server/internal/types"
 	"blog_server/models"
 	"context"
-
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -34,7 +33,12 @@ func (l *DelUploadLogic) DelUpload(req *types.DelUploadReq) (err error, msg resp
 		return err, msg
 	}
 
-	if isExhibitionsUse && isBlogUse {
+	err, isArticleUse := l.articleNoUse(req)
+	if err != nil {
+		return err, msg
+	}
+
+	if isExhibitionsUse && isBlogUse && isArticleUse {
 		_, err = l.svcCtx.Client.Object.Delete(context.Background(), req.Key)
 		if err != nil {
 			return err, msg
@@ -68,6 +72,23 @@ func (l *DelUploadLogic) blogNoUse(req *types.DelUploadReq) (err error, isNoUse 
 	if err = DB.
 		Model(&models.Blog{}).
 		Where("cover = ?", req.Key).
+		Count(&count).Error; err != nil {
+		return err, false
+	} else {
+		if count >= 1 {
+			return nil, false
+		} else {
+			return nil, true
+		}
+	}
+}
+
+func (l *DelUploadLogic) articleNoUse(req *types.DelUploadReq) (err error, isNoUse bool) {
+	var count int64
+	DB := l.svcCtx.DB
+	if err = DB.
+		Model(&models.Article{}).
+		Where("cover = ? or images like ?", req.Key, "%"+req.Key+"%").
 		Count(&count).Error; err != nil {
 		return err, false
 	} else {
