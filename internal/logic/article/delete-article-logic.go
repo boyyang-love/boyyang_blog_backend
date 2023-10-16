@@ -34,6 +34,10 @@ func (l *DeleteArticleLogic) DeleteArticle(req *types.DeleteArticleReq) (err err
 		Delete(&models.Article{}).Error; err != nil {
 		return err, msg
 	} else {
+		l.svcCtx.DB.
+			Model(&models.Comment{}).
+			Where("content_id = ?", req.Uid).
+			Delete(&models.Comment{})
 		return nil, respx.SucMsg{Msg: "删除成功!"}
 	}
 }

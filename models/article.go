@@ -22,6 +22,7 @@ type Article struct {
 	UserId    uint32     `json:"user_id"`                    // 文章作者
 	Tag       string     `json:"tag,omitempty"`              // 文章标签
 	ThumbsUp  *int       `json:"thumbs_up" gorm:"default:0"` // 点赞数
+	Comment   *int       `json:"comment" gorm:"default:0"`   // 评论数
 }
 
 func (*Article) TableName() string {

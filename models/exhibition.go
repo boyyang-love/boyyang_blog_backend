@@ -21,6 +21,7 @@ type Exhibition struct {
 	Tags      *string    `json:"tags"`                       // 图片标签
 	ThumbsUp  *int       `json:"thumbs_up" gorm:"default:0"` // 点赞数
 	Download  *int       `json:"download" gorm:"default:0"`  // 下载数
+	Count     *int       `json:"count" gorm:"default:0"`     // 评论数
 	UserId    uint32     `json:"user_id"`                    // 该图片上传者 id
 	Status    int        `json:"status" gorm:"default:1"`    // 图片状态 1待审核 2审核通过 3未通过审核
 	RejectRes string     `json:"reject_res"`                 // 状态为3时 驳回原因

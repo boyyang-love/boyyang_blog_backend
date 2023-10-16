@@ -83,8 +83,9 @@ type User struct {
 }
 
 type CreateBlogCommentReq struct {
-	Content string `form:"content" gorm:"size:2000"`
-	BlogId  uint32 `form:"blog_id"`
+	Type      string `form:"type,options=image|blog|article"`
+	Content   string `form:"content" gorm:"size:2000"`
+	ContentId uint32 `form:"content_id"`
 }
 
 type CreateBlogCommentRes struct {
@@ -105,6 +106,27 @@ type ThumbsUpBlogCommentReq struct {
 
 type ThumbsUpBlogCommentRes struct {
 	Msg string `json:"msg"`
+}
+
+type InfoCommentReq struct {
+	Page      int    `form:"page"`
+	Limit     int    `form:"limit"`
+	Type      string `form:"type,options=image|blog|article""`
+	ContentId uint32 `form:"content_id"`
+}
+
+type InfoCommentRes struct {
+	Count int64         `json:"count"`
+	Infos []CommentInfo `json:"infos"`
+}
+
+type CommentInfo struct {
+	Uid      uint32 `json:"uid" gorm:"primary_key"`
+	Created  int    `json:"created" gorm:"autoCreateTime"`
+	Content  string `json:"content" gorm:"size:2000"`   // 评论内容
+	UserId   uint32 `json:"user_id"`                    // 评论者 id
+	ThumbsUp *int   `json:"thumbs_up" gorm:"default:0"` // 该条评论 点赞数
+	UserInfo User   `json:"user_info" gorm:"foreignKey:UserId;references:Uid"`
 }
 
 type DashboardRes struct {
@@ -487,7 +509,7 @@ type CreateArticleReq struct {
 	SubTitle string `form:"sub_title"`
 	Content  string `form:"content"`
 	Cover    string `form:"cover"`
-	Images   string `form:"images"`
+	Images   string `form:"images,optional"`
 	Tag      string `form:"tag"`
 }
 
@@ -509,12 +531,14 @@ type InfoArticleReq struct {
 	Limit   int    `form:"limit,optional"`
 	Keyword string `form:"keyword,optional"`
 	UserId  uint32 `form:"user_id,optional"`
+	Type    int    `form:"type,optional"`             // 1 我的 2 推荐
+	Sort    string `form:"sort,default=created desc"` // 排序
 }
 
 type InfoArticleRes struct {
 	Count       int64         `json:"count"`
 	ArticleInfo []ArticleInfo `json:"article_info"`
-	CardInfo    CardInfo      `json:"card_info"`
+	CardInfo    CardInfo      `json:"card_info,omitempty"`
 }
 
 type ArticleInfo struct {
@@ -529,6 +553,8 @@ type ArticleInfo struct {
 	UserId   uint   `json:"user_id"`
 	UserInfo User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:Uid"`
 	Tag      string `json:"tags"`
+	Comment  int    `json:"comment"`
+	ThumbsUp string `json:"thumbs_up"`
 }
 
 type CardInfo struct {

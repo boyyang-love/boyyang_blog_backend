@@ -1,9 +1,12 @@
 syntax = "v1"
 
+import "public/user.api"
+
 type (
     CreateBlogCommentReq {
+        Type string `form:"type,options=image|blog|article"`
         Content string `form:"content" gorm:"size:2000"`
-        BlogId uint32 `form:"blog_id"`
+        ContentId uint32 `form:"content_id"`
     }
 
     CreateBlogCommentRes {
@@ -25,6 +28,25 @@ type (
     ThumbsUpBlogCommentRes {
         Msg string `json:"msg"`
     }
+
+    InfoCommentReq {
+        Page int `form:"page"`
+        Limit int `form:"limit"`
+        Type string `form:"type,options=image|blog|article""`
+        ContentId uint32 `form:"content_id"`
+    }
+    InfoCommentRes {
+        Count int64 `json:"count"`
+        Infos []CommentInfo `json:"infos"`
+    }
+    CommentInfo {
+        Uid uint32 `json:"uid" gorm:"primary_key"`
+        Created int `json:"created" gorm:"autoCreateTime"`
+        Content string `json:"content" gorm:"size:2000"`         // 评论内容
+        UserId uint32 `json:"user_id"`                       // 评论者 id
+        ThumbsUp *int `json:"thumbs_up" gorm:"default:0"`    // 该条评论 点赞数
+        UserInfo User `json:"user_info" gorm:"foreignKey:UserId;references:Uid"`
+    }
 )
 
 
@@ -35,9 +57,11 @@ type (
 )
 service blog-api {
     @handler CreateComment // 新建评论
-    post /blog/comment/create (CreateBlogCommentReq) returns (CreateBlogCommentRes)
+    post /comment/create (CreateBlogCommentReq) returns (CreateBlogCommentRes)
     @handler DeleteComment // 删除评论
-    get /blog/comment/delete (DeleateBlogCommentReq) returns (DeleateBlogCommentRes)
+    get /comment/delete (DeleateBlogCommentReq) returns (DeleateBlogCommentRes)
     @handler ThumbsupComment // 评论点赞
-    get /blog/comment/thumbsup (ThumbsUpBlogCommentReq) returns (ThumbsUpBlogCommentRes)
+    get /comment/thumbsup (ThumbsUpBlogCommentReq) returns (ThumbsUpBlogCommentRes)
+    @handler InfoComment // 评论信息
+    get /comment/info (InfoCommentReq) returns (InfoCommentRes)
 }

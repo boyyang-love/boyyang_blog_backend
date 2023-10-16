@@ -6,6 +6,7 @@ import (
 	"blog_server/internal/types"
 	"blog_server/models"
 	"context"
+	"encoding/json"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -24,42 +25,47 @@ func NewInfoArticleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *InfoA
 }
 
 func (l *InfoArticleLogic) InfoArticle(req *types.InfoArticleReq) (resp *types.InfoArticleRes, err error, msg respx.SucMsg) {
-	DB := l.svcCtx.DB
+	userId, err := l.ctx.Value("Uid").(json.Number).Int64()
+	if err != nil {
+		return nil, err, msg
+	}
+	DB := l.svcCtx.DB.
+		Model(&models.Article{}).
+		Preload("UserInfo").
+		Order(req.Sort)
 
-	isPage := false
 	var count int64
 	var articleInfo []types.ArticleInfo
+	var cardInfo types.CardInfo
+
+	if req.UserId != 0 {
+		DB = DB.Where("user_id = ?", req.UserId)
+		_, cardInfo = l.getCardInfo(req.UserId)
+	}
+
+	if req.Type == 1 {
+		DB = DB.Where("user_id = ?", userId)
+	}
+
+	if req.Type == 2 {
+		DB = DB.Where("user_id != ?", userId)
+	}
+
 	if req.Page != 0 && req.Limit != 0 {
 		DB = DB.
-			Model(&models.Article{}).
-			Order("created desc").
 			Preload("UserInfo").
 			Offset((req.Page - 1) * req.Limit).
 			Limit(req.Limit).
-			Find(&articleInfo)
-		isPage = true
+			Find(&articleInfo).
+			Count(&count).
+			Offset(-1)
 	}
 
 	if req.Uid != 0 {
 		DB = DB.
-			Model(&models.Article{}).
-			Order("created desc").
-			Preload("UserInfo").
 			Where("uid = ?", req.Uid).
 			First(&articleInfo)
 	}
-
-	if isPage {
-		DB = DB.Count(&count).Offset(-1)
-	}
-
-	var userId uint32
-	if req.UserId != 0 {
-		userId = req.UserId
-	} else {
-		userId = uint32(articleInfo[0].UserId)
-	}
-	_, cardInfo := l.getCardInfo(userId)
 
 	if err = DB.Error; err != nil {
 		return nil, err, msg
@@ -94,7 +100,7 @@ func (l *InfoArticleLogic) getCardInfo(userId uint32) (err error, cardInfo types
 	var thumbs int64
 	if err = l.svcCtx.DB.
 		Model(&models.Article{}).
-		Select("sum(thumbs_up) as thumbs").
+		Select("IFNULL(sum(thumbs_up), 0) as thumbs").
 		Where("user_id = ?", userId).
 		Scan(&thumbs).
 		Error; err != nil {
@@ -116,7 +122,7 @@ func (l *InfoArticleLogic) getCardInfo(userId uint32) (err error, cardInfo types
 	var comments int64
 	if err = l.svcCtx.DB.
 		Model(&models.Comment{}).
-		Where("blog_id in ?", articleIds).
+		Where("content_id in ?", articleIds).
 		Count(&comments).
 		Error; err != nil {
 		return err, cardInfo

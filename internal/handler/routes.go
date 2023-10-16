@@ -59,18 +59,23 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/blog/comment/create",
+				Path:    "/comment/create",
 				Handler: comment.CreateCommentHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/blog/comment/delete",
+				Path:    "/comment/delete",
 				Handler: comment.DeleteCommentHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/blog/comment/thumbsup",
+				Path:    "/comment/thumbsup",
 				Handler: comment.ThumbsupCommentHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/comment/info",
+				Handler: comment.InfoCommentHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

@@ -21,6 +21,7 @@ type Blog struct {
 	UserId       uint32     `json:"user_id"`                     // 博客作者
 	Tag          string     `json:"tag,omitempty"`               // 博客标签
 	ThumbsUp     *int       `json:"thumbs_up" gorm:"default:0"`  // 点赞数
+	Comment      *int       `json:"comment" gorm:"default:0"`    // 评论数
 	ThumbsUpList string     `json:"thumbs_up_list"`              // 点赞id集合
 	Collection   *int       `json:"collection" gorm:"default:0"` // 收藏数
 }

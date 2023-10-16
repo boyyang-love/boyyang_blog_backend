@@ -8,7 +8,7 @@ type (
         SubTitle string `form:"sub_title"`
         Content string `form:"content"`
         Cover string `form:"cover"`
-        Images string `form:"images"`
+        Images string `form:"images,optional"`
         Tag string `form:"tag"`
     }
 
@@ -29,13 +29,15 @@ type (
         Page int `form:"page,optional"`
         Limit int `form:"limit,optional"`
         Keyword string `form:"keyword,optional"`
-        UserId  uint32 `form:"user_id,optional"`
+        UserId uint32 `form:"user_id,optional"`
+        Type int `form:"type,optional"`                // 1 我的 2 推荐
+        Sort string `form:"sort,default=created desc"` // 排序
     }
 
     InfoArticleRes {
         Count int64 `json:"count"`
         ArticleInfo []ArticleInfo `json:"article_info"`
-        CardInfo CardInfo `json:"card_info"`
+        CardInfo CardInfo `json:"card_info,omitempty"`
     }
 
     ArticleInfo {
@@ -50,6 +52,8 @@ type (
         UserId uint `json:"user_id"`
         UserInfo User `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:Uid"`
         Tag string `json:"tags"`
+        Comment int `json:"comment"`
+        ThumbsUp string `json:"thumbs_up"`
     }
 
     CardInfo {

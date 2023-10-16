@@ -14,8 +14,9 @@ type Comment struct {
 	DeletedAt *time.Time `json:"deleted_at"`
 	Created   int        `json:"created" gorm:"autoCreateTime"`
 	Updated   int        `json:"updated" gorm:"autoUpdateTime"`
+	Type      string     `json:"type"`                       // image blog article
 	Content   string     `json:"des" gorm:"size:2000"`       // 评论内容
-	BlogId    uint32     `json:"blog_id"`                    // 被评论 博客 id
+	ContentId uint32     `json:"content_id"`                 // 被评论 id
 	UserId    uint32     `json:"user_id"`                    // 评论者 id
 	ThumbsUp  *int       `json:"thumbs_up" gorm:"default:0"` // 该条评论 点赞数
 }
