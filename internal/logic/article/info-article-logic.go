@@ -57,8 +57,8 @@ func (l *InfoArticleLogic) InfoArticle(req *types.InfoArticleReq) (resp *types.I
 			Offset((req.Page - 1) * req.Limit).
 			Limit(req.Limit).
 			Find(&articleInfo).
-			Count(&count).
-			Offset(-1)
+			Offset(-1).
+			Count(&count)
 	}
 
 	if req.Uid != 0 {
