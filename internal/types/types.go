@@ -414,7 +414,7 @@ type InfoExhibition struct {
 type StarReq struct {
 	Uid      uint32 `form:"uid"`
 	StarType int    `form:"star_type"` // 0 取消star 1 star
-	Type     int    `form:"type"`      // 1 图片 2 博客
+	Type     int    `form:"type"`      // 1 图片 2 博客 3 文章
 }
 
 type CreateTagReq struct {
@@ -593,6 +593,7 @@ type CardInfo struct {
 	Article   int64   `json:"article"`    // 文章
 	Comment   int64   `json:"comment"`    // 评论
 	FollowIds []int64 `json:"follow_ids"` // 关注列表id集
+	StarIds   []int64 `json:"star_ids"`   // 文章点赞列表id集
 }
 
 type NoticeCreateReq struct {

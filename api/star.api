@@ -4,7 +4,7 @@ type (
     StarReq {
         Uid uint32 `form:"uid"`
         StarType int `form:"star_type"`  // 0 取消star 1 star
-        Type int `form:"type"`           // 1 图片 2 博客
+        Type int `form:"type"`           // 1 图片 2 博客 3 文章
     }
 )
 

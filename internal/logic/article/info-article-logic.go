@@ -141,6 +141,16 @@ func (l *InfoArticleLogic) getCardInfo(userId uint32) (err error, cardInfo types
 		return err, cardInfo
 	}
 
+	var starIds []int64
+	if err = l.svcCtx.DB.
+		Model(&models.Star{}).
+		Select("star_id").
+		Where("user_id = ? and star_type = ? and type = ?", currentUserId, true, 3).
+		Find(&starIds).
+		Error; err != nil {
+		return err, cardInfo
+	}
+
 	return nil, types.CardInfo{
 		Follow:    follow,
 		Fans:      fans,
@@ -148,5 +158,6 @@ func (l *InfoArticleLogic) getCardInfo(userId uint32) (err error, cardInfo types
 		Article:   articles,
 		Comment:   comments,
 		FollowIds: followIds,
+		StarIds:   starIds,
 	}
 }

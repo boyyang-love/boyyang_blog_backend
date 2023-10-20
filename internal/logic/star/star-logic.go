@@ -38,7 +38,7 @@ func (l *StarLogic) Star(req *types.StarReq) (err error, msg respx.SucMsg) {
 			Assign("star_type", req.StarType).
 			FirstOrCreate(&models.Star{
 				UserId:   uint32(userId),
-				StarId:   uint32(req.Uid),
+				StarId:   req.Uid,
 				StarType: true,
 				Type:     req.Type,
 			}).
@@ -77,9 +77,20 @@ func (l *StarLogic) updateStar(starId uint, starType int, val int) (err error) {
 			Error; err != nil {
 			return err
 		}
-	} else {
+	}
+	if starType == 2 {
 		if err = l.svcCtx.DB.
 			Model(&models.Blog{}).
+			Where("uid = ?", starId).
+			Update("thumbs_up", gorm.Expr("thumbs_up + ?", val)).
+			Error; err != nil {
+			return err
+		}
+	}
+
+	if starType == 3 {
+		if err = l.svcCtx.DB.
+			Model(&models.Article{}).
 			Where("uid = ?", starId).
 			Update("thumbs_up", gorm.Expr("thumbs_up + ?", val)).
 			Error; err != nil {

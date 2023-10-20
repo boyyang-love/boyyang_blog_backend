@@ -63,6 +63,7 @@ type (
         Article int64 `json:"article"`        // 文章
         Comment int64 `json:"comment"`        // 评论
         FollowIds []int64 `json:"follow_ids"` // 关注列表id集
+        starIds []int64 `json:"star_ids"`     // 文章点赞列表id集
     }
 )
 
