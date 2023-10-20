@@ -46,7 +46,6 @@ func (l *ExhibitionAdminInfoLogic) getExhibitions(req *types.AdminExhibitionsReq
 	}
 
 	if err = DB.
-		Debug().
 		Preload("UserInfo", func(db *gorm.DB) *gorm.DB {
 			return db.Select("uid", "username", "gender", "avatar_url", "tel")
 		}).

@@ -99,7 +99,7 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params, likesIds []int) (
 	}
 
 	if params.Public {
-		DB = DB.Where("status = ?", params.Type)
+		DB = DB.Where("status = ?", 2)
 	} else {
 		DB = DB.Where("status = ? and user_id = ?", params.Type, params.UserId)
 	}
@@ -127,7 +127,6 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params, likesIds []int) (
 		Order(params.Sort)
 
 	if err = DB.
-		Debug().
 		Model(&models.Exhibition{}).
 		Find(&exhibitions).
 		Offset(-1).

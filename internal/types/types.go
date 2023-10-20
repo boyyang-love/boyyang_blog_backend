@@ -382,6 +382,35 @@ type UpdateUserPasswordReq struct {
 	Password string `form:"password"`
 }
 
+type InfoUserReq struct {
+	Uid   uint32 `form:"uid"`
+	Page  int    `form:"page"`
+	Limit int    `form:"limit"`
+	Type  int    `form:"type"` // 1上传 2收藏
+}
+
+type InfoUserRes struct {
+	Upload     int64            `json:"upload"`
+	Star       int64            `json:"star"`
+	Like       int64            `json:"like"`
+	Download   int64            `json:"download"`
+	Follow     int64            `json:"follow"`
+	Count      int64            `json:"count"`
+	Exhibition []InfoExhibition `json:"exhibition"`
+	UserInfo   User             `json:"user_info"`
+	FollowIds  []int64          `json:"follow_ids"` // 被关注者id集合
+}
+
+type InfoExhibition struct {
+	Uid      uint   `json:"uid"`
+	Created  int    `json:"created"`
+	Title    string `json:"title"`
+	SubTitle string `json:"sub_title"`
+	Cover    string `json:"cover"`
+	ThumbsUp int    `json:"thumbs_up"`
+	Download int    `json:"download"`
+}
+
 type StarReq struct {
 	Uid      uint32 `form:"uid"`
 	StarType int    `form:"star_type"` // 0 取消star 1 star
@@ -558,11 +587,12 @@ type ArticleInfo struct {
 }
 
 type CardInfo struct {
-	Follow  int64 `json:"follow"`  // 关注
-	Fans    int64 `json:"fans"`    // 粉丝
-	Thumb   int64 `json:"thumb"`   // 获赞
-	Article int64 `json:"article"` // 文章
-	Comment int64 `json:"comment"` // 评论
+	Follow    int64   `json:"follow"`     // 关注
+	Fans      int64   `json:"fans"`       // 粉丝
+	Thumb     int64   `json:"thumb"`      // 获赞
+	Article   int64   `json:"article"`    // 文章
+	Comment   int64   `json:"comment"`    // 评论
+	FollowIds []int64 `json:"follow_ids"` // 关注列表id集
 }
 
 type NoticeCreateReq struct {

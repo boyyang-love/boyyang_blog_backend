@@ -36,7 +36,6 @@ func (l *LikesInfoLogic) LikesInfo(req *types.LikesInfoReq) (resp *types.LikesIn
 
 	if err = l.svcCtx.DB.
 		Model(&models.Exhibition{}).
-		Debug().
 		Where("id in (?)", ids).
 		Find(&likesInfos).
 		Error; err != nil {

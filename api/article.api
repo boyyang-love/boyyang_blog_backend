@@ -57,11 +57,12 @@ type (
     }
 
     CardInfo {
-        Follow int64 `json:"follow"`   // 关注
-        Fans int64 `json:"fans"`       // 粉丝
-        Thumb int64 `json:"thumb"`     // 获赞
-        Article int64 `json:"article"` // 文章
-        Comment int64 `json:"comment"` // 评论
+        Follow int64 `json:"follow"`          // 关注
+        Fans int64 `json:"fans"`              // 粉丝
+        Thumb int64 `json:"thumb"`            // 获赞
+        Article int64 `json:"article"`        // 文章
+        Comment int64 `json:"comment"`        // 评论
+        FollowIds []int64 `json:"follow_ids"` // 关注列表id集
     }
 )
 

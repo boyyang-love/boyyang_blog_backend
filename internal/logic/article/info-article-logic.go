@@ -41,6 +41,8 @@ func (l *InfoArticleLogic) InfoArticle(req *types.InfoArticleReq) (resp *types.I
 	if req.UserId != 0 {
 		DB = DB.Where("user_id = ?", req.UserId)
 		_, cardInfo = l.getCardInfo(req.UserId)
+	} else {
+		_, cardInfo = l.getCardInfo(uint32(userId))
 	}
 
 	if req.Type == 1 {
@@ -88,6 +90,17 @@ func (l *InfoArticleLogic) getCardInfo(userId uint32) (err error, cardInfo types
 		return err, cardInfo
 	}
 
+	currentUserId, _ := l.ctx.Value("Uid").(json.Number).Int64()
+	var followIds []int64
+	if err = l.svcCtx.DB.
+		Model(&models.Follow{}).
+		Select("follow_user_id").
+		Where("user_id = ? and follow_type = ?", currentUserId, true).
+		Find(&followIds).
+		Error; err != nil {
+		return err, cardInfo
+	}
+
 	var fans int64
 	if err = l.svcCtx.DB.
 		Model(&models.Follow{}).
@@ -129,10 +142,11 @@ func (l *InfoArticleLogic) getCardInfo(userId uint32) (err error, cardInfo types
 	}
 
 	return nil, types.CardInfo{
-		Follow:  follow,
-		Fans:    fans,
-		Thumb:   thumbs,
-		Article: articles,
-		Comment: comments,
+		Follow:    follow,
+		Fans:      fans,
+		Thumb:     thumbs,
+		Article:   articles,
+		Comment:   comments,
+		FollowIds: followIds,
 	}
 }

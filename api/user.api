@@ -45,6 +45,37 @@ type (
     }
 )
 
+type (
+    InfoUserReq {
+        Uid uint32 `form:"uid"`
+        Page int `form:"page"`
+        Limit int `form:"limit"`
+        Type int `form:"type"` // 1上传 2收藏
+    }
+
+    InfoUserRes {
+        Upload int64 `json:"upload"`
+        Star int64 `json:"star"`
+        Like int64 `json:"like"`
+        Download int64 `json:"download"`
+        Follow int64 `json:"follow"`
+        Count int64 `json:"count"`
+        Exhibition []InfoExhibition `json:"exhibition"`
+        UserInfo User `json:"user_info"`
+        FollowIds []int64 `json:"follow_ids"` // 被关注者id集合
+    }
+
+    InfoExhibition {
+        Uid uint `json:"uid"`
+        Created int `json:"created"`
+        Title string `json:"title"`
+        SubTitle string `json:"sub_title"`
+        Cover string `json:"cover"`
+        ThumbsUp int `json:"thumbs_up"`
+        Download int `json:"download"`
+    }
+)
+
 // 用户
 @server(
     jwt: Auth
@@ -57,4 +88,6 @@ service blog-api {
     post /users/update (UpdateUserInfoReq)
     @handler UpdateUserPassword
     post /users/update/password (UpdateUserPasswordReq)
+    @handler DetailUser
+    get /users/detail (InfoUserReq) returns (InfoUserRes)
 }
