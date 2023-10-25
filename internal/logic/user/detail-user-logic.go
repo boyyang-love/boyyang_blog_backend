@@ -159,7 +159,7 @@ func (l *DetailUserLogic) userInfo(req *types.InfoUserReq) (err error, info *typ
 	if err = l.svcCtx.DB.
 		Model(&models.User{}).
 		Where("uid = ?", req.Uid).
-		Select("uid", "username", "avatar_url", "background_image").
+		Select("uid", "username", "avatar_url", "background_image", "gender").
 		First(&userInfo).
 		Error; err != nil {
 		return err, nil
