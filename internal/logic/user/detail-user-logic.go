@@ -6,6 +6,7 @@ import (
 	"blog_server/internal/types"
 	"blog_server/models"
 	"context"
+	"encoding/json"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -63,9 +64,10 @@ func (l *DetailUserLogic) DetailUser(req *types.InfoUserReq) (resp *types.InfoUs
 func (l *DetailUserLogic) detailInfo(req *types.InfoUserReq) (err error, detail *Detail) {
 	// 图片上传数
 	var exhibition int64
+	status := []int{2, 4}
 	if err = l.svcCtx.DB.
 		Model(&models.Exhibition{}).
-		Where("user_id = ? and status = ?", req.Uid, 2).
+		Where("user_id = ? and status in ?", req.Uid, status).
 		Count(&exhibition).
 		Error; err != nil {
 		return err, nil
@@ -78,7 +80,7 @@ func (l *DetailUserLogic) detailInfo(req *types.InfoUserReq) (err error, detail 
 	if err = l.svcCtx.DB.
 		Model(&models.Exhibition{}).
 		Select("sum(thumbs_up) as thumbs_up, sum(download) as download").
-		Where("user_id = ? and status = ?", req.Uid, 2).
+		Where("user_id = ? and status in ?", req.Uid, status).
 		Scan(&thumbsUpAndDownload).
 		Error; err != nil {
 		return err, nil
@@ -116,19 +118,27 @@ func (l *DetailUserLogic) detailInfo(req *types.InfoUserReq) (err error, detail 
 }
 
 func (l *DetailUserLogic) exhibition(req *types.InfoUserReq) (err error, count int64, ex []types.InfoExhibition) {
+	userId, _ := l.ctx.Value("Uid").(json.Number).Int64()
 	DB := l.svcCtx.DB.
 		Order("created desc").
 		Model(&models.Exhibition{}).
 		Offset((req.Page - 1) * req.Limit).
 		Limit(req.Limit)
+
 	var exs []types.InfoExhibition
 
+	// 用户上传
 	if req.Type == 1 {
+		status := []int{4}
+		if uint32(userId) == req.Uid {
+			status = append(status, 2)
+		}
 		DB = DB.
-			Where("user_id = ? and status = ?", req.Uid, 2).
+			Where("user_id = ? and status in ?", req.Uid, status).
 			Scan(&exs)
 	}
 
+	// 用户收藏
 	if req.Type == 2 {
 		var ids []int64
 		if err = l.svcCtx.DB.
@@ -140,8 +150,15 @@ func (l *DetailUserLogic) exhibition(req *types.InfoUserReq) (err error, count i
 			return err, count, ex
 		}
 		DB = DB.
-			Where("uid in ? and status = ?", ids, 2).
+			Where("uid in ? and status = ?", ids, 4).
 			Find(&exs)
+	}
+
+	// 用户公开
+	if req.Type == 3 {
+		DB = DB.
+			Where("user_id = ? and status = ?", req.Uid, 4).
+			Scan(&exs)
 	}
 
 	if err = DB.

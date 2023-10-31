@@ -82,6 +82,7 @@ func (l *ExhibitionInfoLogic) ExhibitionInfo(req *types.ExhibitionInfoReq) (resp
 			InReview:       int(status[0]),
 			Approved:       int(status[1]),
 			ReviewRjection: int(status[2]),
+			Open:           int(status[3]),
 			LikesIds:       likes,
 			StarIds:        star,
 		}, nil, msg
@@ -99,7 +100,7 @@ func (l *ExhibitionInfoLogic) getExhibitionInfo(params Params, likesIds []int) (
 	}
 
 	if params.Public {
-		DB = DB.Where("status = ?", 2)
+		DB = DB.Where("status = ?", 4)
 	} else {
 		DB = DB.Where("status = ? and user_id = ?", params.Type, params.UserId)
 	}
@@ -144,6 +145,7 @@ func (l *ExhibitionInfoLogic) getStatus(userid int64) (status []int64, err error
 	var count1 int64
 	var count2 int64
 	var count3 int64
+	var count4 int64
 	err = l.svcCtx.DB.
 		Model(&models.Exhibition{}).
 		Where("status = ? and user_id = ?", 1, userid).
@@ -162,8 +164,14 @@ func (l *ExhibitionInfoLogic) getStatus(userid int64) (status []int64, err error
 		Count(&count3).
 		Error
 
+	err = l.svcCtx.DB.
+		Model(&models.Exhibition{}).
+		Where("status = ? and user_id = ?", 4, userid).
+		Count(&count4).
+		Error
+
 	if err == nil {
-		return append(counts, count1, count2, count3), nil
+		return append(counts, count1, count2, count3, count4), nil
 	} else {
 		return nil, err
 	}

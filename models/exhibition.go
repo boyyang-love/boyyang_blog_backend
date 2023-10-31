@@ -23,7 +23,7 @@ type Exhibition struct {
 	Download  *int       `json:"download" gorm:"default:0"`  // 下载数
 	Count     *int       `json:"count" gorm:"default:0"`     // 评论数
 	UserId    uint32     `json:"user_id"`                    // 该图片上传者 id
-	Status    int        `json:"status" gorm:"default:1"`    // 图片状态 1待审核 2审核通过 3未通过审核
+	Status    int        `json:"status" gorm:"default:1"`    // 图片状态 1待审核 2审核通过 3未通过审核 4 公开˚
 	RejectRes string     `json:"reject_res"`                 // 状态为3时 驳回原因
 	Size      int        `json:"size"`                       // 图片大小
 	Px        string     `json:"px"`                         // 图片宽高

@@ -71,6 +71,7 @@ type (
         InReview int `json:"in_review"`             // 审核中
         Approved int `json:"approved"`              // 审核通过
         ReviewRjection int `json:"review_rjection"` //审核驳回
+        Open int `json:"open"`                      // 公开的图片
         LikesIds []int `json:"likes_ids"`           // 收藏ID集合
         StarIds []int `json:"star_ids"`             // star ID集合
     }
