@@ -44,7 +44,7 @@ func (l *TrayExhibitionLogic) exhibitions(req types.TrayReq) (resp []types.TrayE
 
 	if err = DB.
 		Model(&models.Exhibition{}).
-		Where("status = ?", 2).
+		Where("status = ?", 4).
 		Order("created desc").
 		Find(&resp).
 		Count(&count).Error; err != nil {
