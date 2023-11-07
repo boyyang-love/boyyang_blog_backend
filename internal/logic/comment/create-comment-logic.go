@@ -45,7 +45,9 @@ func (l *CreateCommentLogic) CreateComment(req *types.CreateBlogCommentReq) (res
 		return nil, err, msg
 	}
 
-	return
+	return &types.CreateBlogCommentRes{Msg: "评论成功"}, err, respx.SucMsg{
+		Msg: "评论成功",
+	}
 }
 
 func (l *CreateCommentLogic) updateComment(req types.CreateBlogCommentReq) (err error) {
