@@ -76,7 +76,7 @@ func (l *UserInfoLogic) userOtherInfo(userId uint) (err error, info *types.UserO
 	var ThumbsUp []int
 
 	if err = DB.Model(&models.Exhibition{}).
-		Where("user_id = ? and status = ?", userId, 2).
+		Where("user_id = ? and status = ?", userId, 4).
 		Count(&Publish).
 		Error; err != nil {
 		return err, nil
