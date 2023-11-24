@@ -21,6 +21,7 @@ type (
         Password string `form:"password"`
         Tel int `form:"tel"`
         AvatarUrl string `form:"avatar_url"`
+        BackgroundImage string `form:"background_image,optional"`
     }
 
     RegisterRes {

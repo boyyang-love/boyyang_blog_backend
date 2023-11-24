@@ -207,10 +207,11 @@ type LoginRes struct {
 }
 
 type RegisterReq struct {
-	Username  string `form:"username"`
-	Password  string `form:"password"`
-	Tel       int    `form:"tel"`
-	AvatarUrl string `form:"avatar_url"`
+	Username        string `form:"username"`
+	Password        string `form:"password"`
+	Tel             int    `form:"tel"`
+	AvatarUrl       string `form:"avatar_url"`
+	BackgroundImage string `form:"background_image,optional"`
 }
 
 type RegisterRes struct {

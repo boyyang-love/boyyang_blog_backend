@@ -55,10 +55,11 @@ func (l *RegisterLogic) register(req *types.RegisterReq) (resp *types.RegisterRe
 				Model(&models.User{}).
 				Create(
 					&models.User{
-						Username:  req.Username,
-						Password:  helper.MakeHash(req.Password),
-						Tel:       req.Tel,
-						AvatarUrl: req.AvatarUrl,
+						Username:        req.Username,
+						Password:        helper.MakeHash(req.Password),
+						Tel:             req.Tel,
+						AvatarUrl:       req.AvatarUrl,
+						BackgroundImage: req.BackgroundImage,
 					},
 				).Scan(&user)
 
