@@ -40,3 +40,4 @@ service blog-api {
     @handler Register
     post /register (RegisterReq) returns (RegisterRes)
 }
+
