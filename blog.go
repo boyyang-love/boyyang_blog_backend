@@ -24,6 +24,7 @@ func main() {
 		rest.WithCustomCors(
 			nil,
 			notAllowedFn,
+			"http://boyyang.cn/#/login",
 			"http://localhost:3000",
 			"https://prod-2g5hif5wbec83baa-1301921121.tcloudbaseapp.com",
 		),
