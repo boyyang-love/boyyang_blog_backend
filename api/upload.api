@@ -2,183 +2,181 @@ syntax = "v1"
 import "public/user.api"
 // 文件上传
 type (
-    UploadReq {
-        Hash string `json:"hash,optional"`
-        FileName string `json:"file_name,optional"`
-        Ext string `json:"ext,optional"`
-        Size int64 `json:"size,optional"`
-        FilePath string `json:"file_path,optional"`
-    }
+	UploadReq {
+		Hash     string `json:"hash,optional"`
+		FileName string `json:"file_name,optional"`
+		Ext      string `json:"ext,optional"`
+		Size     int64  `json:"size,optional"`
+		FilePath string `json:"file_path,optional"`
+	}
 
-    UploadRes {
-        FileName string `json:"file_name"`
-        FilePath string `json:"file_path"`
-    }
+	UploadRes {
+		FileName string `json:"file_name"`
+		FilePath string `json:"file_path"`
+	}
 
-    CosUploadReq {
-        FileName string `form:"file_name"`
-        Path string `form:"path,optional"`
-    }
+	CosUploadReq {
+		FileName string `form:"file_name"`
+		Path     string `form:"path,optional"`
+	}
 
-    CosUploadRes {
-        Url string `json:"url"`
-        Token string `json:"token"`
-        Authorization string `json:"authorization"`
-        FileId string `json:"file_id"`
-        CosFileId string `json:"cos_file_id"`
-        Key string `json:"key"`
-    }
+	CosUploadRes {
+		Url           string `json:"url"`
+		Token         string `json:"token"`
+		Authorization string `json:"authorization"`
+		FileId        string `json:"file_id"`
+		CosFileId     string `json:"cos_file_id"`
+		Key           string `json:"key"`
+	}
 )
-
 
 // 创建图片墙
 type (
-    CreateExhibitionReq {
-        Title string `form:"title"`
-        SubTitle string `form:"sub_title,optional"`
-        Des string `form:"des"`
-        Cover string `form:"cover"`
-        Tags string `form:"tags,optional"`
-        Type string `form:"type,optional"`
-        Size int `form:"size,optional"`
-        Px string `form:"px"`
-        Rgb string `form:"rgb,optional"`
-        Palette string `form:"palette,optional"`
-    }
+	CreateExhibitionReq {
+		Title    string `form:"title"`
+		SubTitle string `form:"sub_title,optional"`
+		Des      string `form:"des"`
+		Cover    string `form:"cover"`
+		Tags     string `form:"tags,optional"`
+		Type     string `form:"type,optional"`
+		Size     int    `form:"size,optional"`
+		Px       string `form:"px"`
+		Rgb      string `form:"rgb,optional"`
+		Palette  string `form:"palette,optional"`
+	}
 
-    CreateExhibitionRes {
-        Uid uint `json:"uid"`
-    }
+	CreateExhibitionRes {
+		Uid uint `json:"uid"`
+	}
 )
 
 // 获取图片墙信息
 type (
-    ExhibitionInfoReq {
-        Uids string `form:"uids,optional"`
-        Page int `form:"page,optional"`
-        Limit int `form:"limit,optional"`
-        Type int `form:"type,optional"`
-        Public bool `form:"public,optional"`
-        IsLike bool `form:"is_like,optional"`
-        Sort string `form:"sort,optional"` // Created  ThumbsUp
-        Keywords string `form:"keywords,optional"`
-        Tags string `form:"tags,optional"`
-    }
+	ExhibitionInfoReq {
+		Uids     string `form:"uids,optional"`
+		Page     int    `form:"page,optional"`
+		Limit    int    `form:"limit,optional"`
+		Type     int    `form:"type,optional"`
+		Public   bool   `form:"public,optional"`
+		IsLike   bool   `form:"is_like,optional"`
+		Sort     string `form:"sort,optional"` // Created  ThumbsUp
+		Keywords string `form:"keywords,optional"`
+		Tags     string `form:"tags,optional"`
+	}
 
-    ExhibitionInfoRes {
-        Count int `json:"count"`
-        Exhibitions []ExhibitionInfo `json:"exhibitions"`
-        InReview int `json:"in_review"`             // 审核中
-        Approved int `json:"approved"`              // 审核通过
-        ReviewRjection int `json:"review_rjection"` //审核驳回
-        Open int `json:"open"`                      // 公开的图片
-        LikesIds []int `json:"likes_ids"`           // 收藏ID集合
-        StarIds []int `json:"star_ids"`             // star ID集合
-    }
+	ExhibitionInfoRes {
+		Count          int              `json:"count"`
+		Exhibitions    []ExhibitionInfo `json:"exhibitions"`
+		InReview       int              `json:"in_review"`       // 审核中
+		Approved       int              `json:"approved"`        // 审核通过
+		ReviewRjection int              `json:"review_rjection"` //审核驳回
+		Open           int              `json:"open"`            // 公开的图片
+		LikesIds       []int            `json:"likes_ids"`       // 收藏ID集合
+		StarIds        []int            `json:"star_ids"`        // star ID集合
+	}
 
-    ExhibitionInfo {
-        Uid uint `json:"uid"`
-        Created int `json:"created"`
-        Title string `json:"title"`
-        SubTitle string `json:"sub_title"`
-        Des string `json:"des"`
-        Cover string `json:"cover"`
-        Tags string `json:"tags"`
-        UserId uint `json:"user_id"`
-        ThumbsUp int `json:"thumbs_up"`
-        Download int `json:"download"`
-        Status int `json:"status"`           // 1待审核 2审核通过 3未通过审核
-        RejectRes string `json:"reject_res"` // 驳回原因
-        UserInfo User `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
-        Type string `json:"type"`
-        Size int `json:"size"`
-        Px string `json:"px"`
-        Rgb string `json:"rgb"`
-        Palette string `json:"palette"`
-    }
+	ExhibitionInfo {
+		Uid       uint   `json:"uid"`
+		Created   int    `json:"created"`
+		Title     string `json:"title"`
+		SubTitle  string `json:"sub_title"`
+		Des       string `json:"des"`
+		Cover     string `json:"cover"`
+		Tags      string `json:"tags"`
+		UserId    uint   `json:"user_id"`
+		ThumbsUp  int    `json:"thumbs_up"`
+		Download  int    `json:"download"`
+		Status    int    `json:"status"`     // 1待审核 2审核通过 3未通过审核
+		RejectRes string `json:"reject_res"` // 驳回原因
+		UserInfo  User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:uid"`
+		Type      string `json:"type"`
+		Size      int    `json:"size"`
+		Px        string `json:"px"`
+		Rgb       string `json:"rgb"`
+		Palette   string `json:"palette"`
+	}
 )
 
 // 更新图片墙信息
 type (
-    UpdateExhibitionReq {
-        Uid uint `form:"uid"`
-        Title string `form:"title,optional"`
-        SubTitle string `form:"sub_title,optional"`
-        Des string `form:"des,optional"`
-    }
+	UpdateExhibitionReq {
+		Uid      uint   `form:"uid"`
+		Title    string `form:"title,optional"`
+		SubTitle string `form:"sub_title,optional"`
+		Des      string `form:"des,optional"`
+	}
 
-    UpdateExhibitionRes {
-        Uid uint `json:"uid"`
-    }
+	UpdateExhibitionRes {
+		Uid uint `json:"uid"`
+	}
 )
 
 // 审批图片
 type (
-    ApprovalReq {
-        Uid uint `form:"uid"`
-        Status int `form:"status"`
-        Reason string `form:"reason,optional"`
-    }
+	ApprovalReq {
+		Uid    uint   `form:"uid"`
+		Status int    `form:"status"`
+		Reason string `form:"reason,optional"`
+	}
 
-    ApprovalRes {
-        Uid uint `json:"uid"`
-    }
+	ApprovalRes {
+		Uid uint `json:"uid"`
+	}
 )
 
 type (
-    DelExhibitionReq {
-        Uid uint `form:"uid"`
-    }
+	DelExhibitionReq {
+		Uid uint `form:"uid"`
+	}
 )
 
 type (
-    DelUploadReq {
-        key string `form:"key"`
-    }
+	DelUploadReq {
+		Key string `form:"key"`
+	}
 )
 
 type (
-    UpdateDownloadReq {
-        uid uint `form:"uid"`
-    }
+	UpdateDownloadReq {
+		Uid uint `form:"uid"`
+	}
 )
 
 type (
-    SimilarReq {
-        Tag string `form:"tag"`
-        Color string `form:"color"`
-    }
+	SimilarReq {
+		Tag   string `form:"tag"`
+		Color string `form:"color"`
+	}
 
-    SimilarRes {
-        Infos []ExhibitionInfo `json:"infos"`
-    }
+	SimilarRes {
+		Infos []ExhibitionInfo `json:"infos"`
+	}
 )
-
 
 // 文件上传 图片墙上传 图片墙信息
 @server(
-    jwt: Auth
-    group: exhibition
+	jwt: Auth
+	group: exhibition
 )
 service blog-api {
-    @handler Upload
-    post /upload (UploadReq) returns (UploadRes)
-    @handler CosUpload
-    get /cos/upload (CosUploadReq) returns (CosUploadRes)
-    @handler CreateExhibition
-    post /exhibition/create (CreateExhibitionReq) returns (CreateExhibitionRes)
-    @handler ExhibitionInfo
-    get /exhibition/info (ExhibitionInfoReq) returns (ExhibitionInfoRes)
-    @handler UpdateExhibition
-    post /exhibition/update (UpdateExhibitionReq) returns (UpdateExhibitionRes)
-    @handler ApprovalExhibition
-    post /exhibition/approval (ApprovalReq) returns (ApprovalRes)
-    @handler DelExhibition
-    post /exhibition/del (DelExhibitionReq)
-    @handler DelUpload
-    get /upload/del (DelUploadReq)
-    @handler UpdateDownload
-    get /update/download (UpdateDownloadReq)
-    @handler SimilarExhibition
-    get /exhibition/similar (SimilarReq) returns (SimilarRes)
+	@handler Upload
+	post /upload (UploadReq) returns (UploadRes)
+	@handler CosUpload
+	get /cos/upload (CosUploadReq) returns (CosUploadRes)
+	@handler CreateExhibition
+	post /exhibition/create (CreateExhibitionReq) returns (CreateExhibitionRes)
+	@handler ExhibitionInfo
+	get /exhibition/info (ExhibitionInfoReq) returns (ExhibitionInfoRes)
+	@handler UpdateExhibition
+	post /exhibition/update (UpdateExhibitionReq) returns (UpdateExhibitionRes)
+	@handler ApprovalExhibition
+	post /exhibition/approval (ApprovalReq) returns (ApprovalRes)
+	@handler DelExhibition
+	post /exhibition/del (DelExhibitionReq)
+	@handler DelUpload
+	get /upload/del (DelUploadReq)
+	@handler UpdateDownload
+	get /update/download (UpdateDownloadReq)
+	@handler SimilarExhibition
+	get /exhibition/similar (SimilarReq) returns (SimilarRes)
 }

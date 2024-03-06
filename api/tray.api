@@ -1,27 +1,27 @@
 syntax = "v1"
 
 type (
-    TrayReq {
-        Page int `form:"page,optional"`
-        Limit int `form:"limit,optional"`
-    }
+	TrayReq {
+		Page  int `form:"page,optional"`
+		Limit int `form:"limit,optional"`
+	}
 
-    TrayRes {
-        count int64 `json:"count"`
-        TrayExhibitions []TrayExhibitionInfo `json:"exhibitions"`
-    }
+	TrayRes {
+		Count           int64                `json:"count"`
+		TrayExhibitions []TrayExhibitionInfo `json:"exhibitions"`
+	}
 
-    TrayExhibitionInfo {
-        Uid uint `json:"uid"`
-        Cover string `json:"cover"`
-    }
+	TrayExhibitionInfo {
+		Uid   uint   `json:"uid"`
+		Cover string `json:"cover"`
+	}
 )
 
 @server(
-    group: tray
+	group: tray
 )
 
 service blog-api {
-    @handler TrayExhibition
-    get /tray (TrayReq) returns (TrayRes)
+	@handler TrayExhibition
+	get /tray (TrayReq) returns (TrayRes)
 }

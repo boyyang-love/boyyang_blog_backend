@@ -2,92 +2,92 @@ syntax = "v1"
 import "public/user.api"
 // 用户信息
 type (
-    UserInfoReq {
-        Uid uint32 `form:"uid,optional"`
-    }
+	UserInfoReq {
+		Uid uint32 `form:"uid,optional"`
+	}
 
-    UserInfoRes {
-        UserInfo User `json:"user_info"`                 // 用户基本信息
-        UserOtherInfo UserOtherInfo `json:"user_detail"` // 其它信息
-    }
+	UserInfoRes {
+		UserInfo      User          `json:"user_info"`   // 用户基本信息
+		UserOtherInfo UserOtherInfo `json:"user_detail"` // 其它信息
+	}
 
-    UserOtherInfo {
-        Publish int `json:"publish"`    // 发布数
-        Likes int `json:"likes"`        // 收藏数
-        Follows int `json:"follows"`    // 粉丝数
-        ThumbsUp int `json:"thumbs_up"` // 点赞数
-    }
+	UserOtherInfo {
+		Publish  int `json:"publish"`   // 发布数
+		Likes    int `json:"likes"`     // 收藏数
+		Follows  int `json:"follows"`   // 粉丝数
+		ThumbsUp int `json:"thumbs_up"` // 点赞数
+	}
 )
 
 // 更新用户信息
 type (
-    UpdateUserInfoReq {
-        Uid uint32 `form:"uid"`
-        Username string `form:"username,optional"`
-        Age int `form:"age,optional"`
-        Gender int `form:"gender,optional"`
-        AvatarUrl string `form:"avatar_url,optional"`
-        Tel int `form:"tel,optional"`
-        Email string `form:"email,optional"`
-        Address string `form:"address,optional"`
-        BackgroundImage string `form:"background_image,optional"`
-        Motto string `form:"motto,optional"`
-        Qq int `form:"qq,optional"`
-        Wechat string `form:"wechat,optional"`
-        GitHub string `form:"git_hub,optional"`
-    }
+	UpdateUserInfoReq {
+		Uid             uint32 `form:"uid"`
+		Username        string `form:"username,optional"`
+		Age             int    `form:"age,optional"`
+		Gender          int    `form:"gender,optional"`
+		AvatarUrl       string `form:"avatar_url,optional"`
+		Tel             int    `form:"tel,optional"`
+		Email           string `form:"email,optional"`
+		Address         string `form:"address,optional"`
+		BackgroundImage string `form:"background_image,optional"`
+		Motto           string `form:"motto,optional"`
+		Qq              int    `form:"qq,optional"`
+		Wechat          string `form:"wechat,optional"`
+		GitHub          string `form:"git_hub,optional"`
+	}
 )
 
 // 更新用户密码
 type (
-    UpdateUserPasswordReq {
-        password string `form:"password"`
-    }
+	UpdateUserPasswordReq {
+		Password string `form:"password"`
+	}
 )
 
 type (
-    InfoUserReq {
-        Uid uint32 `form:"uid"`
-        Page int `form:"page"`
-        Limit int `form:"limit"`
-        Type int `form:"type"` // 1上传 2收藏
-    }
+	InfoUserReq {
+		Uid   uint32 `form:"uid"`
+		Page  int    `form:"page"`
+		Limit int    `form:"limit"`
+		Type  int    `form:"type"` // 1上传 2收藏
+	}
 
-    InfoUserRes {
-        Upload int64 `json:"upload"`
-        Star int64 `json:"star"`
-        Like int64 `json:"like"`
-        Download int64 `json:"download"`
-        Follow int64 `json:"follow"`
-        Count int64 `json:"count"`
-        Exhibition []InfoExhibition `json:"exhibition"`
-        UserInfo User `json:"user_info"`
-        FollowIds []int64 `json:"follow_ids"` // 被关注者id集合
-    }
+	InfoUserRes {
+		Upload     int64            `json:"upload"`
+		Star       int64            `json:"star"`
+		Like       int64            `json:"like"`
+		Download   int64            `json:"download"`
+		Follow     int64            `json:"follow"`
+		Count      int64            `json:"count"`
+		Exhibition []InfoExhibition `json:"exhibition"`
+		UserInfo   User             `json:"user_info"`
+		FollowIds  []int64          `json:"follow_ids"` // 被关注者id集合
+	}
 
-    InfoExhibition {
-        Uid uint `json:"uid"`
-        Created int `json:"created"`
-        Title string `json:"title"`
-        SubTitle string `json:"sub_title"`
-        Cover string `json:"cover"`
-        ThumbsUp int `json:"thumbs_up"`
-        Download int `json:"download"`
-    }
+	InfoExhibition {
+		Uid      uint   `json:"uid"`
+		Created  int    `json:"created"`
+		Title    string `json:"title"`
+		SubTitle string `json:"sub_title"`
+		Cover    string `json:"cover"`
+		ThumbsUp int    `json:"thumbs_up"`
+		Download int    `json:"download"`
+	}
 )
 
 // 用户
 @server(
-    jwt: Auth
-    group: user
+	jwt: Auth
+	group: user
 )
 service blog-api {
-    @handler Userinfo
-    get /users/info (UserInfoReq) returns (UserInfoRes)
-    @handler UpdateUserinfo
-    post /users/update (UpdateUserInfoReq)
-    @handler UpdateUserPassword
-    post /users/update/password (UpdateUserPasswordReq)
-    @handler DetailUser
-    get /users/detail (InfoUserReq) returns (InfoUserRes)
+	@handler Userinfo
+	get /users/info (UserInfoReq) returns (UserInfoRes)
+	@handler UpdateUserinfo
+	post /users/update (UpdateUserInfoReq)
+	@handler UpdateUserPassword
+	post /users/update/password (UpdateUserPasswordReq)
+	@handler DetailUser
+	get /users/detail (InfoUserReq) returns (InfoUserRes)
 }

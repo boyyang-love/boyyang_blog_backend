@@ -1,54 +1,54 @@
 syntax = "v1"
 
 type (
-    SearchReq {
-        Keyword string `form:"keyword"`
-        Type int `form:"type"` // 1 图片 2 博客
-        page int `form:"page"`
-        limit int `form:"limit"`
-    }
-    SearchRes {
-        Count int64 `json:"count"`
-        ExhibitionInfo [] SearchExhibitionInfos `json:"exhibitionInfo,omitempty"`
-        BlogInfo [] SearchBlogInfos `json:"blogInfo,omitempty"`
-    }
-    SearchExhibitionInfos {
-        Uid uint32 `json:"uid" gorm:"primary_key"`
-        Created int `json:"created" gorm:"autoCreateTime"`
-        Updated int `json:"updated" gorm:"autoUpdateTime"`
-        Title string `json:"title"`                            // 图片墙标题
-        SubTitle string `json:"sub_title"`                     // 图片墙副标题
-        Des string `json:"des"`                                // 图片描述
-        Cover string `json:"cover"`                            // 图片上传路径
-        Tags *string `json:"tags"`                             // 图片标签
-        ThumbsUp *int `json:"thumbs_up" gorm:"default:0"`      // 点赞数
-        UserId uint32 `json:"user_id"`                         // 该图片上传者 id
-        Status int `json:"status" gorm:"default:1"`            // 图片状态 1待审核 2审核通过 3未通过审核
-        RejectRes string `json:"reject_res"`                   // 状态为3时 驳回原因
-    }
+	SearchReq {
+		Keyword string `form:"keyword"`
+		Type    int    `form:"type"` // 1 图片 2 博客
+		Page    int    `form:"page"`
+		Limit   int    `form:"limit"`
+	}
+	SearchRes {
+		Count          int64                   `json:"count"`
+		ExhibitionInfo []SearchExhibitionInfos `json:"exhibitionInfo,omitempty"`
+		BlogInfo       []SearchBlogInfos       `json:"blogInfo,omitempty"`
+	}
+	SearchExhibitionInfos {
+		Uid       uint32  `json:"uid" gorm:"primary_key"`
+		Created   int     `json:"created" gorm:"autoCreateTime"`
+		Updated   int     `json:"updated" gorm:"autoUpdateTime"`
+		Title     string  `json:"title"`                      // 图片墙标题
+		SubTitle  string  `json:"sub_title"`                  // 图片墙副标题
+		Des       string  `json:"des"`                        // 图片描述
+		Cover     string  `json:"cover"`                      // 图片上传路径
+		Tags      *string `json:"tags"`                       // 图片标签
+		ThumbsUp  *int    `json:"thumbs_up" gorm:"default:0"` // 点赞数
+		UserId    uint32  `json:"user_id"`                    // 该图片上传者 id
+		Status    int     `json:"status" gorm:"default:1"`    // 图片状态 1待审核 2审核通过 3未通过审核
+		RejectRes string  `json:"reject_res"`                 // 状态为3时 驳回原因
+	}
 
-    SearchBlogInfos {
-        Uid uint32 `json:"uid" gorm:"primary_key"`
-        Created int `json:"created" gorm:"autoCreateTime"`
-        Updated int `json:"updated" gorm:"autoUpdateTime"`
-        Title string `json:"title"`                                // 博客标题
-        SubTitle string `json:"sub_title"`                         // 博客副标题
-        Content string `json:"des" gorm:"size:10000"`              // 博客内容
-        Cover string `json:"cover,omitempty"`                      // 背景图片
-        UserId uint32 `json:"user_id"`                             // 博客作者
-        Tag string `json:"tag,omitempty"`                          // 博客标签
-        ThumbsUp int `json:"thumbs_up" gorm:"default:0"`           // 点赞数
-        ThumbsUpList string `json:"thumbs_up_list"`                // 点赞id集合
-        Collection *int `json:"collection" gorm:"default:0"`       // 收藏数
-    }
+	SearchBlogInfos {
+		Uid          uint32 `json:"uid" gorm:"primary_key"`
+		Created      int    `json:"created" gorm:"autoCreateTime"`
+		Updated      int    `json:"updated" gorm:"autoUpdateTime"`
+		Title        string `json:"title"`                       // 博客标题
+		SubTitle     string `json:"sub_title"`                   // 博客副标题
+		Content      string `json:"des" gorm:"size:10000"`       // 博客内容
+		Cover        string `json:"cover,omitempty"`             // 背景图片
+		UserId       uint32 `json:"user_id"`                     // 博客作者
+		Tag          string `json:"tag,omitempty"`               // 博客标签
+		ThumbsUp     int    `json:"thumbs_up" gorm:"default:0"`  // 点赞数
+		ThumbsUpList string `json:"thumbs_up_list"`              // 点赞id集合
+		Collection   *int   `json:"collection" gorm:"default:0"` // 收藏数
+	}
 )
 
 @server(
-    jwt: Auth
-    group: search
+	jwt: Auth
+	group: search
 )
 
 service blog-api {
-    @handler Search
-    get /search (SearchReq) returns (SearchRes)
+	@handler Search
+	get /search (SearchReq) returns (SearchRes)
 }

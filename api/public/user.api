@@ -1,22 +1,21 @@
 syntax = "v1"
 
-
 type (
-    User {
-        Id uint `json:"id"`
-        Uid uint `json:"uid"`
-        Username string `json:"username"`
-        Gender int `json:"gender"`
-        AvatarUrl string `json:"avatar_url"`
-        Age int `json:"age"`
-        Email string `json:"email"`
-        Address string `json:"address"`
-        Tel int `json:"tel"`
-        Qq int `json:"qq"`
-        Wechat string `json:"wechat"`
-        GitHub string `json:"git_hub"`
-        BackgroundImage string `json:"background_image"`
-        Motto string `json:"motto"`
-        Role string `json:"role"`
-    }
+	User {
+		Id              uint   `json:"id"`
+		Uid             uint   `json:"uid"`
+		Username        string `json:"username"`
+		Gender          int    `json:"gender"`
+		AvatarUrl       string `json:"avatar_url"`
+		Age             int    `json:"age"`
+		Email           string `json:"email"`
+		Address         string `json:"address"`
+		Tel             int    `json:"tel"`
+		Qq              int    `json:"qq"`
+		Wechat          string `json:"wechat"`
+		GitHub          string `json:"git_hub"`
+		BackgroundImage string `json:"background_image"`
+		Motto           string `json:"motto"`
+		Role            string `json:"role"`
+	}
 )

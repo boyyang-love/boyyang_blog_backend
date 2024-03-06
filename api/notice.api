@@ -1,48 +1,48 @@
 syntax = "v1"
 
 type (
-    NoticeCreateReq {
-        Content string `form:"content"`
-    }
+	NoticeCreateReq {
+		Content string `form:"content"`
+	}
 
-    NoticeUpdateReq {
-        Uid uint32 `form:"uid"`
-        Content string `form:"content"`
-    }
+	NoticeUpdateReq {
+		Uid     uint32 `form:"uid"`
+		Content string `form:"content"`
+	}
 
-    NoticeDeleteReq {
-        Uid uint32 `form:"uid"`
-    }
+	NoticeDeleteReq {
+		Uid uint32 `form:"uid"`
+	}
 
-    NoticeInfoReq {
-        Page int `form:"page"`
-        Limit int `form:"limit"`
-    }
+	NoticeInfoReq {
+		Page  int `form:"page"`
+		Limit int `form:"limit"`
+	}
 
-    NoticeInfoRes {
-        Count int64 `json:"count"`
-        Infos []NoticeInfo `json:"infos"`
-    }
+	NoticeInfoRes {
+		Count int64        `json:"count"`
+		Infos []NoticeInfo `json:"infos"`
+	}
 
-    NoticeInfo {
-        Uid uint32 `json:"uid"`
-        UserId uint32 `json:"user_id"`
-        Content string `json:"content"`
-    }
+	NoticeInfo {
+		Uid     uint32 `json:"uid"`
+		UserId  uint32 `json:"user_id"`
+		Content string `json:"content"`
+	}
 )
 
 @server(
-    jwt: Auth
-    group: notice
+	jwt: Auth
+	group: notice
 )
 
 service blog-api {
-    @handler CreateNotice
-    post /notice/create (NoticeCreateReq)
-    @handler UpdateNotice
-    post /notice/update (NoticeUpdateReq)
-    @handler DeleteNotice
-    get /notice/delete (NoticeDeleteReq)
-    @handler InfoNotice
-    get /notice/info (NoticeInfoReq) returns (NoticeInfoRes)
+	@handler CreateNotice
+	post /notice/create (NoticeCreateReq)
+	@handler UpdateNotice
+	post /notice/update (NoticeUpdateReq)
+	@handler DeleteNotice
+	get /notice/delete (NoticeDeleteReq)
+	@handler InfoNotice
+	get /notice/info (NoticeInfoReq) returns (NoticeInfoRes)
 }

@@ -3,81 +3,80 @@ syntax = "v1"
 import "public/user.api"
 
 type (
-    CreateBlogReq {// 创建博客
-        Title string `form:"title"`
-        SubTitle string `form:"sub_title"`
-        Content string `form:"content"`
-        Cover string `form:"cover"`
-        UserId uint `form:"user_id,optional"`
-        Tags string `form:"tags,optional"`
-    }
-    CreateBlogRes {
-        Uid uint32 `json:"uid"`
-    }
+	CreateBlogReq { // 创建博客
+		Title    string `form:"title"`
+		SubTitle string `form:"sub_title"`
+		Content  string `form:"content"`
+		Cover    string `form:"cover"`
+		UserId   uint   `form:"user_id,optional"`
+		Tags     string `form:"tags,optional"`
+	}
+	CreateBlogRes {
+		Uid uint32 `json:"uid"`
+	}
 
-    UpdateBlogReq {// 更新博客
-        Uid uint32 `form:"uid"`
-        Title string `form:"title"`
-        SubTitle string `form:"sub_title"`
-        Content string `form:"content"`
-        Cover string `form:"cover,optional"`
-    }
-    UpdateBlogRes {
-        Msg string `json:"msg"`
-    }
+	UpdateBlogReq { // 更新博客
+		Uid      uint32 `form:"uid"`
+		Title    string `form:"title"`
+		SubTitle string `form:"sub_title"`
+		Content  string `form:"content"`
+		Cover    string `form:"cover,optional"`
+	}
+	UpdateBlogRes {
+		Msg string `json:"msg"`
+	}
 
-    DeleteBlogReq { // 删除博客
-        Uid uint32 `form:"uid"`
-    }
+	DeleteBlogReq { // 删除博客
+		Uid uint32 `form:"uid"`
+	}
 
-    BlogInfoReq { // 获取博客信息
-        Uids string `form:"uids,optional"`
-        Page string `form:"page,optional"`
-        Limit string `form:"limit,optional"`
-    }
-    BlogInfoRes {
-        Count int64 `json:"count"`
-        BlogInfo []BlogInfo `json:"blog_info"`
-    }
+	BlogInfoReq { // 获取博客信息
+		Uids  string `form:"uids,optional"`
+		Page  string `form:"page,optional"`
+		Limit string `form:"limit,optional"`
+	}
+	BlogInfoRes {
+		Count    int64      `json:"count"`
+		BlogInfo []BlogInfo `json:"blog_info"`
+	}
 
-    BlogInfo { // 博客信息内容
-        Uid uint32 `json:"uid"`
-        Created int `json:"created"`
-        Updated int `json:"updated"`
-        Title string `json:"title"`
-        SubTitle string `json:"sub_title"`
-        Content string `json:"content"`
-        Cover string `json:"cover"`
-        ThumbsUp *int `json:"thumbs_up"`
-        Collection *int `json:"collection"`
-        UserId uint `json:"user_id"`
-        UserInfo User `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:Uid"`
-        Tag string `json:"tags"`
-    }
+	BlogInfo { // 博客信息内容
+		Uid        uint32 `json:"uid"`
+		Created    int    `json:"created"`
+		Updated    int    `json:"updated"`
+		Title      string `json:"title"`
+		SubTitle   string `json:"sub_title"`
+		Content    string `json:"content"`
+		Cover      string `json:"cover"`
+		ThumbsUp   *int   `json:"thumbs_up"`
+		Collection *int   `json:"collection"`
+		UserId     uint   `json:"user_id"`
+		UserInfo   User   `json:"user_info,omitempty" gorm:"foreignKey:UserId;references:Uid"`
+		Tag        string `json:"tags"`
+	}
 
-    ThumbsUpBlogReq { // 博客点赞
-        Uid uint32 `form:"uid"`
-    }
-    ThumbsUpBlogRes {
-        Msg string `json:"msg"`
-    }
+	ThumbsUpBlogReq { // 博客点赞
+		Uid uint32 `form:"uid"`
+	}
+	ThumbsUpBlogRes {
+		Msg string `json:"msg"`
+	}
 )
 
 // 博客
 @server(
-    jwt: Auth
-    group: blog
+	jwt: Auth
+	group: blog
 )
 service blog-api {
-    @handler CreateBlog // 创建博客
-    post /blog/create (CreateBlogReq) returns (CreateBlogRes)
-    @handler UpdateBlog // 更新博客
-    post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
-    @handler DeleteBlog // 删除博客
-    get /blog/delete (DeleteBlogReq)
-    @handler BlogInfo // 博客信息
-    get /blog/info (BlogInfoReq) returns (BlogInfoRes)
-    @handler ThumbsUpBlog // 点赞博客
-    get /blog/thumbsup (ThumbsUpBlogReq) returns (ThumbsUpBlogRes)
+	@handler CreateBlog // 创建博客
+	post /blog/create (CreateBlogReq) returns (CreateBlogRes)
+	@handler UpdateBlog // 更新博客
+	post /blog/update (UpdateBlogReq) returns (UpdateBlogRes)
+	@handler DeleteBlog // 删除博客
+	get /blog/delete (DeleteBlogReq)
+	@handler BlogInfo // 博客信息
+	get /blog/info (BlogInfoReq) returns (BlogInfoRes)
+	@handler ThumbsUpBlog // 点赞博客
+	get /blog/thumbsup (ThumbsUpBlogReq) returns (ThumbsUpBlogRes)
 }
-

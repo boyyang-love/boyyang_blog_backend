@@ -1,35 +1,35 @@
 syntax = "v1"
 
 type (
-    CreateTagReq {
-        Name string `form:"name"`
-        Type string `form:"type"`
-    }
+	CreateTagReq {
+		Name string `form:"name"`
+		Type string `form:"type"`
+	}
 )
 
 type (
-    TagsInfoReq {
-        Type string `form:"type"`
-        Uids string `form:"uids,optional"`
-    }
-    TagsInfoRes {
-        TagsInfo []TagInfo `json:"tags_info"`
-    }
-    TagInfo {
-        Uid uint32 `json:"uid"`
-        Name string `json:"name"`
-        Type string `json:"type"`
-    }
+	TagsInfoReq {
+		Type string `form:"type"`
+		Uids string `form:"uids,optional"`
+	}
+	TagsInfoRes {
+		TagsInfo []TagInfo `json:"tags_info"`
+	}
+	TagInfo {
+		Uid  uint32 `json:"uid"`
+		Name string `json:"name"`
+		Type string `json:"type"`
+	}
 )
 
 @server(
-    jwt: Auth
-    group: tag
+	jwt: Auth
+	group: tag
 )
 
 service blog-api {
-    @handler CreateTag
-    post /tags/create (CreateTagReq)
-    @handler TagsInfo
-    get /tags/info (TagsInfoReq) returns (TagsInfoRes)
+	@handler CreateTag
+	post /tags/create (CreateTagReq)
+	@handler TagsInfo
+	get /tags/info (TagsInfoReq) returns (TagsInfoRes)
 }
